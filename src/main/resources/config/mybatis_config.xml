@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+ 
+<configuration> 
+<typeAliases>
+ <typeAlias alias="uv" type="com.ezen.ezenhr.domain.UserVo"/>
+ <typeAlias alias="cv" type="com.ezen.ezenhr.domain.CommuteVo"/>
+ <typeAlias alias="lv" type="com.ezen.ezenhr.domain.LeaveVo"/>
+ <typeAlias alias="dv" type="com.ezen.ezenhr.domain.DepartmentVo"/>
+ <typeAlias alias="eav" type="com.ezen.ezenhr.domain.ElectronicApprovalsVo"/>
+ <typeAlias alias="mv" type="com.ezen.ezenhr.domain.MessageVo"/>
+</typeAliases>
+</configuration>
