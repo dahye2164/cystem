@@ -1,5 +1,5 @@
 package com.ezen.ezenhr.persistance;
 
-public class CommuteService_Mapper {
+public interface CommuteService_Mapper {
 
 }

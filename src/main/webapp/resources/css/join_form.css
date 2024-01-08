@@ -1,0 +1,319 @@
+@charset "utf-8";
+
+@import url("../font/s-core-dream.css");
+
+html {
+  font-family: "s-core-dream-regular", sans-serif !important;
+  font-size: 12px;
+}
+
+body {
+  line-height: 1.6;
+}
+
+a {
+  display: inline-block;
+  text-decoration: none;
+  color: inherit;
+}
+
+header {
+  position: fixed;
+  top: 0; /* 수정된 부분: 상단에 고정 */
+  width: 100%;
+  padding: 20px 0;
+  z-index: 1000;
+  transition: all 0.3s ease-in-out;
+  background-color: #CCAADD;
+}
+
+
+header .inner {
+  padding: 0 100px;
+}
+
+header #logo {
+  margin: 18px 50px 0 15px;
+  float: left;
+}
+
+#logo a {
+  width: 100px;
+  height: 28px;
+  background: url("../images/logo.png") no-repeat;
+  background-size: 100% auto;
+  text-indent: -99999px;
+  margin-top : 10px;
+}
+
+header #gnb {
+  width: 800px; /* 추가 */
+  margin-top: 8px;
+  float: left;
+}
+
+#gnb li {
+  float: left;
+}
+
+#gnb a {
+  font-weight: bold;
+  font-size: 18px;
+  color: #fff;
+  width: 120px;
+  padding: 15px;
+
+}
+
+#gnb a::after {
+  content: "";
+  display: block;
+  background: #fff;
+  width: 0;
+  height: 2px;
+  transition: all 0.2s ease-in-out;
+}
+
+#gnb a:hover {
+  color: #BA55D3 !important;
+}
+
+#gnb a:hover::after {
+  width: 100%;
+}
+
+#gnb .sub {
+  display: none;
+  padding-bottom: 20px;
+}
+
+#gnb:hover .sub {
+  display: block;
+}
+
+#gnb .sub li {
+  float: none;
+  margin-left: 15px;
+}
+
+#gnb .sub a {
+  font-size: 16px;
+  font-weight: normal;
+  padding: 0;
+  margin-top : 5px;
+  white-space: nowrap; /*! 줄바꿈 없애는 명령어..기억할것*/
+}
+
+#gnb .sub a::after {
+  display: none;
+}
+
+#gnb .sub a:hover {
+  text-decoration: underline;
+}
+
+header #sns {
+  float: right;
+  margin-top: 8px;
+  font-size: 16px;
+}
+
+#sns li {
+  float: left;
+}
+
+#sns a {
+  padding: 15px 10px;
+  color: #fff;
+}
+
+#sns a:hover {
+  color: #BA55D3;
+}
+
+header.scrolled {
+  background: #fff;
+  padding: 0;
+  border-bottom: 1px solid #eee;
+}
+
+header.scrolled #logo a {
+  background-position: 0 -28px;
+}
+
+header.scrolled #gnb a,
+header.scrolled #sns a {
+  color: #333;
+}
+
+header.scrolled #gnb a::after {
+  background-color: #333;
+}
+
+#search {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 300;
+  background: #000;
+  opacity: 0;
+  visibility: hidden; /*요소를 숨기거나 나타나게 하는것*/
+  transform: scale(1.1, 1.1);
+  transition: all 0.3s;
+}
+
+#search.show {
+  opacity: 1;
+  visibility: visible; /*요소를 숨기거나 나타나게 하는것*/
+  transform: scale(1, 1);
+}
+
+#search .inner {
+  width: 50%;
+}
+#search input {
+  width: 100%;
+  font-size: 7vw;
+  padding: 0 0.1em;
+  background: none;
+  box-sizing: border-box;
+  border: 0;
+  border-bottom: 4px solid #5abcc4;
+  outline: none;
+  color: #5abcc4;
+}
+
+#search input::placeholder {
+  color: #222;
+}
+
+#search p {
+  color: #5abcc4;
+  font-size: 90%;
+  font-weight: bold;
+  padding: 0.85em 0;
+  text-align: right;
+}
+
+#search .close_search {
+  position: absolute;
+  top: 1.25em;
+  right: 1.25em;
+  font-size: 2.5em;
+  padding: 10px;
+  color: #5abcc4;
+  cursor: pointer;
+}
+
+#search .close_search i {
+  transition: all 0.3s;
+}
+
+#search .close_search:hover i {
+  transform: rotate(90deg);
+}
+
+
+.container {
+  background-color: #fff;
+  padding: 80px 20px; /* 수정된 부분: 상단 패딩을 헤더 높이만큼 추가 */
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 400px; /* 수정된 부분: 원하는 크기로 조정 */
+  margin-top: 200px;
+  margin-left: auto; /* 자동으로 왼쪽 여백을 최대화하여 가운데 정렬 */
+  margin-right: auto; /* 자동으로 오른쪽 여백을 최대화하여 가운데 정렬 */
+  height: 520px;
+}
+
+h2 {
+  text-align: center;
+  color: #333;
+  font-size: 16px;
+  margin-top : -40px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #555;
+}
+
+input, select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-top: 5px;
+}
+
+.radio-group {
+  display: flex;
+  margin-top: 5px;
+}
+
+input[type="radio"] {
+  margin-right: 5px;
+}
+
+.submitBtn, #btn {
+  background-color: #CCAADD;
+  color: #fff;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100%;
+  font-weight: bold;
+  transition: background-color 0.3s; /* background-color에 대한 0.5초 동안의 트랜지션 */
+}
+
+.submitBtn:hover {
+	background-color : #BA55D3;
+}
+
+#btn:hover {
+	background-color : #BA55D3;
+}
+
+button {
+  background-color: #CCAADD;
+  color: #fff;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100%;
+  font-weight: bold;
+  transition: background-color 0.3s; /* background-color에 대한 0.5초 동안의 트랜지션 */
+}
+
+button:hover {
+  background-color : #BA55D3;
+}
+
+button[type="reset"] {
+  background-color: #ccc;
+  margin-top: 10px;
+}
+
+.input-with-button input:focus-within {
+  outline: 2px solid #CCAADD;
+}
+
+/* 추가된 CSS 스타일 */
+.form-group input:focus-within,
+.form-group select:focus-within {
+  outline: 2px solid #CCAADD;
+}

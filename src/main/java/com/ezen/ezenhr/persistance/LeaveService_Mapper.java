@@ -1,5 +1,5 @@
 package com.ezen.ezenhr.persistance;
 
-public class LeaveService_Mapper {
+public interface LeaveService_Mapper {
 
 }

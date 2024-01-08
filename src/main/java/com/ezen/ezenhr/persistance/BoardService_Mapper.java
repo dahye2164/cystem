@@ -1,5 +1,5 @@
 package com.ezen.ezenhr.persistance;
 
-public class BoardService_Mapper {
+public interface BoardService_Mapper {
 
 }

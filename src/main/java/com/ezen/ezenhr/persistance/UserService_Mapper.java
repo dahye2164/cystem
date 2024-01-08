@@ -1,5 +1,7 @@
 package com.ezen.ezenhr.persistance;
 
-public class UserService_Mapper {
+public interface UserService_Mapper {
 
+	public int userIdCheck(String userId);
+	
 }

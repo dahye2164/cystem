@@ -17,8 +17,8 @@ select midx,memberid,membername from member0803 where memberid=#{memberId} and m
 select midx,memberid,membername,memberpwd from member0803 where memberid=#{memberId}
 </select>
 
-<select id="memberIdCheck" parameterType="String" resultType="int">
-select count(*) as cnt from member0803 where memberid=#{memberId}
+<select id="userIdCheck" parameterType="String" resultType="int">
+select count(*) as cnt from UserTable where uId = #{uId}
 </select>
 
 <select id="memberList"  resultType="uv">

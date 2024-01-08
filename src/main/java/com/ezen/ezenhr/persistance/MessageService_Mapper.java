@@ -1,5 +1,5 @@
 package com.ezen.ezenhr.persistance;
 
-public class MessageService_Mapper {
+public interface MessageService_Mapper {
 
 }

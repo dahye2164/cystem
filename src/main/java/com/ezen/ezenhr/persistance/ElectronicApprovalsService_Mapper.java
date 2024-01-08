@@ -1,5 +1,5 @@
 package com.ezen.ezenhr.persistance;
 
-public class ElectronicApprovalsService_Mapper {
+public interface ElectronicApprovalsService_Mapper {
 
 }
