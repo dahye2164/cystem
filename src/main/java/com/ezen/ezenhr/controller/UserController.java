@@ -16,8 +16,10 @@ public class UserController {
 	@Autowired
 	UserService us;
 	
-	@Autowired // Spring Security(비밀번호 암호화 주입)
-	private BCryptPasswordEncoder bCryptPasswordEncoder;
+	/*
+	 * @Autowired // Spring Security(비밀번호 암호화 주입) private BCryptPasswordEncoder
+	 * bCryptPasswordEncoder;
+	 */
 	
 	
 	@RequestMapping(value="/userJoin.do")
