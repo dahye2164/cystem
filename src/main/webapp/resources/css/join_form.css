@@ -225,10 +225,10 @@ header.scrolled #gnb a::after {
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   width: 400px; /* 수정된 부분: 원하는 크기로 조정 */
-  margin-top: 200px;
+  margin-top: 123px;
   margin-left: auto; /* 자동으로 왼쪽 여백을 최대화하여 가운데 정렬 */
   margin-right: auto; /* 자동으로 오른쪽 여백을 최대화하여 가운데 정렬 */
-  height: 520px;
+  height: 628px;
 }
 
 h2 {
@@ -308,8 +308,40 @@ button[type="reset"] {
   margin-top: 10px;
 }
 
+.input-with-button {
+  display: flex; /* 아이디 입력창과 버튼을 가로로 배치하기 위해 flex 사용 */
+  align-items: center; /* 수직 중앙 정렬 */
+  margin-bottom: 15px; /* 아이디 입력창과 버튼 사이의 간격 조절 */
+}
+
+.input-with-button input {
+  flex: 7; /* 입력창이 가능한 영역을 최대한 확보 */
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
 .input-with-button input:focus-within {
   outline: 2px solid #CCAADD;
+}
+
+.input-with-button #btn {
+  flex : 3;
+  background-color: #CCAADD;
+  color: #fff;
+  padding: 8px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-left: 5px; /* 아이디 입력창과 버튼 사이의 간격 조절 */
+  font-weight: bold;
+  transition: background-color 0.3s;
+  height : 35px;
+}
+
+.input-with-button #btn:hover {
+  background-color : #BA55D3;
 }
 
 /* 추가된 CSS 스타일 */

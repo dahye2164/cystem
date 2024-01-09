@@ -4,9 +4,9 @@
 
 <mapper namespace="com.ezen.ezenhr.persistance.UserService_Mapper">
 
-<insert id="memberInsert" parameterType="uv">
-insert into member0803(memberid,memberpwd,membername,memberbirth,membergender,memberphone,memberemail,memberaddr,memberhobby) 
-values(#{memberId},#{memberPwd},#{memberName},#{memberBirth},#{memberGender},#{memberPhone},#{memberEmail},#{memberAddr},#{memberHobby})
+<insert id="userInsert" parameterType="uv">
+insert into UserTable(uId,uPwd,uName,uHireDate,uRemainDay,uPhone,uDate,uDelYn,uGrade,uApprovalLevel,uAdminYn,didx) 
+values(#{uId},#{uPwd},#{uName},#{uHireDate},#{uRemainDay},#{uPhone},now(),'N','사원','0','N',1)
 </insert>
 
 <select id="memberLogin" parameterType="HashMap" resultType="uv">

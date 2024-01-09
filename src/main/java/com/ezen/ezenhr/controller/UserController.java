@@ -16,11 +16,9 @@ public class UserController {
 	@Autowired
 	UserService us;
 	
-	/*
-	 * @Autowired // Spring Security(비밀번호 암호화 주입) private BCryptPasswordEncoder
-	 * bCryptPasswordEncoder;
-	 */
 	
+	@Autowired // Spring Security(비밀번호 암호화 주입) 
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
 	@RequestMapping(value="/userJoin.do")
 	public String userJoin() {
@@ -30,7 +28,17 @@ public class UserController {
 	@RequestMapping(value="/userJoinAction.do")
 	public String userJoinAction(UserVo uv) {
 		
-		return "";
+		
+		System.out.println(uv.getuId() + " <----- 유저가 입력한 아이디");
+		System.out.println(uv.getuPwd() + "<---- 유저가 입력한 비밀번호");
+		
+		String userPwdEncrypt = bCryptPasswordEncoder.encode(uv.getuPwd());
+		System.out.println(userPwdEncrypt + "<---- 비밀번호 암호화값");
+		uv.setuPwd(userPwdEncrypt);
+		
+		int value = us.userInsert(uv);
+		
+		return "redirect:/";
 	}
 	
 	

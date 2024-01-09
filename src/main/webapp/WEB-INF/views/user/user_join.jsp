@@ -19,18 +19,20 @@
         <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
         <title>Ezen HR</title>
         
-        <script>
+        <script type="text/javascript">
         $(document).ready(function(){
+        	
+        
         	
         $("#btn").on("click",function() {
         	alert("버튼 클릭완료");
-        	let userId = $("#userId").val();
-        	console.log(userId);
+        	let uId = $("#uId").val();
+        	console.log(uId);
         	
         	$.ajax({
         		type: "post",
         		url : "<%=request.getContextPath() %>/user/userIdCheck.do",
-        		data : {"userId" : userId},
+        		data : {"uId" : uId},
         		dataType : "json",
         		success : function(data) {
         			if(data.value == 0) {
@@ -54,40 +56,52 @@
     <script>
     function check() {
     	
+    let uId = document.signupForm.uId.value;
+    alert("입력된 아이디는?" + uId);
+    	
     var fm = document.signupForm;
     
-    	if(fm.userId.value =="") {
+    	if(fm.uId.value =="") {
     	alert("아이디를 입력하세요");
-    	fm.userId.focus();
+    	fm.uId.focus();
     	return;
-    } else if(fm.userPwd.value =="") {
+    } else if(fm.uPwd.value =="") {
     	alert("비밀번호를 입력해주세요");
-    	fm.userPwd.focus();
+    	fm.uPwd.focus();
     	return;
-    } else if(fm.userPwdConfirm.value == "") {
+    } else if(fm.uPwdConfirm.value == "") {
     	alert("비밀번호 확인을 입력해주세요");
-    	fm.userPwdConfirm.focus();
+    	fm.uPwdConfirm.focus();
     	return;
-    } else if(fm.userPwd.value != fm.userPwdConfirm.value) {
+    } else if(fm.uPwd.value != fm.uPwdConfirm.value) {
     	alert("비밀번호가 일치하지 않습니다.");
-    	fm.userPwd.value = "";
-    	fm.userPwdConfirm.value= "";
-    	fm.userPwd.focus();
+    	fm.uPwd.value = "";
+    	fm.uPwdConfirm.value= "";
+    	fm.uPwd.focus();
     	return;
-    } else if(fm.userName.value == "") {
+    } else if(fm.uName.value == "") {
     	alert("사용자 이름을 입력해주세요");
-    	fm.userName.focus();
+    	fm.uName.focus();
     	return;
-    }  else if (fm.position.selectedIndex === 0) {
+    }  else if (fm.uGrade.selectedIndex === 0) {
         alert("직급을 선택하세요");
-        fm.position.focus();
+        fm.uGrade.focus();
         return;
       } else if (fm.department.selectedIndex === 0) {
         alert("부서를 선택하세요");
         fm.department.focus();
         return;
+      } else if (fm.uHireDate.value == "") {
+    	  alert("입사일을 입력해주세요");
+    	  fm.uHireDate.focus();
+    	  return;
+      } else if (fm.uPhone.value == "") {
+    	  alert("핸드폰 번호를 입력해주세요");
+    	  fm.uPhone.focus();
+    	  return;
+    	  
       }
-    
+    	
     fm.action ="<%=request.getContextPath()%>/user/userJoinAction.do";
     fm.method = "post";
     fm.submit();
@@ -215,19 +229,21 @@
         </section>
         <div class="container">
             <h2>ezenHR 회원가입</h2>
-            <form action="#" method="post" name="signupForm">
+            <form name="signupForm">
               <div class="form-group">
+              
                 <label for="username">아이디</label>
                 <div class="input-with-button">
-                    <input type="text" id="userId" name="userId" required>
+                    <input type="text" id="uId" name="uId" required>
+                    <input type="button" name="btn" id="btn" value="중복체크">
                 </div>
-                <input type="button" name="btn" id="btn" value="아이디 중복체크">
-            </div>
+                
+              </div>
 
                 <!-- 비밀번호 입력 폼 -->
                 <div class="form-group">
                     <label for="password">비밀번호</label>
-                    <input type="password" id="userPwd" name="userPwd" required="required">
+                    <input type="password" id="uPwd" name="uPwd" required="required">
                 </div>
 
                 <!-- 비밀번호 확인 입력 폼 -->
@@ -235,19 +251,30 @@
                     <label for="confirmPassword">비밀번호 확인</label>
                     <input
                         type="password"
-                        id="userPwdConfirm"
-                        name="userPwdConfirm"
+                        id="uPwdConfirm"
+                        name="uPwdConfirm"
                         required="required">
                 </div>
 
                 <div class="form-group">
                     <label for="name">이름</label>
-                    <input type="text" id="userName" name="userName" required="required">
+                    <input type="text" id="uName" name="uName" required="required">
+                </div>
+                
+                <!-- 핸드폰번호 유효성 검사 진행중 -->
+                <div class="form-group">
+                    <label for="uPhone">핸드폰번호</label>
+                    <input type="text" id="uPhone" name="uPhone" required="required">
+                </div>
+                <!-- 입사일 유효성 검사 진행중 -->
+                <div class="form-group">
+                    <label for="uHireDate">입사일</label>
+                    <input type="text" id="uHireDate" name="uHireDate" required="required">
                 </div>
 
                 <div class="form-group">
                     <label for="position">직급</label>
-                    <select id="position" name="position" required="required">
+                    <select id="position" name="uGrade" required="required">
                         <option value="" disabled="disabled" selected="selected">선택하세요</option>
                         <option value="신입사원">신입사원</option>
                         <option value="대리">대리</option>
