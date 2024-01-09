@@ -39,7 +39,7 @@
                                         <a href="#">근태관리</a>
                                     </li>
                                     <li>
-                                        <a href="#">휴가관리</a>
+                                        <a href="<%=request.getContextPath() %>/leave/myLeave.do">휴가관리</a>
                                     </li>
 
                                 </ul>
