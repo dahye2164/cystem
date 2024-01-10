@@ -24,9 +24,9 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	public int userIdCheck(String userId) {
+	public int userIdCheck(String uId) {
 		int value = 0;
-		value = usm.userIdCheck(userId);
+		value = usm.userIdCheck(uId);
 		System.out.println(value+"<---- serviceImpl value");
 		return value;
 		

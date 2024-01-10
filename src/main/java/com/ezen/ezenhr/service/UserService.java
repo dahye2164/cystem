@@ -6,5 +6,5 @@ public interface UserService {
 	
 	public int userInsert(UserVo uv);
 	
-	public int userIdCheck(String userId);
+	public int userIdCheck(String uId);
 }

@@ -20,94 +20,121 @@
         <title>Ezen HR</title>
         
         <script type="text/javascript">
-        $(document).ready(function(){
-        	
+        async function check() {
+            let uId = document.signupForm.uId.value;
+            alert("입력된 아이디는?" + uId);
+
+            var fm = document.signupForm;
+
+            if (fm.uId.value == "") {
+                alert("아이디를 입력하세요");
+                fm.uId.focus();
+                return;
+            } else if (fm.uPwd.value == "") {
+                alert("비밀번호를 입력해주세요");
+                fm.uPwd.focus();
+                return;
+            } else if (fm.uPwdConfirm.value == "") {
+                alert("비밀번호 확인을 입력해주세요");
+                fm.uPwdConfirm.focus();
+                return;
+            } else if (fm.uPwd.value != fm.uPwdConfirm.value) {
+                alert("비밀번호가 일치하지 않습니다.");
+                fm.uPwd.value = "";
+                fm.uPwdConfirm.value = "";
+                fm.uPwd.focus();
+                return;
+            } else if (fm.uName.value == "") {
+                alert("사용자 이름을 입력해주세요");
+                fm.uName.focus();
+                return;
+            } else if (fm.uGrade.selectedIndex === 0) {
+                alert("직급을 선택하세요");
+                fm.uGrade.focus();
+                return;
+            } else if (fm.didx.selectedIndex === 0) {
+                alert("부서를 선택하세요");
+                fm.didx.focus();
+                return;
+            } else if (fm.uHireDate.value == "") {
+                alert("입사일을 입력해주세요");
+                fm.uHireDate.focus();
+                return;
+            } else if (fm.uPhone.value == "") {
+                alert("핸드폰 번호를 입력해주세요");
+                fm.uPhone.focus();
+                return;
+            }
+
+            // 아이디 중복 체크
+            if (!(checkDupl())) {
+                alert("아이디 중복체크를 해주세요.");
+                return;
+            }
+
+            alert("회원가입이 완료 되었습니다. 로그인 해주세요!");
+            fm.action = "<%=request.getContextPath()%>/user/userJoinAction.do";
+            fm.method = "post";
+            fm.submit();
+            
+            return;
+        }
         
-        	
-        $("#btn").on("click",function() {
-        	alert("버튼 클릭완료");
-        	let uId = $("#uId").val();
-        	console.log(uId);
-        	
-        	$.ajax({
-        		type: "post",
-        		url : "<%=request.getContextPath() %>/user/userIdCheck.do",
-        		data : {"uId" : uId},
-        		dataType : "json",
-        		success : function(data) {
-        			if(data.value == 0) {
-        				alert("사용할 수 있는 아이디입니다.");
-        			} else {
-        				alert("사용할 수 없는 아이디입니다.");
-        			}
-        		},
-        		error : function() {
-        			alert("실패");
-        		}
-        	});
-        	
-        });
-      });
+        var validationFlag = false;
+        var validationIdVal = "";
+
+        function validation() {
+            var uId = $("#uId").val();
+            console.log(uId);
+
+              $.ajax({
+                    type: "post",
+                    url: "<%=request.getContextPath()%>/user/userIdCheck.do",
+                    data: { "uId": uId },
+                    success : function(data) {
+                    	if(uId != "") {
+                    		if(data == 1) {
+                    			alert("사용중인 아이디 입니다.");
+                    			validationFlag = false;
+                    			validationIdval = "";
+                    		} else {
+                    			alert("사용 가능한 아이디 입니다.");
+                    			validationFlag = true;
+                    			validationIdval = uId;
+                    		}
+                    	} else {
+                    		alert("아이디는 공백일 수 없습니다");
+                    	}
+                    }
+                });
+        }
+       
+      
+        function checkDupl(){
+    		if(validationFlag == false) { // 위 함수의 validationFlag 변수를 기준으로 조건식을 세움. 위에서 false값이면 아이디가 있다는 뜻이니까?
+    			return false; //false로 막는다.
+    		} else if($("#id").val() == "") { // name이 id인 값을 불러와 공백이라면 
+    			return false; //false로 막는다.
+    		} else {
+    			return true; //위의 두 경우가 모두 조건에 성립하지 않으면 통과.
+    		}
+    	}
+    	
+    	function blurId(obj) { //blurId(obj), 여기서 obj는 사용자가 입력한 id값(this)
+    		var val = obj.value; //사용자가 입력한 id값을 val 변수에 할당
+    		
+    		
+    		//기준점. false
+    		if(validationFlag && val != validationIdVal) { //블러를 했을때 중복확인을 했는지 안했는지 처리해주는 부분.
+    			//해석 : validationFlag가 true 이면서(엔드) val의 값이 기존에 입력했던 값과 일치하는가?
+    			validationFlag = false; //일치하지 않는다면 역시나 false.
+    		}
+    	}
+        
         
         </script>
     </head>
     <body>
-    
-    <script>
-    function check() {
-    	
-    let uId = document.signupForm.uId.value;
-    alert("입력된 아이디는?" + uId);
-    	
-    var fm = document.signupForm;
-    
-    	if(fm.uId.value =="") {
-    	alert("아이디를 입력하세요");
-    	fm.uId.focus();
-    	return;
-    } else if(fm.uPwd.value =="") {
-    	alert("비밀번호를 입력해주세요");
-    	fm.uPwd.focus();
-    	return;
-    } else if(fm.uPwdConfirm.value == "") {
-    	alert("비밀번호 확인을 입력해주세요");
-    	fm.uPwdConfirm.focus();
-    	return;
-    } else if(fm.uPwd.value != fm.uPwdConfirm.value) {
-    	alert("비밀번호가 일치하지 않습니다.");
-    	fm.uPwd.value = "";
-    	fm.uPwdConfirm.value= "";
-    	fm.uPwd.focus();
-    	return;
-    } else if(fm.uName.value == "") {
-    	alert("사용자 이름을 입력해주세요");
-    	fm.uName.focus();
-    	return;
-    }  else if (fm.uGrade.selectedIndex === 0) {
-        alert("직급을 선택하세요");
-        fm.uGrade.focus();
-        return;
-      } else if (fm.department.selectedIndex === 0) {
-        alert("부서를 선택하세요");
-        fm.department.focus();
-        return;
-      } else if (fm.uHireDate.value == "") {
-    	  alert("입사일을 입력해주세요");
-    	  fm.uHireDate.focus();
-    	  return;
-      } else if (fm.uPhone.value == "") {
-    	  alert("핸드폰 번호를 입력해주세요");
-    	  fm.uPhone.focus();
-    	  return;
-    	  
-      }
-    	
-    fm.action ="<%=request.getContextPath()%>/user/userJoinAction.do";
-    fm.method = "post";
-    fm.submit();
-    return;
-    }
-    </script>
     
         <header>
             <div class="inner">
@@ -235,7 +262,7 @@
                 <label for="username">아이디</label>
                 <div class="input-with-button">
                     <input type="text" id="uId" name="uId" required>
-                    <input type="button" name="btn" id="btn" value="중복체크">
+                    <input type="button" name="btn" id="btn" value="중복체크" onclick = "validation();">
                 </div>
                 
               </div>
@@ -285,19 +312,19 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="department">부서</label>
-                    <select id="department" name="department" required="required">
+                    <label for="didx">부서</label>
+                    <select id="didx" name="didx" required="required">
                         <option value="" disabled="disabled" selected="selected">선택하세요</option>
-                        <option value="기획부">기획부</option>
-                        <option value="개발부">개발부</option>
-                        <option value="영업부">영업부</option>
-                        <option value="인사부">인사부</option>
-                        <option value="총무부">총무부</option>
+                        <option value="1">기획부</option>
+                        <option value="2">개발부</option>
+                        <option value="3">영업부</option>
+                        <option value="4">인사부</option>
+                        <option value="5">총무부</option>
                     </select>
                 </div>
 
                 <div class="form-buttons">
-                    <input type="button" name="btn" class="submitBtn" value="가입하기" onclick="check();">
+                    <input type="button" name="btn" id = "submitBtn" class="submitBtn" value="가입하기" onclick="check();">
                     <button type="reset">취소</button>
                 </div>
             </form>

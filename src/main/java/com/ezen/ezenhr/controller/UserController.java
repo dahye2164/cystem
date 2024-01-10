@@ -44,11 +44,11 @@ public class UserController {
 	
 	@ResponseBody
 	@RequestMapping(value="/userIdCheck.do")
-	public String userIdCheck(String userId) {
+	public String userIdCheck(String uId) {
 		System.out.println("컨트롤러 입성완료");
 		
 		String str = null;
-		int value = us.userIdCheck(userId);
+		int value = us.userIdCheck(uId);
 		
 		str = "{\"value\" : \""+value+"\"}";	
 		System.out.println(str);
