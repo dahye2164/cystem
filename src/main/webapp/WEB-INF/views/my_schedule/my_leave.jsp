@@ -31,11 +31,11 @@
 			<nav id="gnb">
 				<ul>
 					<li>
-						<a href="#">내스케쥴관리</a>
+						<a href="#"  style="color:#FF69B4">내스케쥴관리</a>
 							<div class="sub">
 								<ul>
 									<li><a href="#">근태관리</a></li>
-									<li><a href="#">휴가관리</a></li>
+									<li><a href="#"  style="color:#FF69B4">휴가관리</a></li>
 								</ul>
 							</div><!-- //.sub -->
 					</li><!-- 내스케쥴관리 -->
@@ -103,7 +103,7 @@
 	<div class="sidebar" id="sidebar">
 		<ul>
 			<li><a class="side_link" href="#">근태관리</a></li>
-			<li><a class="side_link" href="#">휴가관리</a></li>
+			<li><a class="side_link" href="#"  style="color:#FF69B4">휴가관리</a></li>
 		</ul>
 	</div><!-- //.sidebar -->
    <!-- 사이드바종료 -->
@@ -124,6 +124,10 @@
 			<div class="info_text">
 				<label>부서 :</label>
 				<span>인사부</span>
+			</div><!-- //.info_text -->
+			<div class="info_text">
+				<label>결재권한 :</label>
+				<span>2</span>
 			</div><!-- //.info_text -->
 
 			<div class="info_text">
