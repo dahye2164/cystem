@@ -58,11 +58,11 @@
                 <nav id="gnb">
                     <ul>
                         <li>
-                            <a href="#">내스케쥴관리</a>
+                            <a href="<%=request.getContextPath() %>/commute/myCommute.do">내스케쥴관리</a>
                             <div class="sub">
                                 <ul>
                                     <li>
-                                        <a href="#">근태관리</a>
+                                        <a href="<%=request.getContextPath() %>/commute/myCommute.do">근태관리</a>
                                     </li>
                                     <li>
                                         <a href="<%=request.getContextPath() %>/leave/myLeave.do">휴가관리</a>
@@ -176,7 +176,7 @@
                         <div class="text">
                             <h3>휴가 관리</h3>
                             <p>내 스케쥴관리 / 휴가관리</p>
-                            <a href="#">자세히보기<i class="xi-angle-right"></i>
+                            <a href="<%=request.getContextPath() %>/leave/myLeave.do">자세히보기<i class="xi-angle-right"></i>
                             </a>
                         </div>
                     </article>
