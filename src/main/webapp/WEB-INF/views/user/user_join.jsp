@@ -341,7 +341,7 @@
                 <div class="form-group">
 			        <label for="username">아이디</label>
 			        <div class="input-with-button">
-			            <input type="text" id="uId" name="uId" placeholder="영어와 숫자만 입력가능합니다." required>
+			            <input type="text" id="uId" name="uId" placeholder="영어와 숫자만 입력가능합니다." onkeyup="chkCharCode(event)" required>
 			            <input type="button" name="btn" id="btn" value="중복체크" onclick="validation();">
 			        </div>
 			    </div>

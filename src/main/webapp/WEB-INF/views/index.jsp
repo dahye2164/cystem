@@ -58,11 +58,11 @@
                 <nav id="gnb">
                     <ul>
                         <li>
-                            <a href="<%=request.getContextPath() %>/commute/myCommute.do">내스케쥴관리</a>
+                            <a href="#">내스케쥴관리</a>
                             <div class="sub">
                                 <ul>
                                     <li>
-                                        <a href="<%=request.getContextPath() %>/commute/myCommute.do">근태관리</a>
+                                        <a href="#">근태관리</a>
                                     </li>
                                     <li>
                                         <a href="<%=request.getContextPath() %>/leave/myLeave.do">휴가관리</a>
@@ -77,9 +77,9 @@
                                 <ul>
                                     <li>
                                         <a href="#">새전자결재</a>
-                                    </li> 
+                                    </li>
                                     <li>
-                                        <a href="#">전자결재리스트</a>
+                                        <a href="<%=request.getContextPath() %>/elecAppro/elecApproList.do">전자결재리스트</a>
                                     </li>
                                     <li>
                                         <a href="#">임시저장함</a>
@@ -137,12 +137,40 @@
                 <div id="sns">
                     <ul>
                         <li>
-                        	<%if (session.getAttribute("uidx") == null) { %>
-					    	<a href="<%=request.getContextPath()%>/user/userLogin" id="loginBtn">로그인</a>
-							<%} else { %>
-							    <a href="<%=request.getContextPath()%>/user/userLogout.do">로그아웃</a>
-							<%} %>
+                           <%if (session.getAttribute("uidx") == null) { %>
+                      <a href="#" id="loginBtn">로그인</a>
+                     <%} else { %>
+                         <a href="<%=request.getContextPath()%>/user/userLogout.do">로그아웃</a>
+                     <%} %>
                         </li>
+                        <div id="modalBackground"></div>
+                        <div id="loginModal">
+                            <span class="close-button" onclick="closeModal()">&times;</span>
+                            <div class="modal-title">Ezen HR 로그인하기</div>
+                     <form id="loginForm">
+                            <label for="username">아이디</label>
+                            <input type="text" id="uId" name="uId"/>
+
+                            <label for="password">비밀번호</label>
+                            <input type="password" id="uPwd" name="uPwd"/>
+
+                            <button type="button" onclick="login()">로그인</button>
+                     <%
+                        if (request.getAttribute("loginFail") != null) {
+                     %>
+                     <script type="text/javascript">
+                        handleLoginFailure();
+                     </script>
+                     <%
+                     }
+                     request.removeAttribute("loginFail"); // 실패 플래시 어트리뷰트 제거
+                     %>
+                  </form>
+                            <div class="additional-options">
+                                <a href="#">아이디/비밀번호를 잊으셨나요?</a>
+                                <a class="signup-button" href="#">회원가입하러가기</a>
+                            </div>
+                        </div>
                         <li>
                             <a href="user/userJoin.do">회원가입</a>
                         </li>
@@ -176,7 +204,7 @@
                         <div class="text">
                             <h3>휴가 관리</h3>
                             <p>내 스케쥴관리 / 휴가관리</p>
-                            <a href="<%=request.getContextPath() %>/leave/myLeave.do">자세히보기<i class="xi-angle-right"></i>
+                            <a href="#">자세히보기<i class="xi-angle-right"></i>
                             </a>
                         </div>
                     </article>

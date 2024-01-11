@@ -47,14 +47,14 @@ public class UserController {
 		return "redirect:/";
 	}
 	
-	@RequestMapping(value="/userLogin.do")
-	public String userLogin(Model model) {
-        // 모달창에 필요한 데이터 설정
-        // 예: model.addAttribute("key", value);
-
-        // 모달창을 보여줄 뷰 반환
-        return "login_modal";
-    }
+//	@RequestMapping(value="/userLogin.do")
+//	public String userLogin(Model model) {
+//        // 모달창에 필요한 데이터 설정
+//        // 예: model.addAttribute("key", value);
+//
+//        // 모달창을 보여줄 뷰 반환
+//        return "user/login_modal";
+//    }
 	
 	@RequestMapping(value="/userLoginAction.do")
 	public String userLoginAction(@RequestParam("uId") String uId,
