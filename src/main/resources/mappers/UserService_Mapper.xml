@@ -9,12 +9,12 @@ insert into UserTable(uId,uPwd,uName,uHireDate,uRemainDay,uPhone,uDate,uDelYn,uG
 values(#{uId},#{uPwd},#{uName},#{uHireDate},#{uRemainDay},#{uPhone},now(),'N',#{uGrade},'0','N',#{didx})
 </insert>
 
-<select id="memberLogin" parameterType="HashMap" resultType="uv">
-select midx,memberid,membername from member0803 where memberid=#{memberId} and memberpwd=#{memberPwd}
+<select id="userLogin" parameterType="HashMap" resultType="uv">
+select uidx,uId,uName from UserTable where uId=#{uId} and uPwd=#{uPwd}
 </select>
 
-<select id="memberLogin2" parameterType="String" resultType="uv">
-select midx,memberid,membername,memberpwd from member0803 where memberid=#{memberId}
+<select id="userLogin2" parameterType="String" resultType="uv">
+select uidx,uId,uName,uPwd from UserTable where uId=#{uId}
 </select>
 
 <select id="userIdCheck" parameterType="String" resultType="int">

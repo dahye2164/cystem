@@ -1,10 +1,16 @@
 package com.ezen.ezenhr.controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ezen.ezenhr.domain.UserVo;
 import com.ezen.ezenhr.service.UserService;
@@ -37,6 +43,49 @@ public class UserController {
 		uv.setuPwd(userPwdEncrypt);
 		
 		int value = us.userInsert(uv);
+		
+		return "redirect:/";
+	}
+	
+	@RequestMapping(value="/userLogin.do")
+	public String userLogin(Model model) {
+        // 모달창에 필요한 데이터 설정
+        // 예: model.addAttribute("key", value);
+
+        // 모달창을 보여줄 뷰 반환
+        return "login_modal";
+    }
+	
+	@RequestMapping(value="/userLoginAction.do")
+	public String userLoginAction(@RequestParam("uId") String uId,
+	                              @RequestParam("uPwd") String uPwd,
+	                              HttpServletRequest request,
+	                              RedirectAttributes rttr) {
+
+	    UserVo uv = us.userLogin(uId);
+
+	    if (uv != null && bCryptPasswordEncoder.matches(uPwd, uv.getuPwd())) {
+	        // 비밀번호가 일치하면 세션에 정보 저장
+	        HttpSession session = request.getSession();
+	        session.setAttribute("uidx", uv.getUidx());
+	        session.setAttribute("uName", uv.getuName());
+
+	        // 성공 시 홈페이지로 리다이렉트
+	        return "redirect:/";
+	    }  else {
+	    	rttr.addFlashAttribute("loginFail", true);
+	    	return "redirect:" + request.getHeader("Referer");
+	    }
+	}
+	
+	
+	
+	@RequestMapping(value="/userLogout.do")
+	public String userLogout(HttpSession session) {
+		
+		session.removeAttribute("uidx");
+		session.removeAttribute("uName");
+		session.invalidate();
 		
 		return "redirect:/";
 	}

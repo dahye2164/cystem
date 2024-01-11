@@ -1,5 +1,7 @@
 package com.ezen.ezenhr.service;
 
+import java.util.HashMap;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,5 +32,25 @@ public class UserServiceImpl implements UserService {
 		System.out.println(value+"<---- serviceImpl value");
 		return value;
 		
+	}
+
+	@Override
+	public UserVo userLogin(String uId, String uPwd) {
+		UserVo uv = null;
+		
+		HashMap<String,String> hm = new HashMap<String,String>();
+		hm.put("uId", uId);
+		hm.put("uPwd",uPwd);
+		
+		uv = usm.userLogin(hm);
+		return uv;
+	}
+
+	@Override
+	public UserVo userLogin(String uId) {
+		UserVo uv = null;
+		uv = usm.userLogin2(uId);
+		
+		return uv;
 	}
 }

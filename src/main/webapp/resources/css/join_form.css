@@ -228,7 +228,7 @@ header.scrolled #gnb a::after {
   margin-top: 123px;
   margin-left: auto; /* 자동으로 왼쪽 여백을 최대화하여 가운데 정렬 */
   margin-right: auto; /* 자동으로 오른쪽 여백을 최대화하여 가운데 정렬 */
-  height: 628px;
+  height: 630px;
 }
 
 h2 {
@@ -349,3 +349,40 @@ button[type="reset"] {
 .form-group select:focus-within {
   outline: 2px solid #CCAADD;
 }
+
+.input-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.toggle-password {
+    position: absolute;
+    top : 1;
+    right: 10px; /* 이미지의 오른쪽 여백 조절 */
+    width: 30px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.password-match-status {
+	position: absolute;
+    top : 1;
+    right: 0; /* 이미지의 오른쪽 여백 조절 */
+    width: 30px;
+    height: 10px;
+}
+
+.password-match-status .xi-check {
+    color: #CCAADD; /* 원하는 색상 설정 */
+    width: 30px;
+    heiht: 20px;
+}
+
+/* 닫기 아이콘 스타일 */
+.password-match-status .xi-close {
+    color: red; /* 원하는 색상 설정 */
+    width: 30px;
+    heiht: 20px;
+}
+

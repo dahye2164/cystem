@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page import="javax.servlet.http.HttpSession" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
-<%@ page session="false" %>
 <!DOCTYPE html>
 <html lang="ko">
     <head>
@@ -19,6 +19,32 @@
         <!--swiper plugin connect-->
         <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
         <title>Ezen HR</title>
+        <script type="text/javascript">
+        function login() {
+            alert("로그인 버튼 클릭");
+            let uId = document.getElementById('uId').value;
+            alert("입력된 아이디는?" + uId);
+
+            let fm = document.getElementById('loginForm');
+
+            if (fm.uId.value == "") {
+                alert("아이디를 입력해주세요.");
+                fm.uId.focus();
+                return;
+            } else if (fm.uPwd.value == "") {
+                alert("비밀번호를 입력해주세요");
+                fm.uPwd.focus();
+                return;
+            }
+
+            fm.action = "<%=request.getContextPath()%>/user/userLoginAction.do";
+            fm.method = "post";
+            fm.submit();
+
+            return;
+        }
+        </script>
+       
     </head>
     <body>
         <header>
@@ -111,26 +137,12 @@
                 <div id="sns">
                     <ul>
                         <li>
-                            <a href="#" id="loginBtn">로그인</a>
+                        	<%if (session.getAttribute("uidx") == null) { %>
+					    	<a href="<%=request.getContextPath()%>/user/userLogin" id="loginBtn">로그인</a>
+							<%} else { %>
+							    <a href="<%=request.getContextPath()%>/user/userLogout.do">로그아웃</a>
+							<%} %>
                         </li>
-                        <div id="modalBackground"></div>
-                        <div id="loginModal">
-                            <span class="close-button" onclick="closeModal()">&times;</span>
-                            <div class="modal-title">Ezen HR 로그인하기</div>
-
-                            <label for="username">아이디</label>
-                            <input type="text" id="username" name="username"/>
-
-                            <label for="password">비밀번호</label>
-                            <input type="password" id="password" name="password"/>
-
-                            <button onclick="login()">로그인</button>
-
-                            <div class="additional-options">
-                                <a href="#">아이디/비밀번호를 잊으셨나요?</a>
-                                <a class="signup-button" href="#">회원가입하러가기</a>
-                            </div>
-                        </div>
                         <li>
                             <a href="user/userJoin.do">회원가입</a>
                         </li>

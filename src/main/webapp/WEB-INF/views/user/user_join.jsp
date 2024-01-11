@@ -5,6 +5,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+
         <meta charset="UTF-8"/>
         <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -20,7 +21,7 @@
         <title>Ezen HR</title>
         
         <script type="text/javascript">
-        async function check() {
+        function check() {
             let uId = document.signupForm.uId.value;
             alert("입력된 아이디는?" + uId);
 
@@ -67,9 +68,14 @@
             }
 
             // 아이디 중복 체크
-            if (!(checkDupl())) {
-                alert("아이디 중복체크를 해주세요.");
-                return;
+            if (checkDupl() != true) {
+            	alert("아이디 중복체크를 해주세요.");
+            	obj = fm.uId.value();
+            	var flag = blurId(obj);
+            	if (flag == false) {
+            		alert("");
+            		return;
+            	}
             }
 
             alert("회원가입이 완료 되었습니다. 로그인 해주세요!");
@@ -90,10 +96,12 @@
               $.ajax({
                     type: "post",
                     url: "<%=request.getContextPath()%>/user/userIdCheck.do",
-                    data: { "uId": uId },
+                    data: {uId: uId},
+                    dataType: "json",  // 데이터 타입을 JSON으로 명시
                     success : function(data) {
+                    	console.log(data + "<---data 값"); // 데이터 출력
                     	if(uId != "") {
-                    		if(data == 1) {
+                    		if(data.value == "1") { // data.value로 json형식의 값에대해 접근했음 - 건
                     			alert("사용중인 아이디 입니다.");
                     			validationFlag = false;
                     			validationIdval = "";
@@ -113,7 +121,7 @@
         function checkDupl(){
     		if(validationFlag == false) { // 위 함수의 validationFlag 변수를 기준으로 조건식을 세움. 위에서 false값이면 아이디가 있다는 뜻이니까?
     			return false; //false로 막는다.
-    		} else if($("#id").val() == "") { // name이 id인 값을 불러와 공백이라면 
+    		} else if($("#uId").val() == "") { // name이 id인 값을 불러와 공백이라면 
     			return false; //false로 막는다.
     		} else {
     			return true; //위의 두 경우가 모두 조건에 성립하지 않으면 통과.
@@ -131,6 +139,78 @@
     		}
     	}
         
+    	function chkCharCode(event) {
+    		  const regExp = /[^0-9a-zA-Z]/g;
+    		  const ele = event.target;
+    		  if (regExp.test(ele.value)) {
+    		    ele.value = ele.value.replace(regExp, '');
+    		  }
+    		};
+    	
+    	    document.addEventListener("DOMContentLoaded", function () {
+                document.getElementById("uPhone").addEventListener("input", function (event) {
+                    var inputValue = event.target.value;
+                    var filteredValue = filterSpecialCharacters(inputValue);
+                    event.target.value = filteredValue;
+                });
+            });
+
+            function filterSpecialCharacters(input) {
+                // 원하는 문자 패턴으로 정규식을 수정할 수 있습니다.
+                const regex = /[^0-9]/g;
+                return input.replace(regex, '');
+            }
+		
+         // 비밀번호 숨김/보이기 토글 함수
+            function togglePassword(id) {
+			    const passwordInput = document.getElementById(id);
+				
+			    console.log(passwordInput + "현재 passwordInput");
+			    // type 속성을 변경하여 숨김에서 보이기로, 또는 그 반대로 전환
+			    passwordInput.type = (passwordInput.type === 'password') ? 'text' : 'password';
+				console.log(passwordInput.type + "<---- 패스워드 input type (현재 상태)")
+			    // 이미지를 번갈아가면서 변경
+			    //const imgElement = passwordInput.nextElementSibling.querySelector('.toggle-password');
+				const imgElement = document.getElementById('toggle-password');
+				console.log(imgElement + "<--- 이미지 element 값")
+				
+			    imgElement.src = (passwordInput.type === 'password') ? '../resources/images/close_eyes.PNG' : '../resources/images/open_eyes.PNG';
+				
+				console.log(imgElement.src + "이미지 엘리먼트 src");
+			}
+         
+            document.addEventListener('DOMContentLoaded', function () {
+                // 이곳에 JavaScript 코드를 넣으세요.
+            
+         // 비밀번호 확인 input 요소
+            const passwordConfirmInput = document.getElementById('uPwdConfirm');
+         	console.log(passwordConfirmInput + "<-- 패스워드 확인")
+            // 비밀번호 일치 상태를 보여줄 이미지를 넣을 요소
+            const passwordMatchStatus = document.getElementById('passwordMatchStatus');
+         	console.log(passwordMatchStatus + "<-- 패스워드 일치?")
+
+            // 비밀번호 확인 input이 변경될 때마다 호출되는 함수
+            passwordConfirmInput.addEventListener('input', function () {
+                const passwordInput = document.getElementById('uPwd');
+                const passwordMatch = passwordInput.value === passwordConfirmInput.value;
+
+                // 비밀번호 일치 여부에 따라 이미지를 추가하거나 제거
+                if (passwordMatch) {
+                    showPasswordMatchStatus(true);
+                } else {
+                    showPasswordMatchStatus(false);
+                }
+            });
+
+            // 비밀번호 일치 여부에 따라 이미지를 추가하거나 제거하는 함수
+            function showPasswordMatchStatus(match) {
+            	if (match) {
+                    passwordMatchStatus.innerHTML = '<i class="xi-check"></i>';
+                } else {
+                    passwordMatchStatus.innerHTML = '<i class="xi-close"></i>';
+                }
+            }
+           });
         
         </script>
     </head>
@@ -257,49 +337,50 @@
         <div class="container">
             <h2>ezenHR 회원가입</h2>
             <form name="signupForm">
-              <div class="form-group">
-              
-                <label for="username">아이디</label>
-                <div class="input-with-button">
-                    <input type="text" id="uId" name="uId" required>
-                    <input type="button" name="btn" id="btn" value="중복체크" onclick = "validation();">
-                </div>
-                
-              </div>
+            
+                <div class="form-group">
+			        <label for="username">아이디</label>
+			        <div class="input-with-button">
+			            <input type="text" id="uId" name="uId" placeholder="영어와 숫자만 입력가능합니다." required>
+			            <input type="button" name="btn" id="btn" value="중복체크" onclick="validation();">
+			        </div>
+			    </div>
+			
+			    <!-- 비밀번호 입력 폼 -->
+				<div class="form-group password-container">
+				    <label class="password-label" for="uPwd">비밀번호</label>
+				    <div class="input-container">
+				        <input type="password" id="uPwd" name="uPwd" placeholder="비밀번호를 입력해주세요." required> 
+				        <img class="toggle-password" id="toggle-password" src="../resources/images/close_eyes.PNG" alt="Toggle Password" onclick="togglePassword('uPwd')">
+				    </div>
+				</div>
 
-                <!-- 비밀번호 입력 폼 -->
-                <div class="form-group">
-                    <label for="password">비밀번호</label>
-                    <input type="password" id="uPwd" name="uPwd" required="required">
-                </div>
+				<!-- 비밀번호 확인 입력 폼 -->
+			    <div class="form-group">
+			        <label for="confirmPassword">비밀번호 확인</label>
+			        <div class="input-container">
+			        <input type="password" id="uPwdConfirm" name="uPwdConfirm" placeholder="비밀번호를 다시한번 더 입력해주세요." required>
+			        <div class="password-match-status" id="passwordMatchStatus"></div>
+			        </div>
+			    </div>
+			
+			    <div class="form-group">
+			        <label for="name">이름</label>
+			        <input type="text" id="uName" name="uName" placeholder="이름을 입력해주세요." required>
+			    </div>
+			
+			    <!-- 핸드폰번호 유효성 검사 진행중 -->
+			    <div class="form-group">
+			        <label for="uPhone">핸드폰번호</label>
+			        <input type="text" id="uPhone" name="uPhone" placeholder="숫자만 입력가능합니다." required>
+			    </div>
+			    
+				<div class="form-group">
+					<label for="uHireDate">입사일</label>
+						<input type="date" id="uHireDate" name="uHireDate" required="required">
+				</div>
 
-                <!-- 비밀번호 확인 입력 폼 -->
-                <div class="form-group">
-                    <label for="confirmPassword">비밀번호 확인</label>
-                    <input
-                        type="password"
-                        id="uPwdConfirm"
-                        name="uPwdConfirm"
-                        required="required">
-                </div>
-
-                <div class="form-group">
-                    <label for="name">이름</label>
-                    <input type="text" id="uName" name="uName" required="required">
-                </div>
-                
-                <!-- 핸드폰번호 유효성 검사 진행중 -->
-                <div class="form-group">
-                    <label for="uPhone">핸드폰번호</label>
-                    <input type="text" id="uPhone" name="uPhone" required="required">
-                </div>
-                <!-- 입사일 유효성 검사 진행중 -->
-                <div class="form-group">
-                    <label for="uHireDate">입사일</label>
-                    <input type="text" id="uHireDate" name="uHireDate" required="required">
-                </div>
-
-                <div class="form-group">
+			<div class="form-group">
                     <label for="position">직급</label>
                     <select id="position" name="uGrade" required="required">
                         <option value="" disabled="disabled" selected="selected">선택하세요</option>
