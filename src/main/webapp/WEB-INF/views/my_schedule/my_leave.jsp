@@ -157,24 +157,30 @@
 						<% } %>
 					</select>
 					<p>월</p>
-				</div><!-- //#leave_select -->
+				</div><!-- //#date_select -->
 
 				<div id="type_select">
-					<select name="leaveType" id="leaveType">
-						<option value="유형별" selected>유형별</option>
-						<option value="상태별">상태별</option>
-					</select>
-					<select name="leaveType2" id="leaveType2">
-						<option value="연차" selected>연차</option>
-						<option value="반차">반차</option>
-						<option value="경조사">경조사</option>
-						<option value="병가">병가</option>
-						<option value="기타">기타</option>
-						<option value="승인대기">승인대기</option>
-						<option value="1차결재완료">1차결재완료</option>
-						<option value="최종승인완료">최종승인완료</option>
-					</select>
-					<button id="typeBtn">검색</button>
+					<div class="select_zone">
+					<label>유형별 :</label>
+						<select name="leaveType" id="leaveType">
+							<option value="전체" selected>전체</option>
+							<option value="연차">연차</option>
+							<option value="반차">반차</option>
+							<option value="경조사">경조사</option>
+							<option value="병가">병가</option>
+							<option value="기타">기타</option>
+						</select>
+					</div><!-- //.select_zone-->
+					<div class="select_zone">
+						<label>상태별 :</label>
+						<select name="leaveType2" id="leaveType2">
+							<option value="전체" selected>전체</option>
+							<option value="승인대기">승인대기</option>
+							<option value="1차결재완료">1차결재완료</option>
+							<option value="최종승인완료">최종승인완료</option>
+						</select>
+					</div><!-- //.select_zone-->
+					<button id="typeBtn"><i class="xi-search"></i></button>
 				</div><!--//#type_select-->
 			</div><!-- //#select_zone -->
         
