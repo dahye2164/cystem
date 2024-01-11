@@ -1,5 +1,7 @@
 package com.ezen.ezenhr.controller;
 
+import java.io.PrintWriter;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -8,6 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -26,12 +29,12 @@ public class UserController {
 	@Autowired // Spring Security(비밀번호 암호화 주입) 
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
-	@RequestMapping(value="/userJoin.do")
+	@RequestMapping(value="/userJoin.do", method=RequestMethod.GET)
 	public String userJoin() {
 		return "/user/user_join";
 	}
 	
-	@RequestMapping(value="/userJoinAction.do")
+	@RequestMapping(value="/userJoinAction.do", method=RequestMethod.POST)
 	public String userJoinAction(UserVo uv) {
 		
 		
@@ -56,11 +59,11 @@ public class UserController {
 //        return "user/login_modal";
 //    }
 	
-	@RequestMapping(value="/userLoginAction.do")
+	@RequestMapping(value = "/userLoginAction.do", method = RequestMethod.POST)
 	public String userLoginAction(@RequestParam("uId") String uId,
-	                              @RequestParam("uPwd") String uPwd,
-	                              HttpServletRequest request,
-	                              RedirectAttributes rttr) {
+	                               @RequestParam("uPwd") String uPwd,
+	                               HttpServletRequest request,
+	                               RedirectAttributes rttr) {
 
 	    UserVo uv = us.userLogin(uId);
 
@@ -70,17 +73,17 @@ public class UserController {
 	        session.setAttribute("uidx", uv.getUidx());
 	        session.setAttribute("uName", uv.getuName());
 
-	        // 성공 시 홈페이지로 리다이렉트
-	        return "redirect:/";
-	    }  else {
-	    	rttr.addFlashAttribute("loginFail", true);
-	    	return "redirect:" + request.getHeader("Referer");
+	        // 성공 시 이전 페이지로 리다이렉트
+	        String referer = request.getHeader("Referer");
+	        return "redirect:" + referer;
+	    } else {
+	    	return "index.jsp";
 	    }
 	}
 	
 	
 	
-	@RequestMapping(value="/userLogout.do")
+	@RequestMapping(value="/userLogout.do", method=RequestMethod.GET)
 	public String userLogout(HttpSession session) {
 		
 		session.removeAttribute("uidx");
@@ -92,7 +95,7 @@ public class UserController {
 	
 	
 	@ResponseBody
-	@RequestMapping(value="/userIdCheck.do")
+	@RequestMapping(value="/userIdCheck.do", method=RequestMethod.POST)
 	public String userIdCheck(String uId) {
 		System.out.println("컨트롤러 입성완료");
 		

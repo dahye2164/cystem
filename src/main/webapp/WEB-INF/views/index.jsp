@@ -155,17 +155,7 @@
                             <input type="password" id="uPwd" name="uPwd"/>
 
                             <button type="button" onclick="login()">로그인</button>
-                     <%
-                        if (request.getAttribute("loginFail") != null) {
-                     %>
-                     <script type="text/javascript">
-                        handleLoginFailure();
-                     </script>
-                     <%
-                     }
-                     request.removeAttribute("loginFail"); // 실패 플래시 어트리뷰트 제거
-                     %>
-                  </form>
+                 	 </form>
                             <div class="additional-options">
                                 <a href="#">아이디/비밀번호를 잊으셨나요?</a>
                                 <a class="signup-button" href="#">회원가입하러가기</a>
