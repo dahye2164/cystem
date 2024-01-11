@@ -1,8 +1,10 @@
 package com.ezen.ezenhr.controller;
 
+import java.io.IOException;
 import java.io.PrintWriter;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,11 +61,14 @@ public class UserController {
 //        return "user/login_modal";
 //    }
 	
-	@RequestMapping(value = "/userLoginAction.do", method = RequestMethod.POST)
-	public String userLoginAction(@RequestParam("uId") String uId,
-	                               @RequestParam("uPwd") String uPwd,
-	                               HttpServletRequest request,
-	                               RedirectAttributes rttr) {
+	@RequestMapping(value = "/userLoginAction.do")
+	public String userLoginAction(
+	        @RequestParam("uId") String uId,
+	        @RequestParam("uPwd") String uPwd,
+	        HttpServletRequest request,
+	        HttpServletResponse response,  // HttpServletResponse 파라미터 추가
+	        RedirectAttributes rttr
+	) throws IOException {
 
 	    UserVo uv = us.userLogin(uId);
 
@@ -73,11 +78,12 @@ public class UserController {
 	        session.setAttribute("uidx", uv.getUidx());
 	        session.setAttribute("uName", uv.getuName());
 
-	        // 성공 시 이전 페이지로 리다이렉트
-	        String referer = request.getHeader("Referer");
-	        return "redirect:" + referer;
+	        return "redirect:/";
 	    } else {
-	    	return "index.jsp";
+	        PrintWriter out = response.getWriter();
+	        out.println("<head><meta charset=\"UTF-8\"></head>");
+	        out.println("<script>alert('아이디 또는 비밀번호가 일치하지 않습니다.'); history.back();</script>");
+	        return null;  // 현재 메서드에서 더 이상 진행할 필요가 없을 경우 반환값을 null로 설정
 	    }
 	}
 	

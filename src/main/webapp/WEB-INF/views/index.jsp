@@ -38,6 +38,7 @@
             }
 
             fm.action = "<%=request.getContextPath()%>/user/userLoginAction.do";
+            console.log(fm.action);
             fm.method = "post";
             fm.submit();
 
