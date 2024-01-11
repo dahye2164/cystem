@@ -245,8 +245,8 @@ header.scrolled #logo a {
 }
 
 .sidebar ul li a:hover {
-	background-color: #ccaadd;
-	color: #BA55D3;
+	background-color: #ccaadd !important;
+	color: #BA55D3  !important;
 }
 
 #sideBtn {

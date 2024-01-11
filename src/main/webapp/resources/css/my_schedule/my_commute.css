@@ -1,0 +1,433 @@
+@charset "UTF-8";
+
+@charset "utf-8";
+
+html {
+	font-family: "Pretendard Variable", Pretendard, -apple-system,
+		BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI",
+		"Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic",
+		"Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+	font-size: 12px;
+}
+
+body {
+	line-height: 1.6;
+}
+
+a {
+	display: inline-block;
+	text-decoration: none;
+	color: inherit;
+}
+
+header {
+	position: fixed;
+	top: 0; /* 수정된 부분: 상단에 고정 */
+	width: 100%;
+	padding: 20px 0;
+	z-index: 1000;
+	transition: all 0.3s ease-in-out;
+	background-color: rgba(204, 170, 221, 0.8);
+}
+
+header .inner {
+	padding: 0 100px;
+}
+
+header #logo {
+	margin: 18px 50px 0 15px;
+	float: left;
+}
+
+#logo a {
+	width: 100px;
+	height: 28px;
+	background: url("../images/logo.png") no-repeat;
+	background-size: 100% auto;
+	text-indent: -99999px;
+	margin-top: 10px;
+}
+
+header #gnb {
+	width: 800px; /* 추가 */
+	margin-top: 8px;
+	float: left;
+}
+
+#gnb li {
+	float: left;
+}
+
+#gnb a {
+	font-weight: bold;
+	font-size: 18px;
+	color: #fff;
+	width: 120px;
+	padding: 15px;
+}
+
+#gnb a::after {
+	content: "";
+	display: block;
+	background: #fff;
+	width: 0;
+	height: 2px;
+	transition: all 0.2s ease-in-out;
+}
+
+#gnb a:hover {
+	color: #BA55D3 !important;
+}
+
+#gnb a:hover::after {
+	width: 100%;
+}
+
+#gnb .sub {
+	display: none;
+	padding-bottom: 20px;
+}
+
+#gnb:hover .sub {
+	display: block;
+}
+
+#gnb .sub li {
+	float: none;
+	margin-left: 15px;
+}
+
+#gnb .sub a {
+	font-size: 16px;
+	font-weight: bold;
+	padding: 0;
+	margin-top: 5px;
+	white-space: nowrap; /*! 줄바꿈 없애는 명령어..기억할것*/
+}
+
+#gnb .sub a::after {
+	display: none;
+}
+
+#gnb .sub a:hover {
+	text-decoration: underline;
+}
+
+header #sns {
+	float: right;
+	margin-top: 8px;
+	font-size: 16px;
+}
+
+#sns li {
+	float: left;
+}
+
+#sns a {
+	padding: 15px 10px;
+	color: #fff;
+}
+
+#sns a:hover {
+	color: #BA55D3;
+}
+
+header.scrolled #logo a {
+	background-position: 0 -28px;
+}
+
+#search {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 300;
+	background: #000;
+	opacity: 0;
+	visibility: hidden; /*요소를 숨기거나 나타나게 하는것*/
+	transform: scale(1.1, 1.1);
+	transition: all 0.3s;
+}
+
+#search.show {
+	opacity: 1;
+	visibility: visible; /*요소를 숨기거나 나타나게 하는것*/
+	transform: scale(1, 1);
+}
+
+#search .inner {
+	width: 50%;
+}
+
+#search input {
+	width: 100%;
+	font-size: 7vw;
+	padding: 0 0.1em;
+	background: none;
+	box-sizing: border-box;
+	border: 0;
+	border-bottom: 4px solid #5abcc4;
+	outline: none;
+	color: #5abcc4;
+}
+
+#search input::placeholder {
+	color: #222;
+}
+
+#search p {
+	color: #5abcc4;
+	font-size: 90%;
+	font-weight: bold;
+	padding: 0.85em 0;
+	text-align: right;
+}
+
+#search .close_search {
+	position: absolute;
+	top: 1.25em;
+	right: 1.25em;
+	font-size: 2.5em;
+	padding: 10px;
+	color: #5abcc4;
+	cursor: pointer;
+}
+
+#search .close_search i {
+	transition: all 0.3s;
+}
+
+#search .close_search:hover i {
+	transform: rotate(90deg);
+}
+
+/*사이드바 css*/
+.sidebar {
+	width: 10%;
+	height: 100%;
+	position: fixed;
+	top: 220px;
+	left: -250px;
+	transition: all 0.3s ease;
+}
+
+.sidebar.active {
+	left: 0;
+}
+
+.sidebar ul {
+	list-style: none;
+	padding: 0;
+}
+
+.sidebar ul li {
+	height: 56px;
+	border-bottom: 1px solid #ddd;
+}
+
+.sidebar ul li a {
+	padding-left: 20px;
+	margin-top: 4%;
+	line-height: 40px;
+	width: 90%;
+	height: 70%;
+	text-decoration: none;
+	color: #333;
+	font-size: 16px;
+	font-weight: bold;
+	transition: background-color 0.3s ease;
+	border-top-right-radius: 10px;
+	border-bottom-right-radius: 10px;
+}
+
+.sidebar ul li a:hover {
+	background-color: #ccaadd !important;
+	color: #BA55D3 !important;
+}
+
+#sideBtn {
+	position: fixed;
+	background: none;
+	border: none;
+	font-size: 24px;
+	cursor: pointer;
+	padding: 10px;
+	top: 150px;
+}
+
+main {
+	width: 70%;
+	margin-top: 9%;
+	margin-right: auto;
+	margin-left: auto;
+	min-height: 100vh;
+}
+
+#my_info {
+	display: flex;
+	margin-right: auto;
+	margin-left: auto;
+	width: 90%;
+	align-items: flex-end;
+	justify-content: space-between;
+}
+
+.info_title {
+	display: flex;
+	align-items: flex-end;
+}
+
+.info_title span {
+	color: #4363d8;
+	font-size: 30px;
+	font-weight: bold;
+}
+
+.info_title p {
+	margin-left: 10px;
+	font-size: 20px;
+}
+
+.info_text {
+	font-size: 20px;
+}
+
+.info_text label {
+	font-weight: bold;
+}
+
+#main_zone {
+	display: flex;
+	margin: 30px auto;
+	width: 100%;
+	height: 730px;
+	border: 0.5px solid #ccaadd;
+	justify-content: space-evenly
+}
+
+#api_zone {
+	margin-top: 2.5%;
+	margin-bottom: 2.5%;
+	width: 60%;
+	height: 90%;
+	border: 0.5px solid #FFC0CB;
+}
+
+#api_zone p {
+	font-size: 30px;
+	text-align: center;
+}
+
+#commute_modify_form {
+	margin-top: 2.5%;
+	margin-bottom: 2.5%;
+	border: 0.5px solid #FFC0CB;
+	height: 90%;
+	width: 30%;
+}
+
+#commute_modify_form h2 {
+	font-weight: bold;
+	font-size: 23px;
+	margin-top: 20px;
+	width: 150px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.able_modify label {
+	font-size: 18px;
+}
+
+#modify_reason label {
+	font-size: 18px;
+}
+
+#input_zone {
+	width: 90%;
+	margin: 30px auto;
+}
+
+.able_modify {
+	margin-top: 30px;
+}
+
+#commute_modify_form input, select, span {
+	float: right;
+	margin-left: 10px;
+}
+
+#commute_modify_form select {
+	height: 24px;
+	width: 109px;
+}
+
+#modify_reason {
+	width: 90%;
+	margin-top: 30px;
+	margin-right: auto;
+	margin-left: auto;
+	margin-bottom: 20px;
+}
+
+#cReason {
+	margin: 20px auto;
+	width: 100%;
+	height: 250px;
+	border: 1px solid #848484;
+}
+
+::placeholder {
+	color: #c0c0c0;
+	font-size: 12px;
+}
+
+#button_zone {
+	display: flex;
+	float: right;
+	margin-right: 20px;
+	height: 40px;
+	margin-bottom: 20px;
+}
+
+/* 버튼 스타일링 */
+#modiBtn {
+	padding: 10px 25px;
+	border: none;
+	border-radius: 5px;
+	background-color: #FFC0CB;
+	color: #333;
+	font-size: 16px;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+	margin-right: 20px;
+}
+
+#backBtn {
+	padding: 10px 25px;
+	border: none;
+	border-radius: 5px;
+	background-color: c0c0c0;
+	color: white;
+	font-size: 16px;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+}
+
+#modiBtn:hover {
+	background-color: #FF69B4;
+	color: #FFF;
+}
+
+::selection {
+	color: #ccaadd;
+}
+
+#backBtn:hover {
+	background-color: #969696;
+	color: #000;;
+}
