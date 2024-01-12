@@ -123,10 +123,10 @@
                             <div class="modal-title">Ezen HR 로그인하기</div>
                      <form id="loginForm" name="loginForm">
                             <label for="username">아이디</label>
-                            <input type="text" id="uId" name="uId"/>
+                            <input type="text" id="userId" name="userId"/>
 
                             <label for="password">비밀번호</label>
-                            <input type="password" id="uPwd" name="uPwd"/>
+                            <input type="password" id="userPwd" name="userPwd"/>
 
                             <button type="button" onclick="login()">로그인</button>
                  	 </form>

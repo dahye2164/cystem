@@ -63,8 +63,8 @@ public class UserController {
 	
 	@RequestMapping(value = "/userLoginAction.do")
 	public String userLoginAction(
-	        @RequestParam("uId") String uId,
-	        @RequestParam("uPwd") String uPwd,
+	        @RequestParam("userId") String uId,
+	        @RequestParam("userPwd") String uPwd,
 	        HttpServletRequest request,
 	        HttpServletResponse response,  // HttpServletResponse 파라미터 추가
 	        RedirectAttributes rttr

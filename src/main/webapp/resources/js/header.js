@@ -1,17 +1,17 @@
 function login() {
             alert("로그인 버튼 클릭");
-            let uId = document.getElementById('uId').value;
-            alert("입력된 아이디는?" + uId);
+            let userId = document.getElementById('userId').value;
+            alert("입력된 아이디는?" + userId);
 
             let fm = document.getElementById('loginForm');
 			
-            if (fm.uId.value == "") {
+            if (fm.userId.value == "") {
                 alert("아이디를 입력해주세요.");
-                fm.uId.focus();
+                fm.userId.focus();
                 return;
-            } else if (fm.uPwd.value == "") {
+            } else if (fm.userPwd.value == "") {
                 alert("비밀번호를 입력해주세요");
-                fm.uPwd.focus();
+                fm.userPwd.focus();
                 return;
             }
 			fm.action = loginActionUrl;
