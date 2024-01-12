@@ -29,6 +29,8 @@ function login() {
 
             
                 var closeLoginModal = document.getElementById("closeLoginModal");
+                
+                var closeModalBtn = document.getElementById("closeModalBtn");
 
                 loginBtn.onclick = function () {
                     loginModal.style.display = "block";
@@ -39,9 +41,8 @@ function login() {
                     document.getElementById("loginModal").style.display = "none";
                 }
 
-                window.onclick = function (event) {
-                    if (event.target == loginModal) {
-                        loginModal.style.display = "none";
-                    }
-                };
+                 closeModalBtn.onclick = function() {
+		            document.getElementById("modalBackground").style.display = "none";
+		            document.getElementById("loginModal").style.display = "none";
+		        }
         

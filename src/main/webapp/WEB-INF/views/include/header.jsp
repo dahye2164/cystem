@@ -119,7 +119,7 @@
                         </li>
                         <div id="modalBackground"></div>
                         <div id="loginModal">
-                            <span class="close-button" onclick="closeModal()">&times;</span>
+                            <span class="close-button" id="closeModalBtn" onclick="closeModal()">&times;</span>
                             <div class="modal-title">Ezen HR 로그인하기</div>
                      <form id="loginForm" name="loginForm">
                             <label for="username">아이디</label>
