@@ -240,3 +240,7 @@ main {
 	background-color: #969696;
 	color: #000;;
 }
+
+#signInBtn, #signOutBtn {
+	margin-right: 10px;
+}

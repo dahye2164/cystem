@@ -11,4 +11,6 @@ public interface UserService {
 	public UserVo userLogin(String uId, String uPwd);
 	
 	public UserVo userLogin(String uId);
+	
+	public UserVo getUserInfo(int uidx);
 }

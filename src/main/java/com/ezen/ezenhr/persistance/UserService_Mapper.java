@@ -14,4 +14,6 @@ public interface UserService_Mapper {
 	
 	public UserVo userLogin2(String uId);
 	
+	public UserVo getUserInfo(int uidx);
+	
 }

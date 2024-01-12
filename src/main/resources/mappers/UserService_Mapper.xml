@@ -25,4 +25,8 @@ select count(*) as cnt from UserTable where uId = #{uId}
 select midx,memberid,membername,writeday from member0803 where delyn='N' order by midx desc
 </select>
 
+<select id="getUserInfo" resultType="uv">
+select * FROM UserTable where uidx = #{uidx}
+</select>
+
 </mapper>

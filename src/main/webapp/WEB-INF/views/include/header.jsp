@@ -16,6 +16,7 @@
         <link rel="stylesheet" href="${path }/resources/css/reset.css"/>
         <link rel="stylesheet" href="${path }/resources/css/include/header.css"/>
         
+        
      
         <title>header</title>
 	
@@ -28,20 +29,41 @@
                         <a href="${path }/"></a>
                     </h1>
                 </div>
-
+         
                 <nav id="gnb">
                     <ul>
                         <li>
-                            <a href="#">내스케쥴관리</a>
+                        		<c:choose>
+							<c:when test="${uidx == null }">
+								<a href="<%=request.getContextPath()%>"
+									onclick="return alert('로그인이 필요합니다.')">나의일정관리</a>
+							</c:when>
+							<c:otherwise>
+								<a href="<%=request.getContextPath()%>/commute/myCommute.do">나의일정관리</a>
+							</c:otherwise>
+						</c:choose> 
                             <div class="sub">
                                 <ul>
                                     <li>
-                                        <a href="#">근태관리</a>
+                                    	<c:choose>
+                                    		<c:when test="${uidx == null }">
+                                    			<a href="<%=request.getContextPath()%>" onclick="return alert('로그인이 필요합니다.')">근태관리</a>
+                                    		</c:when>
+                                    		<c:otherwise>	
+                                        		<a href="<%=request.getContextPath() %>/commute/myCommute.do">근태관리</a>
+                                        	</c:otherwise>
+                                        </c:choose>
                                     </li>
                                     <li>
-                                        <a href="#">휴가관리</a>
+                                    	<c:choose>
+                                    		<c:when test="${uidx == null }">
+                                    			<a href="<%=request.getContextPath()%>" onclick="return alert('로그인이 필요합니다.')">휴가관리</a>
+                                    		</c:when>
+                                    		<c:otherwise>	
+                                        <a href="<%=request.getContextPath() %>/leave/myLeave.do">휴가관리</a>
+                                        </c:otherwise>
+                                        </c:choose>
                                     </li>
-
                                 </ul>
                             </div>
                         </li>
@@ -53,7 +75,10 @@
                                         <a href="#">새전자결재</a>
                                     </li>
                                     <li>
-                                        <a href="#">전자결재리스트</a>
+                                        <a href="<%=request.getContextPath() %>/elecAppro/elecApproList.do">전자결재목록</a>
+                                    </li>
+                                    <li>
+                                    	<a href="#">전자결재승인</a>
                                     </li>
                                     <li>
                                         <a href="#">임시저장함</a>
@@ -136,7 +161,7 @@
                             </div>
                         </div>
                         <li>
-                            <a href="user/userJoin.do">회원가입</a>
+                            <a href="${path }/user/userJoin.do">회원가입</a>
                         </li>
                         <li>
                             <a href="#" class="open_search">

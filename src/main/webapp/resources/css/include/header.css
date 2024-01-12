@@ -168,17 +168,17 @@ header.scrolled #logo a {
 	background: none;
 	box-sizing: border-box;
 	border: 0;
-	border-bottom: 4px solid #5abcc4;
+	border-bottom: 4px solid #CCAADD;
 	outline: none;
-	color: #5abcc4;
+	color: #CCAADD;
 }
 
 #search input::placeholder {
-	color: #222;
+	color: #CCAADD;
 }
 
 #search p {
-	color: #5abcc4;
+	color: #CCAADD;
 	font-size: 90%;
 	font-weight: bold;
 	padding: 0.85em 0;
@@ -191,7 +191,7 @@ header.scrolled #logo a {
 	right: 1.25em;
 	font-size: 2.5em;
 	padding: 10px;
-	color: #5abcc4;
+	color: #CCAADD;
 	cursor: pointer;
 }
 

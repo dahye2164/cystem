@@ -53,4 +53,12 @@ public class UserServiceImpl implements UserService {
 		
 		return uv;
 	}
+
+	@Override
+	public UserVo getUserInfo(int uidx) {
+		UserVo uv = null;
+		uv = usm.getUserInfo(uidx);
+		
+		return uv;
+	}
 }

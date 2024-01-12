@@ -22,18 +22,18 @@
         <script type="text/javascript">
         function login() {
             alert("로그인 버튼 클릭");
-            let uId = document.getElementById('uId').value;
-            alert("입력된 아이디는?" + uId);
+            let userId = document.getElementById('userId').value;
+            alert("입력된 아이디는?" + userId);
 
             let fm = document.getElementById('loginForm');
 
-            if (fm.uId.value == "") {
+            if (fm.userId.value == "") {
                 alert("아이디를 입력해주세요.");
-                fm.uId.focus();
+                fm.userId.focus();
                 return;
-            } else if (fm.uPwd.value == "") {
+            } else if (fm.userPwd.value == "") {
                 alert("비밀번호를 입력해주세요");
-                fm.uPwd.focus();
+                fm.userPwd.focus();
                 return;
             }
 
@@ -59,16 +59,37 @@
                 <nav id="gnb">
                     <ul>
                         <li>
-                            <a href="#">내스케쥴관리</a>
+                        		<c:choose>
+							<c:when test="${uidx == null }">
+								<a href="<%=request.getContextPath()%>"
+									onclick="return alert('로그인이 필요합니다.')">나의일정관리</a>
+							</c:when>
+							<c:otherwise>
+								<a href="<%=request.getContextPath()%>/commute/myCommute.do">나의일정관리</a>
+							</c:otherwise>
+						</c:choose> 
                             <div class="sub">
                                 <ul>
                                     <li>
-                                        <a href="<%=request.getContextPath() %>/commute/myCommute.do">근태관리</a>
+                                    	<c:choose>
+                                    		<c:when test="${uidx == null }">
+                                    			<a href="<%=request.getContextPath()%>" onclick="return alert('로그인이 필요합니다.')">근태관리</a>
+                                    		</c:when>
+                                    		<c:otherwise>	
+                                        		<a href="<%=request.getContextPath() %>/commute/myCommute.do">근태관리</a>
+                                        	</c:otherwise>
+                                        </c:choose>
                                     </li>
                                     <li>
+                                    	<c:choose>
+                                    		<c:when test="${uidx == null }">
+                                    			<a href="<%=request.getContextPath()%>" onclick="return alert('로그인이 필요합니다.')">휴가관리</a>
+                                    		</c:when>
+                                    		<c:otherwise>	
                                         <a href="<%=request.getContextPath() %>/leave/myLeave.do">휴가관리</a>
+                                        </c:otherwise>
+                                        </c:choose>
                                     </li>
-
                                 </ul>
                             </div>
                         </li>
@@ -80,7 +101,10 @@
                                         <a href="#">새전자결재</a>
                                     </li>
                                     <li>
-                                        <a href="<%=request.getContextPath() %>/elecAppro/elecApproList.do">전자결재리스트</a>
+                                        <a href="<%=request.getContextPath() %>/elecAppro/elecApproList.do">전자결재목록</a>
+                                    </li>
+                                     <li>
+                                    	<a href="#">전자결재승인</a>
                                     </li>
                                     <li>
                                         <a href="#">임시저장함</a>
@@ -150,10 +174,10 @@
                             <div class="modal-title">Ezen HR 로그인하기</div>
                      <form id="loginForm">
                             <label for="username">아이디</label>
-                            <input type="text" id="uId" name="uId"/>
+                            <input type="text" id="userId" name="userId"/>
 
                             <label for="password">비밀번호</label>
-                            <input type="password" id="uPwd" name="uPwd"/>
+                            <input type="password" id="userPwd" name="userPwd"/>
 
                             <button type="button" onclick="login()">로그인</button>
                  	 </form>
