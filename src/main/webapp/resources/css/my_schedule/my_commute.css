@@ -1,23 +1,18 @@
 
 @charset "utf-8";
 
-html {
-	font-family: "Pretendard Variable", Pretendard, -apple-system,
-		BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI",
-		"Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic",
-		"Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
-	font-size: 12px;
+
+
+/*해당 네브 메뉴 색상 변경*/
+/*내 스케쥴관리*/
+#gnb > ul > li:first-child > a {
+    color:  #4682B4 !important;
+}
+/*근태관리*/
+#gnb > ul > li:first-child > div.sub > ul > li:nth-child(1) > a {
+    color: #4682B4 !important;
 }
 
-body {
-	line-height: 1.6;
-}
-
-a {
-	display: inline-block;
-	text-decoration: none;
-	color: inherit;
-}
 
 /*사이드바 css*/
 .sidebar {
