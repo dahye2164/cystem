@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ezen.ezenhr.persistance.CommuteService_Mapper">
+
+	 <insert id="saveSignInTime" parameterType="cv">
+        INSERT INTO CommuteTable (cInTime, uidx, didx, departmentName,ctype)
+        VALUES (now(), #{uidx}, #{didx}, #{departmentName},#{ctype})
+    </insert>
+	
+	<insert id="saveCommuteInfo" parameterType="civ">
+		insert into CommuteInfo (uidx, cidx, cType, cDate)
+		VALUES (#{uidx}, #{cidx}, #{cType}, #{cDate, jdbcType=DATE, javaType=java.time.LocalDate, typeHandler=org.apache.ibatis.type.LocalDateTypeHandler})
+	</insert>
+</mapper>
