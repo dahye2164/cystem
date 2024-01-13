@@ -69,4 +69,12 @@ public class UserServiceImpl implements UserService {
 		
 		return value;
 	}
+
+	@Override
+	public int getUserDepartmentId(int uidx) {
+		int value = 0;
+		value = usm.getUserDepartmentId(uidx);
+		
+		return value;
+	}
 }

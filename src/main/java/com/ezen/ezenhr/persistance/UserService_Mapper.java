@@ -18,4 +18,6 @@ public interface UserService_Mapper {
 	
 	public String getDepartmentName(int didx);
 	
+	public int getUserDepartmentId(int uidx);
+	
 }

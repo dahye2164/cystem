@@ -15,4 +15,6 @@ public interface UserService {
 	public UserVo getUserInfo(int uidx);
 	
 	public String getDepartmentName(int didx);
+	
+	public int getUserDepartmentId(int uidx);
 }

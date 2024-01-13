@@ -9,5 +9,9 @@
  <typeAlias alias="dv" type="com.ezen.ezenhr.domain.DepartmentVo"/>
  <typeAlias alias="eav" type="com.ezen.ezenhr.domain.ElectronicApprovalsVo"/>
  <typeAlias alias="mv" type="com.ezen.ezenhr.domain.MessageVo"/>
+ <typeAlias alias="civ" type="com.ezen.ezenhr.domain.CommuteInfoVo"/>
 </typeAliases>
+<typeHandlers>
+        <typeHandler handler="org.apache.ibatis.type.LocalDateTypeHandler"/>
+    </typeHandlers>
 </configuration>

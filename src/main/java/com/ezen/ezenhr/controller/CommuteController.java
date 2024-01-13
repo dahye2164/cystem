@@ -1,5 +1,6 @@
 package com.ezen.ezenhr.controller;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
@@ -8,11 +9,14 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ezen.ezenhr.domain.CommuteInfoVo;
+import com.ezen.ezenhr.domain.CommuteVo;
 import com.ezen.ezenhr.domain.UserVo;
 import com.ezen.ezenhr.service.CommuteService;
 import com.ezen.ezenhr.service.UserService;
@@ -52,29 +56,56 @@ public class CommuteController {
 	    return "/my_schedule/my_commute";
 	}
 	
+	@Transactional
 	@RequestMapping(value = "/signIn.do", method = { RequestMethod.GET, RequestMethod.POST })
 	@ResponseBody
 	public Map<String, Object> signIn(HttpSession session) {
-		Map<String, Object> result = new HashMap<>();
-		
-		try {
-			Integer uidx = (Integer) session.getAttribute("uidx");
-			if (uidx != null) {
-				LocalDateTime signInTime = LocalDateTime.now();
-				cs.saveSignInTime(uidx, signInTime);
-				
-				result.put("success", true);
-			} else {
-				result.put("success", false);
-				result.put("message", "사용자 정보가 없습니다.");
-			}
-			
-		} catch (Exception e) {
-			result.put("success", false);
-			result.put("message",e.getMessage());
-		}
-		
-		return result;
-	}
+	    Map<String, Object> result = new HashMap<>();
 
+	    try {
+	        int uidx = (Integer) session.getAttribute("uidx");
+	        int didx = us.getUserDepartmentId(uidx);
+	        System.out.println(didx + "<--- saveSignInTime의 didx");
+	        String departmentName = us.getDepartmentName(didx);
+	        System.out.println(departmentName + "<-- saveSignInTime의 departmentName");
+	        System.out.println(uidx + "<---- signIn.do uidx값");
+	        LocalDateTime signInTime = LocalDateTime.now();
+
+	        // CommuteVo 객체 생성 및 값 설정
+	        CommuteVo cv = new CommuteVo();
+	        cv.setUidx(uidx);
+	        cv.setDidx(didx);
+	        cv.setDepartmentName(departmentName);
+	        cv.setcInTime(signInTime);
+	        cv.setCtype("출근");
+
+	        // CommuteVo 객체를 매퍼에 전달
+	        int value = cs.saveSignInTime(cv);
+
+	        // CommuteInfoVo 객체 생성 및 값 설정
+	        CommuteInfoVo civ = new CommuteInfoVo();
+	        LocalDate currentDate = LocalDate.now();
+	        civ.setUidx(uidx);
+	        civ.setCidx(cv.getCidx());
+	        System.out.println(cv.getCidx()+"cidx값 가져와?");
+	        civ.setcDate(currentDate);
+	        civ.setcType("출근");
+
+	        // CommuteInfoVo 객체를 매퍼에 전달
+	        int value2 = cs.saveCommuteInfo(civ);
+	        System.out.println(value2 + "<---- value2 civ 값");
+
+	        if (value > 0 && value2 > 0) {
+	            result.put("success", true);
+	        } else {
+	            result.put("success", false);
+	            result.put("message", "출근 정보 저장 실패");
+	        }
+	    } catch (Exception e) {
+	        result.put("success", false);
+	        result.put("message", e.getMessage());
+	    }
+
+	    return result;
+	}
 }

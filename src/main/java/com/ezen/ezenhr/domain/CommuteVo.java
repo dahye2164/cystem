@@ -7,10 +7,23 @@ public class CommuteVo {
 	private LocalDateTime cInTime;
 	private LocalDateTime cInOutTime;
 	private String cInOrOut;
-	private String cDate;
 	private int uidx;
 	private int didx;
+	private String departmentName;
+	private String ctype;
 	
+	public String getCtype() {
+		return ctype;
+	}
+	public void setCtype(String ctype) {
+		this.ctype = ctype;
+	}
+	public String getDepartmentName() {
+		return departmentName;
+	}
+	public void setDepartmentName(String departmentName) {
+		this.departmentName = departmentName;
+	}
 	public int getCidx() {
 		return cidx;
 	}
@@ -35,12 +48,7 @@ public class CommuteVo {
 	public void setcInOrOut(String cInOrOut) {
 		this.cInOrOut = cInOrOut;
 	}
-	public String getcDate() {
-		return cDate;
-	}
-	public void setcDate(String cDate) {
-		this.cDate = cDate;
-	}
+	
 	public int getUidx() {
 		return uidx;
 	}
