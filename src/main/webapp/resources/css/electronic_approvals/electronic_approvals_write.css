@@ -11,45 +11,59 @@
 
 
 /*사이드바 css*/
-
 .sidebar {
-   width: 10%;
-   height: 100%;
-   position: fixed;
-   top: 220px;
-   left: -250px;
-   transition: all 0.3s ease;
-  }
-  .sidebar.active {
-   left: 0  ;
-  }
-  .sidebar ul {
-   list-style: none;
-   padding: 0;
-  }
-  .sidebar ul li {
-    height:56px;
-   border-bottom: 1px solid #ddd;
-  }
-  .sidebar ul li a {
-    padding-left: 20px;
-    margin-top:4%;
-    line-height: 40px;
-  width:90%;
-  height:70%;
-   text-decoration: none;
-   color: #333;
-   font-size:16px;
-   font-weight:bold;
-   transition: background-color 0.3s ease;
-  }
+	width: 10%;
+	height: 100%;
+	position: fixed;
+	top: 220px;
+	left: -250px;
+	transition: all 0.3s ease;
+}
 
-  .sidebar ul li a:hover{
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
-    background-color:#ccaadd;
-   color: #BA55D3;
-  }
+.sidebar.active {
+	left: 0;
+}
+
+.sidebar ul {
+	list-style: none;
+	padding: 0;
+}
+
+.sidebar ul li {
+	height: 56px;
+	border-bottom: 1px solid #ddd;
+}
+
+.sidebar ul li a {
+	padding-left: 20px;
+	margin-top: 4%;
+	line-height: 40px;
+	width: 90%;
+	height: 70%;
+	text-decoration: none;
+	color: #333;
+	font-size: 16px;
+	font-weight: bold;
+	transition: background-color 0.3s ease;
+	border-top-right-radius: 10px;
+	border-bottom-right-radius: 10px;
+}
+
+.sidebar ul li a:hover {
+	background-color: #ccaadd !important;
+	color: #BA55D3 !important;
+}
+
+#sideBtn {
+	position: fixed;
+	background: none;
+	border: none;
+	font-size: 24px;
+	cursor: pointer;
+	padding: 10px;
+	top: 150px;
+}
+
 
 
   main {

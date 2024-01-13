@@ -30,8 +30,9 @@
 	
 	<div class="sidebar" id="sidebar">
 		<ul>
-			<li><a class="side_link" href="#">새전자결재</a></li>
-			<li><a class="side_link" href="#" style="color:#fff; background-color: #4682B4;">전자결재리스트</a></li>
+			<li><a class="side_link" href="<%=request.getContextPath() %>/ea/eaWrite.do">새전자결재</a></li>
+			<li><a class="side_link" href="<%=request.getContextPath()%>/ea/eaList.do"  style="color:#fff; background-color: #4682B4;">전자결재목록</a></li>
+            <li><a class="side_link" href="<%=request.getContextPath()%>/ea/eaAdminList.do" >전자결재승인</a></li>
 			<li><a class="side_link" href="#">임시저장함</a></li>
 		</ul>
 	</div><!-- //.sidebar -->

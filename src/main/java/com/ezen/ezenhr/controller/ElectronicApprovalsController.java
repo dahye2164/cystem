@@ -18,5 +18,10 @@ public class ElectronicApprovalsController {
 	public String eaWrite() {
 		return "/electronic_approvals/electronic_approvals_write";
 	}
+	
+	@RequestMapping(value="/eaAdminList.do", method = RequestMethod.GET)
+	public String eaAdminList() {
+		return "/electronic_approvals/electronic_approvals_admin_list";
+	}
 
 }
