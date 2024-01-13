@@ -99,9 +99,17 @@
 											</c:otherwise>
 										</c:choose>
 								</li>
-                                     <li>
-                                    	<a href="#">전자결재승인</a>
-                                    </li>
+									<li>
+                                    	<c:choose>
+											<c:when test="${uidx ==null }">
+												<a href="<%=request.getContextPath()%>"
+													onclick="return alert('로그인이 필요합니다.')">전자결재승인</a>
+											</c:when>
+											<c:otherwise>
+												<a href="<%=request.getContextPath()%>/ea/eaAdminList.do">전자결재승인</a>
+											</c:otherwise>
+										</c:choose>
+									</li>
                                     <li>
                                         <a href="#">임시저장함</a>
                                     </li>

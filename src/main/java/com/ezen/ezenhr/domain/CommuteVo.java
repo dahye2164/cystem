@@ -1,8 +1,11 @@
 package com.ezen.ezenhr.domain;
 
+import java.time.LocalDateTime;
+
 public class CommuteVo {
 	private int cidx;
-	private String cInOutTime;
+	private LocalDateTime cInTime;
+	private LocalDateTime cInOutTime;
 	private String cInOrOut;
 	private String cDate;
 	private int uidx;
@@ -14,10 +17,16 @@ public class CommuteVo {
 	public void setCidx(int cidx) {
 		this.cidx = cidx;
 	}
-	public String getcInOutTime() {
+	public LocalDateTime getcInTime() {
+		return cInTime;
+	}
+	public void setcInTime(LocalDateTime cInTime) {
+		this.cInTime = cInTime;
+	}
+	public LocalDateTime getcInOutTime() {
 		return cInOutTime;
 	}
-	public void setcInOutTime(String cInOutTime) {
+	public void setcInOutTime(LocalDateTime cInOutTime) {
 		this.cInOutTime = cInOutTime;
 	}
 	public String getcInOrOut() {
@@ -44,4 +53,5 @@ public class CommuteVo {
 	public void setDidx(int didx) {
 		this.didx = didx;
 	}
+	
 }

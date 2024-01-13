@@ -179,11 +179,25 @@
      <script>
    // 출근하기 버튼 클릭 시
    function signIn() {
-      // 여기에 출근 처리 로직을 추가 (서버와의 통신 등)
-
-      // 출근하기 버튼 숨기고 퇴근하기 버튼 표시
-      document.getElementById('signInBtn').style.display = 'none';
-      document.getElementById('signOutBtn').style.display = 'block';
+      // 출근 정보를 서버로 전송
+      $.ajax({
+         url: "<%=request.getContextPath()%>/commute/signIn.do",  // 실제 서버의 URL로 변경
+         type: 'POST',
+         contentType: 'application/json', // 이 부분을 추가해보세요
+         success: function(response) {
+            // 서버에서의 응답에 따른 처리
+            if (response.success) {
+               // 출근 버튼 숨기고 퇴근 버튼 표시
+               document.getElementById('signInBtn').style.display = 'none';
+               document.getElementById('signOutBtn').style.display = 'block';
+            } else {
+               alert('출근 정보 전송 실패');
+            }
+         },
+         error: function() {
+            alert('서버 오류');
+         }
+      });
    }
 
    // 퇴근하기 버튼 클릭 시

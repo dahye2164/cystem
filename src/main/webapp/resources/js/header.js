@@ -1,7 +1,6 @@
 function login() {
-            alert("로그인 버튼 클릭");
+            
             let userId = document.getElementById('userId').value;
-            alert("입력된 아이디는?" + userId);
 
             let fm = document.getElementById('loginForm');
 			

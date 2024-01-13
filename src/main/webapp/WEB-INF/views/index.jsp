@@ -21,9 +21,8 @@
         <title>Ezen HR</title>
         <script type="text/javascript">
         function login() {
-            alert("로그인 버튼 클릭");
             let userId = document.getElementById('userId').value;
-            alert("입력된 아이디는?" + userId);
+            
 
             let fm = document.getElementById('loginForm');
 
@@ -126,8 +125,16 @@
 										</c:choose>
 								</li>
                                      <li>
-                                    	<a href="#">전자결재승인</a>
-                                    </li>
+                                    	<c:choose>
+											<c:when test="${uidx ==null }">
+												<a href="<%=request.getContextPath()%>"
+													onclick="return alert('로그인이 필요합니다.')">전자결재승인</a>
+											</c:when>
+											<c:otherwise>
+												<a href="<%=request.getContextPath()%>/ea/eaAdminList.do">전자결재승인</a>
+											</c:otherwise>
+										</c:choose>
+									</li>
                                     <li>
                                         <a href="#">임시저장함</a>
                                     </li>
