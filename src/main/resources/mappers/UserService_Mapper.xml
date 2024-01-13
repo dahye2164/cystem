@@ -29,4 +29,7 @@ select midx,memberid,membername,writeday from member0803 where delyn='N' order b
 select * FROM UserTable where uidx = #{uidx}
 </select>
 
+<select id="getDepartmentName" parameterType="int" resultType="string">
+	SELECT dName FROM DepartmentTable WHERE didx = #{didx}
+</select>
 </mapper>

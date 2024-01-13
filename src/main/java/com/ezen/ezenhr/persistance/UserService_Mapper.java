@@ -16,4 +16,6 @@ public interface UserService_Mapper {
 	
 	public UserVo getUserInfo(int uidx);
 	
+	public String getDepartmentName(int didx);
+	
 }

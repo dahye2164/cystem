@@ -111,7 +111,7 @@
 
 			<div class="info_text">
 				<label>부서 :</label>
-				<span><%= user.getDidx() %></span>
+				<span><%= (String) request.getAttribute("departmentName") %></span>
 			</div><!-- //.info_text -->
 
 			<div class="info_text">
@@ -121,7 +121,7 @@
 
 			<div class="info_text">
 				<label>입사일 :</label>
-				<span><%= user.getuHireDate() %></span>
+				 <span><%= user.getuHireDate().toString().substring(0, 10) %></span>
 			</div><!-- //.info_text -->
 		</section><!--//#my_info-->
 		<div id="main_zone">

@@ -94,15 +94,37 @@
                             </div>
                         </li>
                         <li>
-                            <a href="#">전자결재</a>
+                        	<c:choose>
+                        		<c:when test="${uidx ==null }">
+                            <a href="<%=request.getContextPath() %>" onclick="return alert('로그인이 필요합니다.')">전자결재</a>
+                            	</c:when>
+                            	<c:otherwise>
+                            <a href="<%=request.getContextPath() %>/ea/eaList.do">전자결재</a>
+                            	</c:otherwise>
+                            </c:choose>
                             <div class="sub">
                                 <ul>
                                     <li>
-                                        <a href="#">새전자결재</a>
+		                                <c:choose>
+		                        			<c:when test="${uidx ==null }">
+		                            			<a href="<%=request.getContextPath() %>" onclick="return alert('로그인이 필요합니다.')">새전자결재</a>
+		                            		</c:when>
+		                            		<c:otherwise>
+		                            			<a href="<%=request.getContextPath() %>/ea/eaWrite.do">새전자결재</a>
+		                            		</c:otherwise>
+		                            	</c:choose>
                                     </li>
                                     <li>
-                                        <a href="<%=request.getContextPath() %>/elecAppro/elecApproList.do">전자결재목록</a>
-                                    </li>
+                                    	<c:choose>
+											<c:when test="${uidx ==null }">
+												<a href="<%=request.getContextPath()%>"
+													onclick="return alert('로그인이 필요합니다.')">전자결재목록</a>
+											</c:when>
+											<c:otherwise>
+												<a href="<%=request.getContextPath()%>/ea/eaList.do">전자결재목록</a>
+											</c:otherwise>
+										</c:choose>
+								</li>
                                      <li>
                                     	<a href="#">전자결재승인</a>
                                     </li>

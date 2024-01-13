@@ -61,4 +61,12 @@ public class UserServiceImpl implements UserService {
 		
 		return uv;
 	}
+
+	@Override
+	public String getDepartmentName(int didx) {
+		String value = "";
+		value = usm.getDepartmentName(didx);
+		
+		return value;
+	}
 }

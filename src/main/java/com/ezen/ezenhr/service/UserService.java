@@ -13,4 +13,6 @@ public interface UserService {
 	public UserVo userLogin(String uId);
 	
 	public UserVo getUserInfo(int uidx);
+	
+	public String getDepartmentName(int didx);
 }
