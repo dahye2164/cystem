@@ -52,9 +52,10 @@
 				<div id="input_zone">
 					<div class="able_modify">
 						<div id="date_zone">
-							<label>기간</label> <input type="date" id="startDate"
-								name="startDate" /><span> ~ </span><input type="date"
-								id="endDate" name="endDate" />
+							<label>기간</label>
+							<input type="date" id="startDate" name="startDate" />
+							<span> ~ </span>
+							<input type="date" id="endDate" name="endDate" />
 						</div><!-- //#date_zone -->
 						<div id="type_zone">
 							<label>종류</label> <select name="leaveType" id="leaveType">
@@ -143,6 +144,36 @@
 				
 				sidebar.classList.toggle('active');
 			}
+		</script>
+		
+		
+		<script>
+		  function updateUsers() {
+		    var departmentSelect = document.getElementById("department");
+		    var userSelect = document.getElementById("uName");
+		    var selectedDepartment = departmentSelect.value;
+		
+		    // 기존의 옵션 제거
+		    while (userSelect.options.length > 1) {
+		      userSelect.remove(1);
+		    }
+		
+		    // 선택된 부서의 사용자 목록을 서버에서 가져오기
+		  	fetch(`/getUsersForDepartment?department=${selectedDepartment}`)
+		      .then(response => response.json())
+		      .then(users => {
+		        // 새로운 사용자 목록으로 옵션 추가
+		        for (var i = 0; i < users.length; i++) {
+		          var option = document.createElement("option");
+		          option.value = users[i].value;
+		          option.text = users[i].text;
+		          userSelect.add(option);
+		        }
+		      })
+		      .catch(error => {
+		        console.error("Error fetching user data:", error);
+		      });
+		  }
 		</script>
 	</main>
 </body>
