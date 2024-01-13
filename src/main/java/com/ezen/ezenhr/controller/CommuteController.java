@@ -71,6 +71,9 @@ public class CommuteController {
 	        System.out.println(uidx + "<---- signIn.do uidx값");
 	        LocalDateTime signInTime = LocalDateTime.now();
 
+	        // 세션에 출근 정보 저장
+	        session.setAttribute("isSignedIn", true);
+
 	        // CommuteVo 객체 생성 및 값 설정
 	        CommuteVo cv = new CommuteVo();
 	        cv.setUidx(uidx);
@@ -82,24 +85,62 @@ public class CommuteController {
 	        // CommuteVo 객체를 매퍼에 전달
 	        int value = cs.saveSignInTime(cv);
 
-	        // CommuteInfoVo 객체 생성 및 값 설정
-	        CommuteInfoVo civ = new CommuteInfoVo();
-	        LocalDate currentDate = LocalDate.now();
-	        civ.setUidx(uidx);
-	        civ.setCidx(cv.getCidx());
-	        System.out.println(cv.getCidx()+"cidx값 가져와?");
-	        civ.setcDate(currentDate);
-	        civ.setcType("출근");
-
-	        // CommuteInfoVo 객체를 매퍼에 전달
-	        int value2 = cs.saveCommuteInfo(civ);
-	        System.out.println(value2 + "<---- value2 civ 값");
-
-	        if (value > 0 && value2 > 0) {
+	        if (value > 0) {
 	            result.put("success", true);
 	        } else {
 	            result.put("success", false);
 	            result.put("message", "출근 정보 저장 실패");
+	        }
+	    } catch (Exception e) {
+	        result.put("success", false);
+	        result.put("message", e.getMessage());
+	    }
+
+	    return result;
+	}
+	
+	@RequestMapping(value = "/signOut.do", method = { RequestMethod.GET, RequestMethod.POST })
+	@ResponseBody
+	public Map<String, Object> signOut(HttpSession session) {
+	    Map<String, Object> result = new HashMap<>();
+
+	    try {
+	        // 세션에서 출근 여부 확인
+	        boolean isSignedIn = session.getAttribute("isSignedIn") != null && (boolean) session.getAttribute("isSignedIn");
+
+	        if (isSignedIn) {
+	            int uidx = (Integer) session.getAttribute("uidx");
+	            
+	          
+		        int didx = us.getUserDepartmentId(uidx);
+		        System.out.println(didx + "<--- saveSignInTime의 didx");
+		        String departmentName = us.getDepartmentName(didx);
+		        System.out.println(departmentName + "<-- saveSignInTime의 departmentName");
+		        System.out.println(uidx + "<---- signIn.do uidx값");
+		        LocalDateTime signOutTime = LocalDateTime.now();
+
+	            // 세션에서 출근 정보 업데이트
+	            session.setAttribute("isSignedIn", false);
+	            
+	            CommuteVo cv = new CommuteVo();
+		        cv.setUidx(uidx);
+		        cv.setDidx(didx);
+		        cv.setDepartmentName(departmentName);
+		        cv.setcInTime(signOutTime);
+		        cv.setCtype("퇴근");
+
+	            // CommuteVo 객체 생성 및 값 설정
+	            int value = cs.saveSignOutTime(cv);
+
+	            if (value > 0) {
+	                result.put("success", true);
+	            } else {
+	                result.put("success", false);
+	                result.put("message", "퇴근 정보 저장 실패");
+	            }
+	        } else {
+	            result.put("success", false);
+	            result.put("message", "사용자가 출근 중이 아닙니다.");
 	        }
 	    } catch (Exception e) {
 	        result.put("success", false);

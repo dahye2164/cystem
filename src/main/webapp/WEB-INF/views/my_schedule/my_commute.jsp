@@ -81,6 +81,24 @@
         });
     });
 </script>
+
+ <script>
+      // 페이지 로딩 시 실행되는 부분
+      $(document).ready(function () {
+         // 세션 스토리지에서 출근 여부를 가져옴
+         var isSignedIn = sessionStorage.getItem('isSignedIn');
+
+         if (isSignedIn === 'true') {
+            // 출근 중인 경우의 처리
+            document.getElementById('signInBtn').style.display = 'none';
+            document.getElementById('signOutBtn').style.display = 'block';
+         } else {
+            // 퇴근 중 또는 정보가 없는 경우의 처리
+            document.getElementById('signOutBtn').style.display = 'none';
+            document.getElementById('signInBtn').style.display = 'block';
+         }
+      });
+   </script>
 </head>
 <body>
 	<%@include file="../include/header.jsp"%>
@@ -179,6 +197,14 @@
      <script>
    // 출근하기 버튼 클릭 시
    function signIn() {
+	   
+	   var isSignedIn = sessionStorage.getItem('isSignedIn');
+
+	   // 이미 출근한 경우 처리
+	   if (isSignedIn === 'true') {
+	      alert('이미 출근하셨습니다.');
+	      return;
+	   }
       // 출근 정보를 서버로 전송
       $.ajax({
          url: "<%=request.getContextPath()%>/commute/signIn.do",  // 실제 서버의 URL로 변경
@@ -187,9 +213,12 @@
          success: function(response) {
             // 서버에서의 응답에 따른 처리
             if (response.success) {
+               sessionStorage.setItem('isSignedIn', 'true');
                // 출근 버튼 숨기고 퇴근 버튼 표시
                document.getElementById('signInBtn').style.display = 'none';
                document.getElementById('signOutBtn').style.display = 'block';
+               
+               sessionStorage.setItem('isSignedIn', 'true');
             } else {
                alert('출근 정보 전송 실패');
             }
@@ -202,14 +231,37 @@
 
    // 퇴근하기 버튼 클릭 시
    function signOut() {
-      // 여기에 퇴근 처리 로직을 추가 (서버와의 통신 등)
+   // 퇴근 정보를 서버로 전송
+   
+   var isSignedIn = sessionStorage.getItem('isSignedIn');
+   
+   if (isSignedIn !== 'true') {
+	      alert('아직 출근하지 않았습니다.');
+	      return;
+	   }
 
-      // 퇴근하기 버튼 숨기고 출근하기 버튼 표시
-      document.getElementById('signOutBtn').style.display = 'none';
-      document.getElementById('signInBtn').style.display = 'block';
-   }
+   $.ajax({
+      url: "<%=request.getContextPath()%>/commute/signOut.do",  // 실제 서버의 URL로 변경
+      type: 'POST',
+      contentType: 'application/json',
+      success: function(response) {
+         // 서버에서의 응답에 따른 처리
+         if (response.success) {
+            // 퇴근 버튼 숨기고 출근 버튼 표시
+            document.getElementById('signOutBtn').style.display = 'none';
+            document.getElementById('signInBtn').style.display = 'block';
+            
+            sessionStorage.removeItem('isSignedIn');
+         } else {
+            alert('퇴근 정보 전송 실패');
+         }
+      },
+      error: function() {
+         alert('서버 오류');
+      }
+   });
+}
 
-   // ... (이전 코드 생략) ...
 </script>
 
 </body>

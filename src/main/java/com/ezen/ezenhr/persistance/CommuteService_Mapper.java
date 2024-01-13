@@ -9,9 +9,9 @@ public interface CommuteService_Mapper {
 	
 	public int saveSignInTime(CommuteVo cv); 
 	
-	public int saveCommuteInfo(CommuteInfoVo civ);
+	/* public int saveCommuteInfo(CommuteInfoVo civ); */
 
-    public CommuteVo saveSignOutTime(int uidx, LocalDateTime signOutTime);
+    public int saveSignOutTime(CommuteVo cv);
 
 	
 }

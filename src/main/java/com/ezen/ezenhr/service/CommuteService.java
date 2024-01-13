@@ -7,8 +7,10 @@ import com.ezen.ezenhr.domain.CommuteVo;
 
 public interface CommuteService {
 	
-	public int saveSignInTime(CommuteVo cv); 
+	public int saveSignInTime(CommuteVo cv);
 	
-	public int saveCommuteInfo(CommuteInfoVo civ);
+	public int saveSignOutTime(CommuteVo cv);
+
+	
 
 }

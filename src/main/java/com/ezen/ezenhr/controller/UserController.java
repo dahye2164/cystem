@@ -78,6 +78,9 @@ public class UserController {
 	        HttpSession session = request.getSession();
 	        session.setAttribute("uidx", uv.getUidx());
 	        session.setAttribute("uName", uv.getuName());
+	        
+	     // 세션 스토리지에 출근 여부 저장
+	        session.setAttribute("isSignedIn", true);
 
 	        return "redirect:/";
 	    } else {
@@ -92,6 +95,8 @@ public class UserController {
 	
 	@RequestMapping(value="/userLogout.do", method=RequestMethod.GET)
 	public String userLogout(HttpSession session) {
+		
+		session.removeAttribute("isSignedIn");
 		
 		session.removeAttribute("uidx");
 		session.removeAttribute("uName");

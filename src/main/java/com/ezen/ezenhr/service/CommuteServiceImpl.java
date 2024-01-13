@@ -29,10 +29,19 @@ public class CommuteServiceImpl implements CommuteService {
 	}
 
 	@Override
-	public int saveCommuteInfo(CommuteInfoVo civ) {
-		int value2 = csm.saveCommuteInfo(civ);
+	public int saveSignOutTime(CommuteVo cv) {
+		int value = csm.saveSignOutTime(cv);
 		
-		return value2;
+		return value;
 	}
+
+	/*
+	 * @Override public int saveCommuteInfo(CommuteInfoVo civ) { int value2 =
+	 * csm.saveCommuteInfo(civ);
+	 * 
+	 * return value2; }
+	 */
+
+	
 
 }
