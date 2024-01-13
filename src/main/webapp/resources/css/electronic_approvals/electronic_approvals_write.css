@@ -1,0 +1,279 @@
+@charset "UTF-8";
+/*해당 네브 메뉴 색상 변경*/
+/*전자결재*/
+#gnb > ul > li:nth-child(2) > a {
+    color:  #4682B4 !important;
+}
+/*새전자결재*/
+#gnb > ul > li:nth-child(2) > div.sub > ul > li:nth-child(1) > a {
+    color: #4682B4 !important;
+}
+
+
+/*사이드바 css*/
+
+.sidebar {
+   width: 10%;
+   height: 100%;
+   position: fixed;
+   top: 220px;
+   left: -250px;
+   transition: all 0.3s ease;
+  }
+  .sidebar.active {
+   left: 0  ;
+  }
+  .sidebar ul {
+   list-style: none;
+   padding: 0;
+  }
+  .sidebar ul li {
+    height:56px;
+   border-bottom: 1px solid #ddd;
+  }
+  .sidebar ul li a {
+    padding-left: 20px;
+    margin-top:4%;
+    line-height: 40px;
+  width:90%;
+  height:70%;
+   text-decoration: none;
+   color: #333;
+   font-size:16px;
+   font-weight:bold;
+   transition: background-color 0.3s ease;
+  }
+
+  .sidebar ul li a:hover{
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    background-color:#ccaadd;
+   color: #BA55D3;
+  }
+
+
+  main {
+   width:70%;
+   margin-top:8%;
+   margin-right:auto;
+   margin-left:auto;
+   min-height:100vh;
+  }
+
+  #sideBtn{
+   position:fixed;
+   background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 10px;
+    top:150px;
+  }
+  main h2{
+   font-size: 30px;
+   font-weight: bold;
+   }
+
+  #main_zone {
+   margin: 30px auto;
+   width: 100%;
+   height: 730px;
+   border: 0.5px solid #ccaadd;
+}
+
+#frm{
+   width:95%;
+   margin:0 auto;
+}
+
+
+.able_modify label{   
+   display:inline-block;
+   font-size: 20px;
+   width:80px;
+}
+#reason_file label{
+   width:80px;
+   display:inline-block;
+   font-size: 20px;
+}
+
+#input_zone{
+   margin:60px auto;
+}
+
+.able_modify{
+   justify-content: space-between;
+   display: flex;
+   align-items: center;
+   width:100%;
+   margin-top:40px;
+}
+
+#date_zone{
+   width:60%;
+}
+
+#type_zone{
+   width:260px;
+}
+
+#reason_file{
+   justify-content: space-between;
+   display: flex;
+   align-items: center;
+   margin:0 auto;
+}
+#person_zone{
+   margin:0px auto;
+}
+
+#startDate,#endDate {
+   padding: 10px;
+   border-radius: 5px;
+   font-size: 16px;
+   color: #333;
+   border:1px solid #ccc;
+}
+.able_modify span{
+   font-size:20px;
+}
+#startDate{
+   margin-right: 10px;
+}
+#endDate{
+   margin-left:10px;
+}
+
+#leaveType{
+   padding:10px 15px;
+   border-radius: 5px;
+   font-size: 16px;
+   color: #333;
+   border:1px solid #ccc;
+}
+#file_zone{
+   width:260px;
+   display: flex;
+   align-items: center;
+}
+
+
+#fileBtn{
+   padding: 10px 10px;
+   border-radius: 5px;
+   font-size: 16px;
+   background-color: #3498db;  
+  color: #fff;  
+
+   border:none;
+   cursor: pointer;
+   transition: background-color 0.3s ease;
+}
+
+
+
+#file_zone p{
+   color: blue;
+   margin-top: 20px;
+   margin-left: 10px;
+   font-size: 14px;
+}
+
+#fileBtn:hover{
+   background-color: #2980b9; 
+}
+
+
+#cReason{
+   margin:40px auto;
+   width: 100%;
+   height: 150px;
+   border:1px solid#848484;
+}
+
+.ea_person select{
+   margin-right:20px;
+   padding: 10px;
+   border-radius: 5px;
+   font-size: 16px;
+   color: #333;
+   border:1px solid #ccc;
+}
+
+.ea_person button{
+   background-color:#3498db; 
+   color:#fff;
+   border:none;
+   border-radius: 5px;
+   cursor: pointer;
+   transition: background-color 0.3s ease;
+   padding: 12.5px 12px;
+}
+
+#button_zone{
+   display: flex;
+   float: right;
+   height: 40px;
+   margin-top:60px;
+   margin-bottom: 20px;
+}
+
+#modiBtn {
+   padding: 10px 25px;
+   border: none;
+   border-radius: 5px;
+   background-color:#FFC0CB;
+   color: #333;
+   font-size: 16px;
+   cursor: pointer;
+   transition: background-color 0.3s ease;
+   margin-right:20px;
+
+  }
+
+#backBtn{
+   padding: 10px 25px;
+   border: none;
+   border-radius: 5px;
+   background-color:c0c0c0;
+   color: white;
+   font-size: 16px;
+   cursor: pointer;
+   transition: background-color 0.3s ease;
+
+}
+
+#modiBtn:hover{
+   background-color:#FF69B4;
+   color: #FFF;
+}
+
+::selection{
+   color:#ccaadd;
+}
+
+#backBtn:hover {
+    background-color: #969696; 
+    color:#000;; 
+}
+
+
+#saveBtn {
+   padding: 10px 10px;
+   border: none;
+   border-radius: 5px;
+   background-color:#ec5bc1;
+   color: #fff;
+   font-size: 16px;
+   cursor: pointer;
+   transition: background-color 0.3s ease;
+   margin-right:20px;
+
+  }
+
+
+  #saveBtn:hover{
+   background-color:#b62a8c;
+   color: #FFF;
+}
