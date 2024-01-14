@@ -16,7 +16,7 @@ select uidx,uId,uName from UserTable where uId=#{uId} and uPwd=#{uPwd}
 <select id="userLogin2" parameterType="String" resultType="uv">
 select uidx,uId,uName,uPwd from UserTable where uId=#{uId}
 </select>
-
+  
 <select id="userIdCheck" parameterType="String" resultType="int">
 select count(*) as cnt from UserTable where uId = #{uId}
 </select>
