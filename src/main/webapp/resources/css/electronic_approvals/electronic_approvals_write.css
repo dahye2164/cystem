@@ -93,6 +93,7 @@
    width: 100%;
    height: 730px;
    border: 0.5px solid #ccaadd;
+   padding: 30px;
 }
 
 #frm{
@@ -104,42 +105,47 @@
 .able_modify label{   
    display:inline-block;
    font-size: 20px;
-   width:80px;
-}
-#reason_file label{
-   width:80px;
-   display:inline-block;
-   font-size: 20px;
+   width: 90px;
 }
 
+
 #input_zone{
-   margin:60px auto;
+   margin:60px 30px 0px 30px;
 }
 
 .able_modify{
    justify-content: space-between;
-   display: flex;
-   align-items: center;
    width:100%;
-   margin-top:40px;
 }
 
-#date_zone{
+
+#date_zone, #person1{
    width:60%;
+   margin-bottom: 30px;
 }
 
-#type_zone{
-   width:260px;
+#type_zone, #person2{
+   width: 60%;
+   	margin-bottom: 30px;
+}
+
+#person1 {
+	padding-right: 77px;
+	border-right: 1px dotted #444444;
+}
+
+#person1 label, #person2 label {
+	margin-bottom: 15px;
 }
 
 #reason_file{
    justify-content: space-between;
-   display: flex;
-   align-items: center;
    margin:0 auto;
 }
+
 #person_zone{
-   margin:0px auto;
+   margin: 60px 0px 0px 30px;
+   display: flex;
 }
 
 #startDate,#endDate {
@@ -161,15 +167,47 @@
 
 #leaveType{
    padding:10px 15px;
-   border-radius: 5px;
+/*    border-radius: 5px; */
    font-size: 16px;
    color: #333;
    border:1px solid #ccc;
 }
+
+#reason_file {
+	margin: 30px 0px 0px 30px;	
+	display: flex;
+}
+
+
+#reason_file label{
+	width: 80px;
+   display:inline-block;
+   font-size: 20px;
+}
+
+#cReason {
+   width: 100%;
+   height: 70px;
+   border:1px solid#848484;
+   margin: 0px 70px 0 22px;
+   padding: 10px;	
+   resize: none;
+}
+
+/*#reason_file end*/
+
 #file_zone{
-   width:260px;
+	margin: 30px 0px 0px 30px;	
+   width: 260px;
    display: flex;
    align-items: center;
+   justify-content: space-between;
+}
+
+#file_zone label{
+   display:inline-block;
+   font-size: 20px;
+    width:80px;
 }
 
 
@@ -186,24 +224,23 @@
 }
 
 
-
 #file_zone p{
    color: blue;
-   margin-top: 20px;
-   margin-left: 10px;
    font-size: 14px;
 }
 
-#fileBtn:hover{
-   background-color: #2980b9; 
+#fileBtn {
+	background-color: #ec5bc1;
 }
 
+#fileBtn:hover{
+   background-color: #b62a8c; 
+}
+ 
+/*#file_zone end*/
 
-#cReason{
-   margin:40px auto;
-   width: 100%;
-   height: 150px;
-   border:1px solid#848484;
+.ea_person {
+	width: 370px;
 }
 
 .ea_person select{
@@ -216,13 +253,21 @@
 }
 
 .ea_person button{
-   background-color:#3498db; 
+   background-color:#ec5bc1; 
    color:#fff;
    border:none;
    border-radius: 5px;
    cursor: pointer;
    transition: background-color 0.3s ease;
    padding: 12.5px 12px;
+}
+
+#addResult, #addResult2 {
+	margin-top: 30px;
+}
+
+#addResult p, #addResult2 p {
+	font-size: 20px;
 }
 
 #button_zone{
@@ -233,11 +278,11 @@
    margin-bottom: 20px;
 }
 
-#modiBtn {
+#modiBtn, #saveBtn, #backBtn {
    padding: 10px 25px;
    border: none;
    border-radius: 5px;
-   background-color:#FFC0CB;
+   background-color:#ffb0c8;
    color: #333;
    font-size: 16px;
    cursor: pointer;
@@ -246,19 +291,8 @@
 
   }
 
-#backBtn{
-   padding: 10px 25px;
-   border: none;
-   border-radius: 5px;
-   background-color:c0c0c0;
-   color: white;
-   font-size: 16px;
-   cursor: pointer;
-   transition: background-color 0.3s ease;
 
-}
-
-#modiBtn:hover{
+#modiBtn:hover,#saveBtn:hover, #backBtn:hover{
    background-color:#FF69B4;
    color: #FFF;
 }
@@ -267,27 +301,4 @@
    color:#ccaadd;
 }
 
-#backBtn:hover {
-    background-color: #969696; 
-    color:#000;; 
-}
 
-
-#saveBtn {
-   padding: 10px 10px;
-   border: none;
-   border-radius: 5px;
-   background-color:#ec5bc1;
-   color: #fff;
-   font-size: 16px;
-   cursor: pointer;
-   transition: background-color 0.3s ease;
-   margin-right:20px;
-
-  }
-
-
-  #saveBtn:hover{
-   background-color:#b62a8c;
-   color: #FFF;
-}

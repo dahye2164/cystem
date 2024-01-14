@@ -71,41 +71,41 @@
 				</div><!-- //#input_zone-->
 				<div id="reason_file">
 					<label>사유</label>
-					
-					<div id="file_zone">
-						<label>증빙서류</label>
-						<button type="button" id="fileBtn">파일첨부</button>
-						<p>파일명.hwp</p>
-					</div><!-- //#file_zone-->
-					
-				</div><!-- //#reason_file-->
 				<textarea name="cReason" id="cReason" placeholder="사유를 입력하고 제출 버튼을 눌러주세요. 제출 버튼 클릭시 결제 대기 상태로 변경됩니다."></textarea>
-			
+					</div><!-- //#reason_file-->
+					<div id="file_zone">
+								<label>증빙서류</label>
+								<button type="button" id="fileBtn">파일첨부</button>
+								<p>파일명.hwp</p>
+							</div><!-- //#file_zone-->
 				<div id="person_zone">
 					<div class="able_modify">
-						<label>결재자</label>
-						<div class="ea_person">
-							<select name="department" id="department">
-								<option value="전체" selected>전체</option>
-								<option value="1">기획부</option>
-								<option value="2">개발부</option>
-								<option value="3">영업부</option>
-								<option value="4">인사부</option>
-								<option value="5">총무부</option>
-							</select>
-							<select name="uName" id="uName">
-								<option value="전체" selected>전체</option>
-								<option value="오이사">오이사</option>
-								<option value="몰라">몰라</option>
-								<option value="몰라">몰라</option>
-								<option value="몰라">몰라</option>
-								<option value="몰라">몰라</option>
-							</select>
-							<button type="button" id="addEaBtn"><i class="xi-user-plus"></i></button>
-							<div id="addResult"></div>
-						</div><!-- //.ea_person-->
+						<div id="person1">
+							<label>결재자</label>
+							<div class="ea_person">
+								<select name="department" id="department">
+									<option value="전체" selected>전체</option>
+									<option value="1">기획부</option>
+									<option value="2">개발부</option>
+									<option value="3">영업부</option>
+									<option value="4">인사부</option>
+									<option value="5">총무부</option>
+								</select>
+								<select name="uName" id="uName">
+									<option value="전체" selected>전체</option>
+									<option value="오이사">오이사</option>
+									<option value="몰라">몰라</option>
+									<option value="몰라">몰라</option>
+									<option value="몰라">몰라</option>
+									<option value="몰라">몰라</option>
+								</select>
+								<button type="button" id="addEaBtn"><i class="xi-user-plus"></i></button>
+								<div id="addResult">사람 이름 들어가는 자리</div>
+							</div><!-- //.ea_person-->
+						</div><!-- //#person1 -->
 					</div><!-- //.able_modify-->
 					<div class="able_modify">
+						<div id="person2">
 						<label>참조자</label>
 						<div class="ea_person">
 							<select name="department2" id="department2">
@@ -125,8 +125,9 @@
 								<option value="몰라">몰라</option>
 							</select>
 							<button type="button" id="addEaBtn2"><i class="xi-user-plus"></i></button>
-							<div id="addResult2"></div>
-						</div><!-- //.ea_person-->
+							<div id="addResult2">사람 이름 들어가는 자리</div>
+							</div><!-- //.ea_person-->
+						</div><!-- //#person2 -->
 					</div><!-- //.able_modify-->
 				</div><!-- //#person_zone-->
 				
