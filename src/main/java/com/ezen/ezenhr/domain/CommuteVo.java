@@ -5,13 +5,19 @@ import java.time.LocalDateTime;
 public class CommuteVo {
 	private int cidx;
 	private LocalDateTime cInTime;
-	private LocalDateTime cInOutTime;
-	private String cInOrOut;
+	private LocalDateTime cOutTime;
 	private int uidx;
 	private int didx;
 	private String departmentName;
 	private String ctype;
+	private String actionType;
 	
+	public String getActionType() {
+		return actionType;
+	}
+	public void setActionType(String actionType) {
+		this.actionType = actionType;
+	}
 	public String getCtype() {
 		return ctype;
 	}
@@ -36,18 +42,14 @@ public class CommuteVo {
 	public void setcInTime(LocalDateTime cInTime) {
 		this.cInTime = cInTime;
 	}
-	public LocalDateTime getcInOutTime() {
-		return cInOutTime;
+	
+	public LocalDateTime getcOutTime() {
+		return cOutTime;
 	}
-	public void setcInOutTime(LocalDateTime cInOutTime) {
-		this.cInOutTime = cInOutTime;
+	public void setcOutTime(LocalDateTime cOutTime) {
+		this.cOutTime = cOutTime;
 	}
-	public String getcInOrOut() {
-		return cInOrOut;
-	}
-	public void setcInOrOut(String cInOrOut) {
-		this.cInOrOut = cInOrOut;
-	}
+	
 	
 	public int getUidx() {
 		return uidx;

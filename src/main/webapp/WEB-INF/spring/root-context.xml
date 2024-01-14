@@ -18,7 +18,7 @@
 	<!-- bean은 스프링한테 객체생성요청하게 담아놓은곳 -->	
 	<bean id="db" class="org.springframework.jdbc.datasource.DriverManagerDataSource" >
 	<property name="driverClassName" value="com.mysql.cj.jdbc.Driver" />
-	<property name="url" value="jdbc:mysql://silverwoods.synology.me:3306/beanchat?useSSL=false&amp;serverTimezone=UTC&amp;allowPublicKeyRetrieval=true" />
+	<property name="url" value="jdbc:mysql://silverwoods.synology.me:3306/beanchat?useSSL=false&amp;serverTimezone=Asia/Seoul&amp;allowPublicKeyRetrieval=true" />
 	<property name="username" value="beanchat" />
 	<property name="password" value="bORPmB)Ez8DeiBI0" />
 	</bean>

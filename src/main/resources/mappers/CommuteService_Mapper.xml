@@ -20,4 +20,21 @@
         SET cOutTime = now(), ctype = '퇴근'
         WHERE uidx = #{uidx} AND cOutTime IS NULL
     </update>
+    
+    <select id="getCommuteInfo" resultType="cv">
+    	SELECT cidx, cInTime, uidx, didx, cOutTime, ctype
+    	FROM CommuteTable
+    	WHERE uidx = #{uidx}
+    	ORDER BY cidx DESC
+    	LIMIT 1
+    </select>
+    
+    <select id="getCommuteList" parameterType="int" resultType="cv">
+    	SELECT *
+    	FROM CommuteTable
+    	WHERE uidx = #{uidx}
+    	ORDER BY cInTime;
+    </select>
+    
+    
 </mapper>

@@ -1,6 +1,7 @@
 package com.ezen.ezenhr.service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,19 @@ public class CommuteServiceImpl implements CommuteService {
 		int value = csm.saveSignOutTime(cv);
 		
 		return value;
+	}
+
+	@Override
+	public CommuteVo getCommuteInfo(int uidx) {
+		CommuteVo cv = csm.getCommuteInfo(uidx);
+		
+		return cv;
+	}
+
+	@Override
+	public List<CommuteVo> getCommuteList(int uidx) {
+		List<CommuteVo> commuteList = csm.getCommuteList(uidx);
+		return commuteList;
 	}
 
 	/*

@@ -1,6 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
+<%
+    java.util.Date now = new java.util.Date();
+    request.setAttribute("commuteInfo", now);
+%>
+
+<c:set var="formattedInTime" value="<fmt:formatDate value='${cv.cInTime}' pattern='yyyy-MM-dd HH:mm:ss' timeZone='Asia/Seoul' />" />
+<c:set var="formattedOutTime" value="<fmt:formatDate value='${cv.cOutTime}' pattern='yyyy-MM-dd HH:mm:ss' timeZone='Asia/Seoul' />" />
 
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <%@ page import="com.ezen.ezenhr.domain.UserVo" %>
@@ -38,28 +47,131 @@
 
     <script>
         $(document).ready(function () {
-            // FullCalendar 초기화
-            $('#api_zone').fullCalendar({
-                header: {
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'month,basicWeek,basicDay'
-                },
-                defaultView: 'month', // 기본으로 월 뷰로 설정
-                eventRender: function (event, element) {
-                    // 이벤트 렌더링을 위한 설정 (추후 서버에서 받아온 이벤트 데이터로 적절하게 설정)
-                },
-                locale: 'ko' // 한국어로 설정
-                // 추가적인 설정 및 서버에서 데이터를 받아와서 이벤트를 렌더링하는 로직을 작성할 수 있습니다.
-            });
+            // 페이지 로딩 시 출퇴근 정보를 미리 가져와서 FullCalendar 초기화
+            loadCommuteInfoAndInitializeCalendar();
+
+            // 출근 또는 퇴근 버튼 상태 업데이트 함수
+            function updateButtonState(isSignedIn) {
+                if (isSignedIn === 'true') {
+                    // 출근 중인 경우의 처리
+                    document.getElementById('signInBtn').style.display = 'none';
+                    document.getElementById('signOutBtn').style.display = 'inline-block';
+                    document.getElementById('signInBtn').disabled = true;
+                    document.getElementById('signOutBtn').disabled = false;
+                } else {
+                    // 퇴근 중 또는 정보가 없는 경우의 처리
+                    document.getElementById('signOutBtn').style.display = 'none';
+                    document.getElementById('signInBtn').style.display = 'inline-block';
+                    document.getElementById('signOutBtn').disabled = true;
+                    document.getElementById('signInBtn').disabled = false;
+                }
+            }
+
+            // 출근하기 버튼 클릭 시
+            function signIn() {
+                var isSignedIn = sessionStorage.getItem('isSignedIn');
+
+                // 이미 출근한 경우 처리
+                if (isSignedIn === 'true') {
+                    alert('이미 출근하셨습니다.');
+                    return;
+                }
+
+                // 출근 정보를 서버로 전송
+                $.ajax({
+                    url: "<%=request.getContextPath()%>/commute/signIn.do",
+                    type: 'POST',
+                    contentType: 'application/json',
+                    success: function(response) {
+                        // 서버에서의 응답에 따른 처리
+                        if (response.success) {
+                            sessionStorage.setItem('isSignedIn', 'true');
+                            updateButtonState('true');
+                        } else {
+                            alert('출근 정보 전송 실패');
+                        }
+                    },
+                    error: function() {
+                        alert('서버 오류');
+                    }
+                });
+            }
+
+            // 퇴근하기 버튼 클릭 시
+            function signOut() {
+                var isSignedIn = sessionStorage.getItem('isSignedIn');
+
+                if (isSignedIn !== 'true') {
+                    alert('아직 출근하지 않았습니다.');
+                    return;
+                }
+
+                // 퇴근 정보를 서버로 전송
+                $.ajax({
+                    url: "<%=request.getContextPath()%>/commute/signOut.do",
+                    type: 'POST',
+                    contentType: 'application/json',
+                    success: function(response) {
+                        // 서버에서의 응답에 따른 처리
+                        if (response.success) {
+                            sessionStorage.removeItem('isSignedIn');
+                            updateButtonState('false');
+                        } else {
+                            alert('퇴근 정보 전송 실패');
+                        }
+                    },
+                    error: function() {
+                        alert('서버 오류');
+                    }
+                });
+            }
 
             // 페이지 로딩 시 실행되는 부분
             var isSignedIn = sessionStorage.getItem('isSignedIn');
             updateButtonState(isSignedIn);
+
+            // 페이지 로딩 시 출퇴근 정보를 가져와서 FullCalendar 초기화
+            function loadCommuteInfoAndInitializeCalendar() {
+                // 서버에서 출퇴근 정보를 가져오는 요청
+                $.ajax({
+                    url: '${path}/commute/myCommuteEvents.do',
+                    method: 'GET',
+                    success: function (data) {
+                        // 서버에서 가져온 출퇴근 정보를 FullCalendar 이벤트로 변환
+                        // FullCalendar 이벤트 생성
+                        var events = data.map(function (commute) {
+                            return {
+                                title: commute.title, // 출근 또는 퇴근
+                                start: new Date(commute.start.year, commute.start.monthValue - 1, commute.start.dayOfMonth, commute.start.hour, commute.start.minute, commute.start.second), // 출근 시간
+                                end: new Date(commute.end.year, commute.end.monthValue - 1, commute.end.dayOfMonth, commute.end.hour, commute.end.minute, commute.end.second), // 퇴근 시간
+                                allDay: false
+                            };
+                        });
+
+                        // FullCalendar에 이벤트 추가
+                        $('#api_zone').fullCalendar({
+                            header: {
+                                left: 'prev,next today',
+                                center: 'title',
+                                right: 'month,basicWeek,basicDay'
+                            },
+                            defaultView: 'month', // 기본으로 월 뷰로 설정
+                            events: events, // 가져온 이벤트 데이터 설정
+                            locale: 'ko' // 한국어로 설정
+                        });
+                    },
+                    error: function () {
+                        alert('서버 오류');
+                    }
+                });
+            }
         });
 
         // 출근 또는 퇴근 버튼 상태 업데이트 함수
         function updateButtonState(isSignedIn) {
+            // 세션 스토리지에 출근 여부 저장
+            sessionStorage.setItem('isSignedIn', isSignedIn);
+
             if (isSignedIn === 'true') {
                 // 출근 중인 경우의 처리
                 document.getElementById('signInBtn').style.display = 'none';
@@ -220,6 +332,15 @@
 
 
     </div><!--//#main_zone-->
+    
+  <div id = "commuteInfo">
+    	<h3>출퇴근 정보</h3>
+    	 <p>
+          출근시각 :  ${cv.cInTime}<br>
+          퇴근시각 :  ${cv.cOutTime}
+        </p>
+    </div>
+    
 </main>
 
 <script>
