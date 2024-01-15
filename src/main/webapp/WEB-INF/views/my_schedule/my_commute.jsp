@@ -46,6 +46,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/locale/ko.js"></script>
 
     <script>
+    // 출퇴근 정보 수정 제출 버튼 클릭 시 
         $(document).ready(function () {
             // 페이지 로딩 시 출퇴근 정보를 미리 가져와서 FullCalendar 초기화
             loadCommuteInfoAndInitializeCalendar();
@@ -245,6 +246,49 @@
                 }
             });
         }
+        
+    
+    </script>
+    <script type="text/javascript">
+    
+    function check() {
+    	
+    	alert("modiBtn 클릭");
+        var modiform = document.commuteModifyForm;
+        // 출근/퇴근 구분 값 가져오기
+        var cInOrOut = document.getElementById('cInOrOut').value;
+        // 시간 입력란의 값 가져오기
+        var modifyTime = document.getElementById('modifyTime').value;
+        // 사유 입력란의 값 가져오기
+        var cReason = document.getElementById('cReason').value;
+
+        // 출근/퇴근 구분이 선택되었는지 확인
+        if (cInOrOut.trim() === "") {
+            alert("출근 또는 퇴근을 선택해주세요.");
+            return false;
+        }
+
+        // 시간 입력란의 값이 비어있는지 확인
+        if (modifyTime.trim() === "") {
+            alert("시간을 설정해주세요.");
+            return false;
+        }
+
+        // 사유 입력란의 값이 비어있는지 확인
+        if (cReason.trim() === "") {
+            alert("사유를 입력해주세요.");
+            return false;
+        }
+
+        // 다른 유효성 검사 또는 처리 로직을 추가할 수 있습니다.
+
+        // 유효성 검사 통과 시 폼 제출
+        modiform.action = "<%=request.getContextPath()%>/commute/commuteUpdateAction.do";
+        modiform.method = "post";
+        modiform.submit();
+
+        return;
+    }
     </script>
 </head>
 <body>
@@ -294,14 +338,24 @@
 
         </div><!-- //#api_zone-->
         <div id="commute_modify_form">
-            <form name="frm">
+            <form name="commuteModifyForm">
                 <h2>출퇴근 시간 수정</h2>
 
                 <div id="input_zone">
                     <div class="able_modify">
-                        <label>근무시간</label>
-                        <input type="time" name="inTime" /><span> ~ </span><input type="time"
-                                                                                     name="outTime" />
+                        <label>현재 근무날짜</label>
+							<p id="currentDate"></p>
+							
+							<!-- JavaScript 코드 -->
+							<script>
+							    // JavaScript를 사용하여 현재 날짜를 가져오고 p 태그에 추가
+							    var currentDate = new Date();
+							    var options = { year: 'numeric', month: 'long', day: 'numeric' };
+							    var formattedDate = currentDate.toLocaleDateString('ko-KR', options);
+							
+							    // HTML에 해당 ID를 가진 요소에 날짜 추가
+							    document.getElementById('currentDate').innerText = formattedDate;
+							</script>
                     </div><!-- //.able_modify-->
                     <div class="able_modify">
                         <label>출근/퇴근 구분</label>
@@ -324,7 +378,7 @@
 
                     <!-- 퇴근하기 버튼 (최초에는 숨겨둠) -->
                     <button type="button" id="signOutBtn" style="display:none;" onclick="signOut()">퇴근하기</button>
-                    <button type="submit" id="modiBtn">제출</button>
+                    <input type="button" id="modiBtn" value="제출" onclick="check();" >
                     <button type="button" id="backBtn" onclick="history.back">취소</button>
                 </div><!-- //#button_zone-->
             </form>

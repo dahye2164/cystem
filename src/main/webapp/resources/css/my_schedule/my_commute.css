@@ -165,9 +165,13 @@ main {
 	margin-top: 30px;
 }
 
-#commute_modify_form input, select, span {
+#commute_modify_form input, select, span, p {
 	float: right;
 	margin-left: 10px;
+}
+
+#commute_modify_form p {
+	font-size : 18px;
 }
 
 #commute_modify_form select {
