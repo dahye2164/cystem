@@ -252,7 +252,7 @@
    border:1px solid #ccc;
 }
 
-#addEaBtn,#addRefEaBtn{
+#addEaBtn,#addRefEaBtn, #addEaBtn2{
    background-color:#ec5bc1; 
    color:#fff;
    border:none;
@@ -262,7 +262,7 @@
    padding: 12.5px 12px;
 }
 
-#addResult, #addRefResult {
+#addResult, #addRefResult, #addResult2 {
 	margin-top: 30px;
 }
 

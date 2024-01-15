@@ -83,7 +83,7 @@
 						<div id="person1">
 							<label>1차결재자</label>
 							<div class="ea_person">
-								<select id="departmentSelect1" onchange="loadUserName('userNameSelect1')">
+								<select id="departmentSelect1" onchange="loadFirstApproverName()">
 									<option value="" selected>전체</option>
 									<option value="1">기획부</option>
 									<option value="2">개발부</option>
@@ -103,7 +103,7 @@
 						<div id="person2">
 							<label>2차결재자</label>
 							<div class="ea_person">
-								 <select id="departmentSelect2" onchange="loadUserName('userNameSelect2')">
+								 <select id="departmentSelect2" onchange="loadSecondApproverName()">
 				                    <option value="" selected>전체</option>
 				                    <option value="1">기획부</option>
 				                    <option value="2">개발부</option>
@@ -159,38 +159,61 @@
 		
 		
 		<script>
-		$(document).ready(function () {
-		    // 처음에 페이지 로드될 때 두 번째 셀렉트박스에 전체 사원이름을 추가
-		    loadAllUsers();
-		});
 		
-
+		 // didx를 부서명으로 변환하는 함수
+	    function getDepartmentNameByDidx(didx) {
+	        switch (didx) {
+	            case 1:
+	                return "기획부";
+	            case 2:
+	                return "개발부";
+	            case 3:
+	                return "영업부";
+	            case 4:
+	                return "인사부";
+	            case 5:
+	                return "총무부";
+	            default:
+	                return "";
+	        }
+	    }
 		
 		// 두 번째 셀렉트박스에 전체 사원이름을 추가하는 함수
 		function loadAllUsers() {
-		    // 서버에서 전체 사용자 목록을 가져오는 AJAX 요청
-		    $.ajax({
-		        type: "GET",
-		        url: "<%=request.getContextPath()%>/user/userAllSelect.do",  
-		        success: function (data) {
-		            // 받아온 데이터를 이용하여 두 번째 셀렉트 옵션 업데이트
-		            var  userNameSelect1 = $("#userNameSelect1");
-		            userNameSelect1.empty(); // 기존 옵션 제거
-					var refUserNameSelect = $("#refUserNameSelect");
-					refUserNameSelect.empty();
-		            
-		            // 데이터를 이용하여 옵션 추가
-		            for (var i = 0; i < data.length; i++) {
-		            	userNameSelect1.append("<option value='" + data[i].uidx + "'>" + data[i].uName + "</option>");
-		            	refUserNameSelect.append("<option value='" + data[i].uidx + "'>" + data[i].uName + "</option>");
-		            	
-		            }
-		        },
-		        error: function () {
-		            console.error("Failed to load all users");
-		        }
-		    });
-		}
+    // 서버에서 전체 사용자 목록을 가져오는 AJAX 요청
+    $.ajax({
+        type: "GET",
+        url: "<%=request.getContextPath()%>/user/userAllSelect.do",
+        success: function (data) {
+            // 받아온 데이터를 이용하여 두 번째 셀렉트 옵션 업데이트
+            var userNameSelect1 = $("#userNameSelect1");
+            userNameSelect1.empty(); // 기존 옵션 제거
+            var userNameSelect2 = $("#userNameSelect2");
+            userNameSelect2.empty(); // 기존 옵션 제거
+            var refUserNameSelect = $("#refUserNameSelect");
+            refUserNameSelect.empty();
+
+            // 데이터를 이용하여 옵션 추가
+            for (var i = 0; i < data.length; i++) {
+                var option = $("<option>")
+                    .val(data[i].uidx)
+                    .text(data[i].uName)
+                    .data("user-info", data[i]); // 사용자 정보 저장
+                userNameSelect1.append(option);
+
+                // "전체"가 선택된 경우 두 번째 셀렉트에는 모든 사용자를 추가
+                if ($("#departmentSelect2").val() !== "all") {
+                    userNameSelect2.append(option.clone()); // 복제해서 두 번째 셀렉트에 추가
+                }
+
+                refUserNameSelect.append(option.clone()); // 복제해서 참조 셀렉트에 추가
+            }
+        },
+        error: function () {
+            console.error("Failed to load all users");
+        }
+    });
+}
 
 		 // 사용자 목록을 저장할 배열
 	    var selectedUsers = [];
@@ -198,9 +221,8 @@
 	    var selectedUser1; // 1차 결재자
 	    var selectedUser2; // 2차 결재자
 		
-	    function loadUserName() {
+	    function loadFirstApproverName(){
 	        var didx = $("#departmentSelect1").val();
-	        console.log(didx);
 	        if (!didx) {
 	            // "전체"가 선택되었을 때 loadAllUsers 호출
 	            loadAllUsers();
@@ -218,9 +240,12 @@
 	              
 	                // 데이터를 이용하여 옵션 추가
 	                for (var i = 0; i < data.length; i++) {
-	                	userNameSelect1.append("<option value='" + data[i].uidx + "'>" + data[i].uName + "</option>");
+	                    var option = $("<option>")
+	                        .val(data[i].uidx)
+	                        .text(data[i].uName)
+	                        .data("user-info", data[i]); // 사용자 정보 저장
+	                    userNameSelect1.append(option);
 	                }
-	                
 	            },
 	            error: function () {
 	                console.error("Failed to load employees");
@@ -229,30 +254,32 @@
 	    }
 	    
 	    $("#departmentSelect1").change(function () {
-	    	 loadUserName();
+	    	 loadFirstApproverName();
 	    });
 	    
 	
 
 	    function addSelectedUser() {
-	        var selectedUserId = $("#userNameSelect1").val();
+	        var selectedUserId1 = $("#userNameSelect1").val();
 
 	        // 사용자를 선택하지 않은 경우
-	        if (!selectedUserId) {
+	        if (!selectedUserId1) {
 	            alert("선택해주세요.");
 	            return;
 	        }
 
-	        var selectedUserName = $("#userNameSelect1 option:selected").text();
+	        var selectedUser1Info = $("#userNameSelect1 option:selected").data("user-info");
+
+	        console.log("Selected User Info:", selectedUser1Info); // 디버깅을 위해 출력
 
 	        // 이미 선택된 사용자인지 확인
 	        if (!selectedUser1) {
 	            // 새로운 사용자 추가
 	            selectedUser1 = {
-	                userId: selectedUserId,
-	                userName: selectedUserName,
-	                department: $("#departmentSelect1 option:selected").text(),
-	                uidx: selectedUserId
+	                userId: selectedUserId1,
+	                userName: selectedUser1Info.uName,
+	                uidx: selectedUserId1,
+	                department: getDepartmentNameByDidx(selectedUser1Info.didx)
 	            };
 
 	            // 사용자 목록 갱신
@@ -277,7 +304,7 @@
 	            // 삭제 버튼 추가
 	            var deleteButton = $('<button>').text('삭제').click(function () {
 	                // 삭제 함수 호출
-	                removeSelectedUser();
+	                removeSelectedUser1();
 	            });
 
 	            // userContainer에 uidx 값 추가
@@ -291,7 +318,7 @@
 	        }
 	    }
 
-	    function removeSelectedUser() {
+	    function removeSelectedUser1() {
 	        // 선택된 사용자 초기화
 	        selectedUser1 = null;
 
@@ -304,31 +331,17 @@
 	        addSelectedUser();
 	    });
 
-	    // 초기화
-	    function initialize() {
-	        // 선택된 사용자 초기화
-	        selectedUser1 = null;
 
-	        // 사용자 목록 초기화
-	        displaySelectedUser();
-	    }
-
-	    // 페이지 로드 시 초기화
-	    $(document).ready(function () {
-	        initialize();
-	    });
-	   
+	    //-------------------------------2차결재자------------------------------------------------
 	    
 	    
-	    
-	    function loadUserName() {
-	        var didx = $("#departmentSelect2").val();
-	        console.log(didx);
-	        if (!didx) {
-	            // "전체"가 선택되었을 때 loadAllUsers 호출
-	            loadAllUsers();
-	            return;
-	        }
+	    	function loadSecondApproverName() {
+	    	    var didx = $("#departmentSelect2").val();
+	    	    if (!didx) {
+	    	        // "전체"가 선택되었을 때 loadAllUsers 호출
+	    	        loadAllUsers("#userNameSelect2");
+	    	        return;
+	    	    }
 	
 	        $.ajax({
 	            type: "GET",
@@ -339,11 +352,13 @@
 	                userNameSelect2.empty(); // 기존 옵션 제거
 	
 	              
-	                // 데이터를 이용하여 옵션 추가
 	                for (var i = 0; i < data.length; i++) {
-	                	userNameSelect2.append("<option value='" + data[i].uidx + "'>" + data[i].uName + "</option>");
+	                    var option = $("<option>")
+	                        .val(data[i].uidx)
+	                        .text(data[i].uName)
+	                        .data("user-info", data[i]); // 사용자 정보 저장
+	                    userNameSelect2.append(option);
 	                }
-	                
 	            },
 	            error: function () {
 	                console.error("Failed to load employees");
@@ -352,43 +367,47 @@
 	    }
 	    
 	    $("#departmentSelect2").change(function () {
-	    	 loadUserName();
+	    	 loadSecondApproverName();
 	    });
 	    
-	
 
-	    function addSelectedUser() {
-	        var selectedUserId = $("#userNameSelect2").val();
 
+	    function addSelectedUser2() {
+	        var selectedOption = $("#userNameSelect2 option:selected");
+	        
 	        // 사용자를 선택하지 않은 경우
-	        if (!selectedUserId) {
+	        if (!selectedOption.val()) {
 	            alert("선택해주세요.");
 	            return;
 	        }
 
-	        var selectedUserName = $("#userNameSelect2 option:selected").text();
+	        console.log("Selected Option:", selectedOption);
+
+	        var selectedUser2Info = selectedOption.data("user-info");
+
+	        console.log("Selected User Info:", selectedUser2Info);
 
 	        // 이미 선택된 사용자인지 확인
 	        if (!selectedUser2) {
 	            // 새로운 사용자 추가
 	            selectedUser2 = {
-	                userId: selectedUserId,
-	                userName: selectedUserName,
-	                department: $("#departmentSelect2 option:selected").text(),
-	                uidx: selectedUserId
+	                userId: selectedUser2Info.uId,
+	                userName: selectedUser2Info.uName,
+	                uidx: selectedUser2Info.uidx,
+	                department: selectedUser2Info.didx
 	            };
 
 	            // 사용자 목록 갱신
-	            displaySelectedUser();
+	            displaySelectedUser2();
 	        } else {
 	            // 이미 선택된 사용자일 경우 알림
 	            alert("이미 선택된 사용자가 있습니다.");
 	        }
 	    }
 
-	    function displaySelectedUser() {
-	        var addResult = $("#addResult2");
-	        addResult.empty(); // 기존 사용자 목록 제거
+	    function displaySelectedUser2() {
+	        var addResult2 = $("#addResult2");
+	        addResult2.empty(); // 기존 사용자 목록 제거
 
 	        // 선택된 사용자 목록을 addResult에 추가
 	        if (selectedUser2) {
@@ -410,7 +429,7 @@
 	            userContainer.append(userText).append(deleteButton);
 
 	            // 사용자 컨테이너를 addResult에 추가
-	            addResult.append(userContainer);
+	            addResult2.append(userContainer);
 	        }
 	    }
 
@@ -419,27 +438,37 @@
 	        selectedUser2 = null;
 
 	        // 사용자 목록 갱신
-	        displaySelectedUser();
+	        displaySelectedUser2();
 	    }
 
 	    // 이벤트 핸들러 등록
 	    $("#addEaBtn2").click(function () {
-	        addSelectedUser();
+	        addSelectedUser2();
 	    });
 
 	    // 초기화
 	    function initialize() {
 	        // 선택된 사용자 초기화
-	        selectedUser2 = null;
+	        selectedUser1 = null;
 
 	        // 사용자 목록 초기화
 	        displaySelectedUser();
+	        
+	        selectedUser2 = null;
+
+	        // 사용자 목록 초기화
+	        displaySelectedUser2();
 	    }
 
 	    // 페이지 로드 시 초기화
 	    $(document).ready(function () {
+	    	  // 처음에 페이지 로드될 때 두 번째 셀렉트박스에 전체 사원이름을 추가
+		    loadAllUsers();
 	        initialize();
 	    });
+	   
+
+
 	    
 	    
 	    
