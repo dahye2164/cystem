@@ -1,5 +1,7 @@
 package com.ezen.ezenhr.service;
 
+import java.util.List;
+
 import com.ezen.ezenhr.domain.UserVo;
 
 public interface UserService {
@@ -17,4 +19,8 @@ public interface UserService {
 	public String getDepartmentName(int didx);
 	
 	public int getUserDepartmentId(int uidx);
+	
+	public List<UserVo> getUidxByDidx(int didx);
+	
+	public List<UserVo> getAllUsers();
 }

@@ -38,5 +38,16 @@ select * FROM UserTable where uidx = #{uidx}
         FROM UserTable
         WHERE uidx = #{uidx}
     </select>
+    
+<select id="getUidxByDidx" resultType="uv">
+	SELECT *
+	FROM UserTable
+	WHERE didx = #{didx}
+</select>
+
+<select id="getAllUsers" resultType="uv">
+        SELECT *
+        FROM UserTable
+</select>
 
 </mapper>

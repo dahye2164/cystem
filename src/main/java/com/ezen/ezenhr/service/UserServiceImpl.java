@@ -1,6 +1,7 @@
 package com.ezen.ezenhr.service;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,5 +77,17 @@ public class UserServiceImpl implements UserService {
 		value = usm.getUserDepartmentId(uidx);
 		
 		return value;
+	}
+
+	@Override
+	public List<UserVo> getUidxByDidx(int didx) {
+		
+		return usm.getUidxByDidx(didx);
+	}
+
+	@Override
+	public List<UserVo> getAllUsers() {
+		// TODO Auto-generated method stub
+		return usm.getAllUsers();
 	}
 }

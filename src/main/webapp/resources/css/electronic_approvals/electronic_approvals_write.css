@@ -252,7 +252,7 @@
    border:1px solid #ccc;
 }
 
-.ea_person button{
+#addEaBtn,#addRefEaBtn{
    background-color:#ec5bc1; 
    color:#fff;
    border:none;
@@ -262,13 +262,35 @@
    padding: 12.5px 12px;
 }
 
-#addResult, #addResult2 {
+#addResult, #addRefResult {
 	margin-top: 30px;
 }
 
+.user-container button{
+	margin-left:20px;
+	background-color:red; 
+   color:#fff;
+   border:none;
+   border-radius: 5px;
+   cursor: pointer;
+   transition: background-color 0.3s ease;
+   padding: 0 6px;
+}
+
+.user-container{
+	margin-top:10px;
+	font-size:20px;
+	display:flex;
+	width:200px;
+	float:right;
+	justify-content: flex-end;
+	margin-right:100px;
+}
 #addResult p, #addResult2 p {
 	font-size: 20px;
 }
+
+
 
 #button_zone{
    display: flex;

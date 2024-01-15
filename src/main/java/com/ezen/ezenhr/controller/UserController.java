@@ -2,6 +2,7 @@ package com.ezen.ezenhr.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -119,6 +120,30 @@ public class UserController {
 		
 		return str;
 	}
+	
+	
+	@RequestMapping(value = "/userAllSelect.do", method = RequestMethod.GET)
+    @ResponseBody
+    public List<UserVo>userAllSelect() {
+		
+        return us.getAllUsers();
+    }
+	
+	
+   @RequestMapping(value = "/userDepartmentSelect", method = RequestMethod.GET)
+    @ResponseBody
+    public List<UserVo> getUserByDepartment(@RequestParam int didx) {
+	   if (didx == 0) {
+           // didx가 null이면 모든 사용자를 가져옴
+           return us.getAllUsers();
+       } else {
+           // didx에 해당하는 부서의 사용자 목록을 가져옴
+           return us.getUidxByDidx(didx);
+       }
+   }
+	
+
+	    
 	
 	
 }

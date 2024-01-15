@@ -81,51 +81,61 @@
 				<div id="person_zone">
 					<div class="able_modify">
 						<div id="person1">
-							<label>결재자</label>
+							<label>1차결재자</label>
 							<div class="ea_person">
-								<select name="department" id="department">
-									<option value="전체" selected>전체</option>
+								<select id="departmentSelect1" onchange="loadUserName('userNameSelect1')">
+									<option value="" selected>전체</option>
 									<option value="1">기획부</option>
 									<option value="2">개발부</option>
 									<option value="3">영업부</option>
 									<option value="4">인사부</option>
 									<option value="5">총무부</option>
 								</select>
-								<select name="uName" id="uName">
+								<select id="userNameSelect1">
 									<option value="전체" selected>전체</option>
-									<option value="오이사">오이사</option>
-									<option value="몰라">몰라</option>
-									<option value="몰라">몰라</option>
-									<option value="몰라">몰라</option>
-									<option value="몰라">몰라</option>
 								</select>
 								<button type="button" id="addEaBtn"><i class="xi-user-plus"></i></button>
-								<div id="addResult">사람 이름 들어가는 자리</div>
+								<div id="addResult"></div>
 							</div><!-- //.ea_person-->
 						</div><!-- //#person1 -->
 					</div><!-- //.able_modify-->
 					<div class="able_modify">
 						<div id="person2">
+							<label>2차결재자</label>
+							<div class="ea_person">
+								 <select id="departmentSelect2" onchange="loadUserName('userNameSelect2')">
+				                    <option value="" selected>전체</option>
+				                    <option value="1">기획부</option>
+				                    <option value="2">개발부</option>
+				                    <option value="3">영업부</option>
+				                    <option value="4">인사부</option>
+				                    <option value="5">총무부</option>
+				                </select>
+				                <select id="userNameSelect2">
+				                    <option value="전체" selected>전체</option>
+				                </select>
+				                <button type="button" id="addEaBtn2"><i class="xi-user-plus"></i></button>
+				                <div id="addResult2"></div>
+							</div><!-- //.ea_person-->
+						</div><!-- //#person2 -->
+					</div><!-- //.able_modify-->
+					<div class="able_modify">
+						<div id="person3">
 						<label>참조자</label>
 						<div class="ea_person">
-							<select name="department2" id="department2">
-								<option value="전체" selected>전체</option>
+							<select id="refDepartmentSelect" onchange="loadRefUserName()">
+								<option value="" selected>전체</option>
 								<option value="1">기획부</option>
 								<option value="2">개발부</option>
 								<option value="3">영업부</option>
 								<option value="4">인사부</option>
 								<option value="5">총무부</option>
 							</select>
-							<select name="uName2" id="uName2">
-								<option value="전체" selected>전체</option>
-								<option value="오이사">오이사</option>
-								<option value="몰라">몰라</option>
-								<option value="몰라">몰라</option>
-								<option value="몰라">몰라</option>
-								<option value="몰라">몰라</option>
+							<select id="refUserNameSelect">
+								<option value="" selected>전체</option>
 							</select>
-							<button type="button" id="addEaBtn2"><i class="xi-user-plus"></i></button>
-							<div id="addResult2">사람 이름 들어가는 자리</div>
+							<button type="button" id="addRefEaBtn"><i class="xi-user-plus"></i></button>
+							<div id="addRefResult"></div>
 							</div><!-- //.ea_person-->
 						</div><!-- //#person2 -->
 					</div><!-- //.able_modify-->
@@ -149,33 +159,441 @@
 		
 		
 		<script>
-		  function updateUsers() {
-		    var departmentSelect = document.getElementById("department");
-		    var userSelect = document.getElementById("uName");
-		    var selectedDepartment = departmentSelect.value;
+		$(document).ready(function () {
+		    // 처음에 페이지 로드될 때 두 번째 셀렉트박스에 전체 사원이름을 추가
+		    loadAllUsers();
+		});
 		
-		    // 기존의 옵션 제거
-		    while (userSelect.options.length > 1) {
-		      userSelect.remove(1);
-		    }
+
 		
-		    // 선택된 부서의 사용자 목록을 서버에서 가져오기
-		  	fetch(`/getUsersForDepartment?department=${selectedDepartment}`)
-		      .then(response => response.json())
-		      .then(users => {
-		        // 새로운 사용자 목록으로 옵션 추가
-		        for (var i = 0; i < users.length; i++) {
-		          var option = document.createElement("option");
-		          option.value = users[i].value;
-		          option.text = users[i].text;
-		          userSelect.add(option);
+		// 두 번째 셀렉트박스에 전체 사원이름을 추가하는 함수
+		function loadAllUsers() {
+		    // 서버에서 전체 사용자 목록을 가져오는 AJAX 요청
+		    $.ajax({
+		        type: "GET",
+		        url: "<%=request.getContextPath()%>/user/userAllSelect.do",  
+		        success: function (data) {
+		            // 받아온 데이터를 이용하여 두 번째 셀렉트 옵션 업데이트
+		            var  userNameSelect1 = $("#userNameSelect1");
+		            userNameSelect1.empty(); // 기존 옵션 제거
+					var refUserNameSelect = $("#refUserNameSelect");
+					refUserNameSelect.empty();
+		            
+		            // 데이터를 이용하여 옵션 추가
+		            for (var i = 0; i < data.length; i++) {
+		            	userNameSelect1.append("<option value='" + data[i].uidx + "'>" + data[i].uName + "</option>");
+		            	refUserNameSelect.append("<option value='" + data[i].uidx + "'>" + data[i].uName + "</option>");
+		            	
+		            }
+		        },
+		        error: function () {
+		            console.error("Failed to load all users");
 		        }
-		      })
-		      .catch(error => {
-		        console.error("Error fetching user data:", error);
-		      });
-		  }
-		</script>
+		    });
+		}
+
+		 // 사용자 목록을 저장할 배열
+	    var selectedUsers = [];
+		 
+	    var selectedUser1; // 1차 결재자
+	    var selectedUser2; // 2차 결재자
+		
+	    function loadUserName() {
+	        var didx = $("#departmentSelect1").val();
+	        console.log(didx);
+	        if (!didx) {
+	            // "전체"가 선택되었을 때 loadAllUsers 호출
+	            loadAllUsers();
+	            return;
+	        }
+	
+	        $.ajax({
+	            type: "GET",
+	            url: "<%=request.getContextPath()%>/user/userDepartmentSelect?didx=" + didx,
+	            success: function (data) {
+	                // 받아온 데이터를 이용하여 두 번째 셀렉트 옵션 업데이트
+	                var userNameSelect1 = $("#userNameSelect1");
+	                userNameSelect1.empty(); // 기존 옵션 제거
+	
+	              
+	                // 데이터를 이용하여 옵션 추가
+	                for (var i = 0; i < data.length; i++) {
+	                	userNameSelect1.append("<option value='" + data[i].uidx + "'>" + data[i].uName + "</option>");
+	                }
+	                
+	            },
+	            error: function () {
+	                console.error("Failed to load employees");
+	            }
+	        });
+	    }
+	    
+	    $("#departmentSelect1").change(function () {
+	    	 loadUserName();
+	    });
+	    
+	
+
+	    function addSelectedUser() {
+	        var selectedUserId = $("#userNameSelect1").val();
+
+	        // 사용자를 선택하지 않은 경우
+	        if (!selectedUserId) {
+	            alert("선택해주세요.");
+	            return;
+	        }
+
+	        var selectedUserName = $("#userNameSelect1 option:selected").text();
+
+	        // 이미 선택된 사용자인지 확인
+	        if (!selectedUser1) {
+	            // 새로운 사용자 추가
+	            selectedUser1 = {
+	                userId: selectedUserId,
+	                userName: selectedUserName,
+	                department: $("#departmentSelect1 option:selected").text(),
+	                uidx: selectedUserId
+	            };
+
+	            // 사용자 목록 갱신
+	            displaySelectedUser();
+	        } else {
+	            // 이미 선택된 사용자일 경우 알림
+	            alert("이미 선택된 사용자가 있습니다.");
+	        }
+	    }
+
+	    function displaySelectedUser() {
+	        var addResult = $("#addResult");
+	        addResult.empty(); // 기존 사용자 목록 제거
+
+	        // 선택된 사용자 목록을 addResult에 추가
+	        if (selectedUser1) {
+	            var userContainer = $('<div>').addClass('user-container');
+
+	            // 사용자 정보 텍스트 추가
+	            var userText = $('<div>').text(selectedUser1.department + ' ' + selectedUser1.userName);
+
+	            // 삭제 버튼 추가
+	            var deleteButton = $('<button>').text('삭제').click(function () {
+	                // 삭제 함수 호출
+	                removeSelectedUser();
+	            });
+
+	            // userContainer에 uidx 값 추가
+	            userContainer.data('uidx', selectedUser1.uidx);
+
+	            // 사용자 정보와 삭제 버튼을 사용자 컨테이너에 추가
+	            userContainer.append(userText).append(deleteButton);
+
+	            // 사용자 컨테이너를 addResult에 추가
+	            addResult.append(userContainer);
+	        }
+	    }
+
+	    function removeSelectedUser() {
+	        // 선택된 사용자 초기화
+	        selectedUser1 = null;
+
+	        // 사용자 목록 갱신
+	        displaySelectedUser();
+	    }
+
+	    // 이벤트 핸들러 등록
+	    $("#addEaBtn").click(function () {
+	        addSelectedUser();
+	    });
+
+	    // 초기화
+	    function initialize() {
+	        // 선택된 사용자 초기화
+	        selectedUser1 = null;
+
+	        // 사용자 목록 초기화
+	        displaySelectedUser();
+	    }
+
+	    // 페이지 로드 시 초기화
+	    $(document).ready(function () {
+	        initialize();
+	    });
+	   
+	    
+	    
+	    
+	    function loadUserName() {
+	        var didx = $("#departmentSelect2").val();
+	        console.log(didx);
+	        if (!didx) {
+	            // "전체"가 선택되었을 때 loadAllUsers 호출
+	            loadAllUsers();
+	            return;
+	        }
+	
+	        $.ajax({
+	            type: "GET",
+	            url: "<%=request.getContextPath()%>/user/userDepartmentSelect?didx=" + didx,
+	            success: function (data) {
+	                // 받아온 데이터를 이용하여 두 번째 셀렉트 옵션 업데이트
+	                var userNameSelect2 = $("#userNameSelect2");
+	                userNameSelect2.empty(); // 기존 옵션 제거
+	
+	              
+	                // 데이터를 이용하여 옵션 추가
+	                for (var i = 0; i < data.length; i++) {
+	                	userNameSelect2.append("<option value='" + data[i].uidx + "'>" + data[i].uName + "</option>");
+	                }
+	                
+	            },
+	            error: function () {
+	                console.error("Failed to load employees");
+	            }
+	        });
+	    }
+	    
+	    $("#departmentSelect2").change(function () {
+	    	 loadUserName();
+	    });
+	    
+	
+
+	    function addSelectedUser() {
+	        var selectedUserId = $("#userNameSelect2").val();
+
+	        // 사용자를 선택하지 않은 경우
+	        if (!selectedUserId) {
+	            alert("선택해주세요.");
+	            return;
+	        }
+
+	        var selectedUserName = $("#userNameSelect2 option:selected").text();
+
+	        // 이미 선택된 사용자인지 확인
+	        if (!selectedUser2) {
+	            // 새로운 사용자 추가
+	            selectedUser2 = {
+	                userId: selectedUserId,
+	                userName: selectedUserName,
+	                department: $("#departmentSelect2 option:selected").text(),
+	                uidx: selectedUserId
+	            };
+
+	            // 사용자 목록 갱신
+	            displaySelectedUser();
+	        } else {
+	            // 이미 선택된 사용자일 경우 알림
+	            alert("이미 선택된 사용자가 있습니다.");
+	        }
+	    }
+
+	    function displaySelectedUser() {
+	        var addResult = $("#addResult2");
+	        addResult.empty(); // 기존 사용자 목록 제거
+
+	        // 선택된 사용자 목록을 addResult에 추가
+	        if (selectedUser2) {
+	            var userContainer = $('<div>').addClass('user-container');
+
+	            // 사용자 정보 텍스트 추가
+	            var userText = $('<div>').text(selectedUser2.department + ' ' + selectedUser2.userName);
+
+	            // 삭제 버튼 추가
+	            var deleteButton = $('<button>').text('삭제').click(function () {
+	                // 삭제 함수 호출
+	                removeSelectedUser();
+	            });
+
+	            // userContainer에 uidx 값 추가
+	            userContainer.data('uidx', selectedUser2.uidx);
+
+	            // 사용자 정보와 삭제 버튼을 사용자 컨테이너에 추가
+	            userContainer.append(userText).append(deleteButton);
+
+	            // 사용자 컨테이너를 addResult에 추가
+	            addResult.append(userContainer);
+	        }
+	    }
+
+	    function removeSelectedUser() {
+	        // 선택된 사용자 초기화
+	        selectedUser2 = null;
+
+	        // 사용자 목록 갱신
+	        displaySelectedUser();
+	    }
+
+	    // 이벤트 핸들러 등록
+	    $("#addEaBtn2").click(function () {
+	        addSelectedUser();
+	    });
+
+	    // 초기화
+	    function initialize() {
+	        // 선택된 사용자 초기화
+	        selectedUser2 = null;
+
+	        // 사용자 목록 초기화
+	        displaySelectedUser();
+	    }
+
+	    // 페이지 로드 시 초기화
+	    $(document).ready(function () {
+	        initialize();
+	    });
+	    
+	    
+	    
+	    //-----------참조자-------------
+	    function loadRefUserName() {
+	    var refDidx = $("#refDepartmentSelect").val();
+	    if (!refDidx) {
+	        // "전체"가 선택되었을 때 loadAllUsers 호출
+	        loadAllUsers();
+	        return;
+	    }
+	
+	    $.ajax({
+	        type: "GET",
+	        url: "<%=request.getContextPath()%>/user/userDepartmentSelect?didx=" + refDidx,
+	        success: function (data) {
+	            // 받아온 데이터를 이용하여 두 번째 셀렉트 옵션 업데이트
+	            var refUserNameSelect = $("#refUserNameSelect");
+	            refUserNameSelect.empty(); // 기존 옵션 제거
+	
+	            // 데이터를 이용하여 옵션 추가
+	            for (var i = 0; i < data.length; i++) {
+	                refUserNameSelect.append("<option value='" + data[i].uidx + "'>" + data[i].uName + "</option>");
+	            }
+	        },
+	        error: function () {
+	            console.error("Failed to load reference users");
+	        }
+	    });
+	}
+	
+	$("#refDepartmentSelect").change(function () {
+	    loadRefUserName();
+	});
+	
+	var selectedRefUsers = [];
+	
+	function addSelectedRefUser() {
+	    var selectedRefUserId = $("#refUserNameSelect").val();
+	
+	    // 사용자를 선택하지 않은 경우
+	    if (!selectedRefUserId) {
+	        alert("선택해주세요.");
+	        return;
+	    }
+	
+	    var selectedRefUserName = $("#refUserNameSelect option:selected").text();
+	
+	    // 이미 선택된 사용자인지 확인
+	    var isAlreadySelected = selectedRefUsers.some(function (user) {
+	        return user.userId === selectedRefUserId && user.uidx === selectedRefUserId;
+	    });
+	
+	    // 중복 선택 방지
+	    if (!isAlreadySelected) {
+	        // 새로운 사용자 추가
+	        selectedRefUsers.push({
+	            userId: selectedRefUserId,
+	            userName: selectedRefUserName,
+	            department: $("#refDepartmentSelect option:selected").text(),
+	            uidx: selectedRefUserId // 여기에 uidx 추가
+	        });
+	
+	        // 사용자 목록 갱신
+	        displaySelectedRefUsers();
+	    } else {
+	        // 이미 선택된 사용자일 경우 알림
+	        alert("이미 선택된 사용자입니다.");
+	    }
+	}
+	
+	function displaySelectedRefUsers() {
+	    var addRefResult = $("#addRefResult");
+	    addRefResult.empty(); // 기존 사용자 목록 제거
+	
+	    // 선택된 사용자 목록을 addRefResult에 추가
+	    for (var i = 0; i < selectedRefUsers.length; i++) {
+	        var userContainer = $('<div>').addClass('user-container');
+	
+	        // 사용자 정보 텍스트 추가
+	        var userText = $('<div>').text(selectedRefUsers[i].department + ' ' + selectedRefUsers[i].userName);
+	
+	        // 삭제 버튼 추가
+	        var deleteButton = $('<button>').text('삭제').click(function() {
+	            // 클릭한 버튼이 속한 사용자 컨테이너
+	            var userContainer = $(this).closest('.user-container');
+	
+	            // 삭제 함수 호출
+	            removeSelectedRefUser(userContainer);
+	        });
+	
+	        // userContainer에 uidx 값 추가
+	        userContainer.data('uidx', selectedRefUsers[i].uidx);
+	
+	        // 사용자 정보와 삭제 버튼을 사용자 컨테이너에 추가
+	        userContainer.append(userText).append(deleteButton);
+	
+	        // 사용자 컨테이너를 addRefResult에 추가
+	        addRefResult.append(userContainer);
+	    }
+	}
+	
+	function removeSelectedRefUser(userContainer) {
+	    // 삭제 버튼을 클릭한 사용자의 uidx 값 가져오기
+	    var uidxToRemove = userContainer.data('uidx');
+	
+	    // 선택된 사용자 목록에서 해당 사용자 제거
+	    selectedRefUsers = selectedRefUsers.filter(function(user) {
+	        return user.userId !== uidxToRemove;
+	    });
+	
+	    // 사용자 목록 갱신
+	    displaySelectedRefUsers();
+	}
+	
+	// 이벤트 핸들러 등록
+	$("#addRefEaBtn").click(function () {
+	    addSelectedRefUser();
+	});
+	    
+	</script>
+	
+	<script>
+	$("#modiBtn").click(function () {
+	    // 전송할 데이터 준비
+	    var data = {
+	        startDate: $("#startDate").val(),
+	        endDate: $("#endDate").val(),
+	        leaveType: $("#leaveType").val(),
+	        cReason: $("#cReason").val(),
+	        selectedUsers: selectedUsers, // 결재자 정보
+	        selectedRefUsers: selectedRefUsers // 참조자 정보
+	    };
+
+	    // 서버로 전송
+	    $.ajax({
+	        type: "POST",
+	        url: "<%=request.getContextPath()%>/ea/submitElectronicApproval.do",
+	        contentType: "application/json;charset=UTF-8",
+	        data: JSON.stringify(data),
+	        success: function (response) {
+	            if (response.success) {
+	                alert("전자결재가 제출되었습니다.");
+	                // 성공적으로 제출되면 페이지 이동 등을 처리할 수 있습니다.
+	            } else {
+	                alert("전자결재 제출에 실패했습니다.");
+	            }
+	        },
+	        error: function () {
+	            console.error("Failed to submit electronic approval");
+	        }
+	    });
+	});
+	</script>
 	</main>
 </body>
 </html>
