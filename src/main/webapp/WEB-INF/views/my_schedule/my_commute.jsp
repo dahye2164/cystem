@@ -265,18 +265,21 @@
         // 출근/퇴근 구분이 선택되었는지 확인
         if (cInOrOut.trim() === "") {
             alert("출근 또는 퇴근을 선택해주세요.");
+            modiform.cInOrOut.focus();
             return false;
         }
 
         // 시간 입력란의 값이 비어있는지 확인
         if (modifyTime.trim() === "") {
             alert("시간을 설정해주세요.");
+            modiform.modifyTime.focus();
             return false;
         }
 
         // 사유 입력란의 값이 비어있는지 확인
         if (cReason.trim() === "") {
             alert("사유를 입력해주세요.");
+            modiform.cReason.focus();
             return false;
         }
 
@@ -359,14 +362,14 @@
                     </div><!-- //.able_modify-->
                     <div class="able_modify">
                         <label>출근/퇴근 구분</label>
-                        <select name="cInOrOut">
+                        <select id ="cInOrOut" name="cInOrOut">
                             <option value="출근" selected>출근</option>
                             <option value="퇴근">퇴근</option>
                         </select>
                     </div><!-- //.able_modify-->
                     <div class="able_modify">
                         <label>시간</label>
-                        <input type="time" name="modifyTime" />
+                        <input type="time" id="modifyTime" name="modifyTime" />
                     </div><!-- //.able_modify-->
                 </div><!-- //#input_zone-->
                 <div id="modify_reason">
