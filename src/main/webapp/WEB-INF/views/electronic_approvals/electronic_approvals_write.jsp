@@ -188,25 +188,16 @@
             // 받아온 데이터를 이용하여 두 번째 셀렉트 옵션 업데이트
             var userNameSelect1 = $("#userNameSelect1");
             userNameSelect1.empty(); // 기존 옵션 제거
-            var userNameSelect2 = $("#userNameSelect2");
-            userNameSelect2.empty(); // 기존 옵션 제거
-            var refUserNameSelect = $("#refUserNameSelect");
-            refUserNameSelect.empty();
 
-            // 데이터를 이용하여 옵션 추가
+         // 데이터를 이용하여 옵션 추가
             for (var i = 0; i < data.length; i++) {
                 var option = $("<option>")
                     .val(data[i].uidx)
                     .text(data[i].uName)
                     .data("user-info", data[i]); // 사용자 정보 저장
+
                 userNameSelect1.append(option);
-
-                // "전체"가 선택된 경우 두 번째 셀렉트에는 모든 사용자를 추가
-                if ($("#departmentSelect2").val() !== "all") {
-                    userNameSelect2.append(option.clone()); // 복제해서 두 번째 셀렉트에 추가
-                }
-
-                refUserNameSelect.append(option.clone()); // 복제해서 참조 셀렉트에 추가
+                
             }
         },
         error: function () {
@@ -215,6 +206,65 @@
     });
 }
 
+		// 두 번째 셀렉트박스에 전체 사원이름을 추가하는 함수
+		function loadAllUsers2() {
+    // 서버에서 전체 사용자 목록을 가져오는 AJAX 요청
+    $.ajax({
+        type: "GET",
+        url: "<%=request.getContextPath()%>/user/userAllSelect.do",
+        success: function (data) {
+            // 받아온 데이터를 이용하여 두 번째 셀렉트 옵션 업데이트
+
+            var userNameSelect2 = $("#userNameSelect2");
+            userNameSelect2.empty(); // 기존 옵션 제거
+
+         // 데이터를 이용하여 옵션 추가
+            for (var i = 0; i < data.length; i++) {
+                var option = $("<option>")
+                    .val(data[i].uidx)
+                    .text(data[i].uName)
+                    .data("user-info", data[i]); // 사용자 정보 저장
+
+  
+
+                // "전체"가 선택된 경우 두 번째 셀렉트와 참조 셀렉트에는 모든 사용자를 추가
+                userNameSelect2.append(option);
+
+                
+            }
+        },
+        error: function () {
+            console.error("Failed to load all users");
+        }
+    });
+}
+		// 두 번째 셀렉트박스에 전체 사원이름을 추가하는 함수
+		function loadAllUsers3() {
+    // 서버에서 전체 사용자 목록을 가져오는 AJAX 요청
+    $.ajax({
+        type: "GET",
+        url: "<%=request.getContextPath()%>/user/userAllSelect.do",
+        success: function (data) {
+
+            var refUserNameSelect = $("#refUserNameSelect");
+            refUserNameSelect.empty();
+         // 데이터를 이용하여 옵션 추가
+            for (var i = 0; i < data.length; i++) {
+                var option = $("<option>")
+                    .val(data[i].uidx)
+                    .text(data[i].uName)
+                    .data("user-info", data[i]); // 사용자 정보 저장
+
+
+                refUserNameSelect.append(option);
+
+            }
+        },
+        error: function () {
+            console.error("Failed to load all users");
+        }
+    });
+}
 		 // 사용자 목록을 저장할 배열
 	    var selectedUsers = [];
 		 
@@ -276,7 +326,6 @@
 	        if (!selectedUser1) {
 	            // 새로운 사용자 추가
 	            selectedUser1 = {
-	                userId: selectedUserId1,
 	                userName: selectedUser1Info.uName,
 	                uidx: selectedUserId1,
 	                department: getDepartmentNameByDidx(selectedUser1Info.didx)
@@ -336,12 +385,12 @@
 	    
 	    
 	    	function loadSecondApproverName() {
-	    	    var didx = $("#departmentSelect2").val();
-	    	    if (!didx) {
-	    	        // "전체"가 선택되었을 때 loadAllUsers 호출
-	    	        loadAllUsers("#userNameSelect2");
-	    	        return;
-	    	    }
+	    		   var didx = $("#departmentSelect2").val();
+	   	        if (!didx) {
+	   	            // "전체"가 선택되었을 때 loadAllUsers 호출
+	   	            loadAllUsers2();
+	   	            return;
+	   	        }
 	
 	        $.ajax({
 	            type: "GET",
@@ -358,6 +407,7 @@
 	                        .text(data[i].uName)
 	                        .data("user-info", data[i]); // 사용자 정보 저장
 	                    userNameSelect2.append(option);
+	                    console.log("User Info for " + data[i].uName + ":", data[i]);
 	                }
 	            },
 	            error: function () {
@@ -373,28 +423,26 @@
 
 
 	    function addSelectedUser2() {
-	        var selectedOption = $("#userNameSelect2 option:selected");
-	        
+	    	var selectedUserId2 = $("#userNameSelect2").val();
+
 	        // 사용자를 선택하지 않은 경우
-	        if (!selectedOption.val()) {
+	        if (!selectedUserId2) {
 	            alert("선택해주세요.");
 	            return;
 	        }
 
-	        console.log("Selected Option:", selectedOption);
+	        
+	        var selectedUser2Info = $("#userNameSelect2 option:selected").data("user-info");
 
-	        var selectedUser2Info = selectedOption.data("user-info");
+	        console.log("Selected User Info:", selectedUser2Info); // 디버깅을 위해 출력
 
-	        console.log("Selected User Info:", selectedUser2Info);
-
-	        // 이미 선택된 사용자인지 확인
+	     // 이미 선택된 사용자인지 확인
 	        if (!selectedUser2) {
 	            // 새로운 사용자 추가
 	            selectedUser2 = {
-	                userId: selectedUser2Info.uId,
 	                userName: selectedUser2Info.uName,
-	                uidx: selectedUser2Info.uidx,
-	                department: selectedUser2Info.didx
+	                uidx: selectedUserId2,
+	                department: getDepartmentNameByDidx(selectedUser2Info.didx)
 	            };
 
 	            // 사용자 목록 갱신
@@ -404,6 +452,7 @@
 	            alert("이미 선택된 사용자가 있습니다.");
 	        }
 	    }
+
 
 	    function displaySelectedUser2() {
 	        var addResult2 = $("#addResult2");
@@ -460,24 +509,19 @@
 	        displaySelectedUser2();
 	    }
 
-	    // 페이지 로드 시 초기화
-	    $(document).ready(function () {
-	    	  // 처음에 페이지 로드될 때 두 번째 셀렉트박스에 전체 사원이름을 추가
-		    loadAllUsers();
-	        initialize();
-	    });
+	   
 	   
 
 
 	    
 	    
 	    
-	    //-----------참조자-------------
+	    //----------------------------------참조자-----------------------------
 	    function loadRefUserName() {
 	    var refDidx = $("#refDepartmentSelect").val();
 	    if (!refDidx) {
 	        // "전체"가 선택되었을 때 loadAllUsers 호출
-	        loadAllUsers();
+	        loadAllUsers3();
 	        return;
 	    }
 	
@@ -486,14 +530,18 @@
 	        url: "<%=request.getContextPath()%>/user/userDepartmentSelect?didx=" + refDidx,
 	        success: function (data) {
 	            // 받아온 데이터를 이용하여 두 번째 셀렉트 옵션 업데이트
-	            var refUserNameSelect = $("#refUserNameSelect");
-	            refUserNameSelect.empty(); // 기존 옵션 제거
-	
-	            // 데이터를 이용하여 옵션 추가
-	            for (var i = 0; i < data.length; i++) {
-	                refUserNameSelect.append("<option value='" + data[i].uidx + "'>" + data[i].uName + "</option>");
-	            }
-	        },
+	        	  var refUserNameSelect = $("#refUserNameSelect");
+	              refUserNameSelect.empty();
+
+	              for (var i = 0; i < data.length; i++) {
+	                  var option = $("<option>")
+	                      .val(data[i].uidx)
+	                      .text(data[i].uName)
+	                      .data("user-info", data[i]); // 사용자 정보 저장
+	                  refUserNameSelect.append(option);
+	                  console.log("User Info for " + data[i].uName + ":", data[i]);
+	              }
+	          },
 	        error: function () {
 	            console.error("Failed to load reference users");
 	        }
@@ -515,6 +563,8 @@
 	        return;
 	    }
 	
+	    var selectedRefUserInfo = $("#refUserNameSelect option:selected").data("user-info");
+	    console.log("Selected User Info for refUserNameSelect:", selectedRefUserInfo);
 	    var selectedRefUserName = $("#refUserNameSelect option:selected").text();
 	
 	    // 이미 선택된 사용자인지 확인
@@ -528,7 +578,7 @@
 	        selectedRefUsers.push({
 	            userId: selectedRefUserId,
 	            userName: selectedRefUserName,
-	            department: $("#refDepartmentSelect option:selected").text(),
+	            department: getDepartmentNameByDidx(selectedRefUserInfo.didx),
 	            uidx: selectedRefUserId // 여기에 uidx 추가
 	        });
 	
@@ -589,6 +639,19 @@
 	    addSelectedRefUser();
 	});
 	    
+	 // 페이지 로드 시 초기화
+    $(document).ready(function () {
+    	  // 처음에 페이지 로드될 때 두 번째 셀렉트박스에 전체 사원이름을 추가
+	    loadAllUsers();
+	    loadAllUsers2();
+	    loadAllUsers3();
+        initialize();
+        
+     // 제출 버튼 클릭 시 이벤트 처리
+        $("#modiBtn").click(function () {
+            submitForm();
+        });
+    });
 	</script>
 	
 	<script>
@@ -622,6 +685,64 @@
 	        }
 	    });
 	});
+	
+	function submitForm() {
+	    // 각 입력 폼에서 데이터 수집
+	    var startDate = $("#startDate").val();
+	    var endDate = $("#endDate").val();
+	    var leaveType = $("#leaveType").val();
+	    var cReason = $("#cReason").val();
+	    // 파일 첨부 관련 코드도 추가해야 함
+
+	    // 선택된 결재자 및 참조자 목록 수집
+	    var approvalUsers = [];
+	    if (selectedUser1) {
+	        approvalUsers.push({
+	            uidx: selectedUser1.uidx,
+	            department: selectedUser1.department,
+	            userName: selectedUser1.userName,
+	            type: "first_approver"
+	        });
+	    }
+	    if (selectedUser2) {
+	        approvalUsers.push({
+	            uidx: selectedUser2.uidx,
+	            department: selectedUser2.department,
+	            userName: selectedUser2.userName,
+	            type: "second_approver"
+	        });
+	    }
+	    // 참조자 목록도 추가해야 함
+	    for (var i = 0; i < selectedRefUsers.length; i++) {
+	        approvalUsers.push({
+	            uidx: selectedRefUsers[i].uidx,
+	            department: selectedRefUsers[i].department,
+	            userName: selectedRefUsers[i].userName,
+	            type: "reference"
+	        });
+	    }
+
+	    // AJAX를 사용하여 서버에 데이터 전송
+	    $.ajax({
+	        type: "POST",
+	        url: "<%=request.getContextPath()%>/submitFormData", // 적절한 서버 URL로 변경
+	        data: {
+	            startDate: startDate,
+	            endDate: endDate,
+	            leaveType: leaveType,
+	            cReason: cReason,
+	            approvalUsers: JSON.stringify(approvalUsers)
+	        },
+	        success: function (response) {
+	            // 성공적으로 전송되었을 때의 처리
+	            console.log("Form submitted successfully:", response);
+	        },
+	        error: function () {
+	            // 전송 실패 시의 처리
+	            console.error("Failed to submit form data");
+	        }
+	    });
+	}
 	</script>
 	</main>
 </body>
