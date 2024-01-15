@@ -24,6 +24,11 @@
 <link rel="stylesheet" href="${path }/resources/css/reset.css" />
 <link rel="stylesheet"
 	href="${path }/resources/css/electronic_approvals/electronic_approvals_write.css" />
+	<!-- SweetAlert2 CSS -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.2/dist/sweetalert2.min.css">
+	
+	<!-- SweetAlert2 JS -->
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.2/dist/sweetalert2.all.min.js"></script>
 <title>새전자결재</title>
 </head>
 <body>
@@ -314,7 +319,13 @@
 
 	        // 사용자를 선택하지 않은 경우
 	        if (!selectedUserId1) {
-	            alert("선택해주세요.");
+	        	Swal.fire({
+	                title: "선택 오류",
+	                text: "사용자를 선택해주세요.",
+	                icon: 'error',
+	                showConfirmButton: false,
+	                timer: 1500
+	            });
 	            return;
 	        }
 
@@ -335,7 +346,13 @@
 	            displaySelectedUser();
 	        } else {
 	            // 이미 선택된 사용자일 경우 알림
-	            alert("이미 선택된 사용자가 있습니다.");
+	        	 Swal.fire({
+	        	        title: "선택 완료",
+	        	        text: "이미 선택된 사용자가 있습니다.",
+	        	        icon: 'info',
+	        	        showConfirmButton: false,
+	        	        timer: 1500
+	        	    });
 	        }
 	    }
 
@@ -427,7 +444,13 @@
 
 	        // 사용자를 선택하지 않은 경우
 	        if (!selectedUserId2) {
-	            alert("선택해주세요.");
+	        	 Swal.fire({
+	        	        title: "선택 오류",
+	        	        text: "사용자를 선택해주세요.",
+	        	        icon: 'error',
+	        	        showConfirmButton: false,
+	        	        timer: 1500
+	        	    });
 	            return;
 	        }
 
@@ -449,7 +472,13 @@
 	            displaySelectedUser2();
 	        } else {
 	            // 이미 선택된 사용자일 경우 알림
-	            alert("이미 선택된 사용자가 있습니다.");
+	        	Swal.fire({
+	                title: "선택 완료",
+	                text: "이미 선택된 사용자가 있습니다.",
+	                icon: 'info',
+	                showConfirmButton: false,
+	                timer: 1500
+	            });
 	        }
 	    }
 
@@ -559,7 +588,13 @@
 	
 	    // 사용자를 선택하지 않은 경우
 	    if (!selectedRefUserId) {
-	        alert("선택해주세요.");
+	    	 Swal.fire({
+	    	        title: "선택 오류",
+	    	        text: "사용자를 선택해주세요.",
+	    	        icon: 'error',
+	    	        showConfirmButton: false,
+	    	        timer: 1500
+	    	    });
 	        return;
 	    }
 	
@@ -586,7 +621,13 @@
 	        displaySelectedRefUsers();
 	    } else {
 	        // 이미 선택된 사용자일 경우 알림
-	        alert("이미 선택된 사용자입니다.");
+	    	Swal.fire({
+	            title: "선택 완료",
+	            text: "이미 선택된 사용자입니다.",
+	            icon: 'info',
+	            showConfirmButton: false,
+	            timer: 1500
+	        });
 	    }
 	}
 	
@@ -674,10 +715,22 @@
 	        data: JSON.stringify(data),
 	        success: function (response) {
 	            if (response.success) {
-	                alert("전자결재가 제출되었습니다.");
+	            	 Swal.fire({
+	            	        title: "전자결재 제출 성공",
+	            	        text: "전자결재가 제출되었습니다.",
+	            	        icon: 'success',
+	            	        showConfirmButton: false,
+	            	        timer: 1500
+	            	    });
 	                // 성공적으로 제출되면 페이지 이동 등을 처리할 수 있습니다.
 	            } else {
-	                alert("전자결재 제출에 실패했습니다.");
+	            	Swal.fire({
+	                    title: "전자결재 제출 실패",
+	                    text: "전자결재 제출에 실패했습니다.",
+	                    icon: 'error',
+	                    showConfirmButton: false,
+	                    timer: 1500
+	                });
 	            }
 	        },
 	        error: function () {

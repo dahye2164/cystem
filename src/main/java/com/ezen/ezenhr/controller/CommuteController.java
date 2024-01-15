@@ -1,6 +1,8 @@
 package com.ezen.ezenhr.controller;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ezen.ezenhr.domain.CommuteVo;
@@ -186,4 +189,62 @@ public class CommuteController {
 
         return events;
     }
+    
+    @RequestMapping(value = "/commuteUpdateAction.do", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> commuteUpdateAction(@RequestParam("cInOrOut") String cInOrOut,
+                                                  @RequestParam("modifyTime") String modifyTime,
+                                                  @RequestParam("cReason") String cReason,
+                                                  HttpSession session) {
+        Map<String, Object> result = new HashMap<>();
+
+        try {
+            int uidx = (Integer) session.getAttribute("uidx");
+            int didx = us.getUserDepartmentId(uidx);
+            String departmentName = us.getDepartmentName(didx);
+
+            LocalDate currentDate = LocalDate.now();
+            LocalDateTime modifiedTime = LocalDateTime.of(currentDate, LocalTime.parse(modifyTime));
+
+            CommuteVo cv = new CommuteVo();
+            cv.setUidx(uidx);
+            cv.setDidx(didx);
+            cv.setDepartmentName(departmentName);
+
+            if ("출근".equals(cInOrOut)) {
+                cv.setcInTime(modifiedTime);
+                cv.setCtype("출근");
+            } else if ("퇴근".equals(cInOrOut)) {
+                cv.setcOutTime(modifiedTime);
+                cv.setCtype("퇴근");
+            } else {
+                result.put("success", false);
+                result.put("message", "올바르지 않은 출퇴근 구분 값입니다.");
+                return result;
+            }
+
+            if (cReason != null && !cReason.trim().isEmpty()) {
+                cv.setcReason(cReason);
+            }
+
+            int value = cs.updateCommuteTime(cv);
+
+            if (value > 0) {
+                result.put("success", true);
+                // 여기서 페이지 이동 키를 "redirectURL"로 설정
+                result.put("redirectURL", "/ezenhr/commute/myCommute.do");
+                result.put("message", "결재 대기 상태로 변경되었습니다.");
+            } else {
+                result.put("success", false);
+                result.put("message", "출퇴근 정보 수정 실패");
+            }
+        } catch (Exception e) {
+            result.put("success", false);
+            result.put("message", e.getMessage());
+        }
+
+        return result;
+    }
+    
+    
 }

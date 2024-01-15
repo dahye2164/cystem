@@ -49,6 +49,19 @@ public class CommuteServiceImpl implements CommuteService {
 		return commuteList;
 	}
 
+	@Override
+	public int updateCommuteTime(CommuteVo cv) {
+	    // 출근 또는 퇴근에 따라 업데이트할 컬럼 선택
+	    if ("출근".equals(cv.getCtype())) {
+	        return csm.updateSignInTime(cv);
+	    } else if ("퇴근".equals(cv.getCtype())) {
+	        return csm.updateSignOutTime(cv);
+	    } else {
+	        // 다른 경우에 대한 처리 (예: 예외 발생 또는 에러 코드 반환)
+	        return -1;
+	    }
+	}
+
 	/*
 	 * @Override public int saveCommuteInfo(CommuteInfoVo civ) { int value2 =
 	 * csm.saveCommuteInfo(civ);

@@ -18,6 +18,12 @@
         <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
         <!--swiper plugin connect-->
         <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+        
+		 <!-- SweetAlert2 CSS -->
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.2/dist/sweetalert2.min.css">
+		
+		<!-- SweetAlert2 JS -->
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.2/dist/sweetalert2.all.min.js"></script>
         <title>Ezen HR</title>
 
         <script type="text/javascript">
@@ -28,60 +34,136 @@
             var fm = document.signupForm;
 
             if (fm.uId.value == "") {
-                alert("아이디를 입력하세요");
+                Swal.fire({
+                    title: "아이디 입력",
+                    text: "아이디를 입력하세요",
+                    icon: 'warning',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
                 fm.uId.focus();
                 return;
             } else if (fm.uPwd.value == "") {
-                alert("비밀번호를 입력해주세요");
+                Swal.fire({
+                    title: "비밀번호 입력",
+                    text: "비밀번호를 입력해주세요",
+                    icon: 'warning',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
                 fm.uPwd.focus();
                 return;
             } else if (fm.uPwdConfirm.value == "") {
-                alert("비밀번호 확인을 입력해주세요");
+                Swal.fire({
+                    title: "비밀번호 확인",
+                    text: "비밀번호 확인을 입력해주세요",
+                    icon: 'warning',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
                 fm.uPwdConfirm.focus();
                 return;
             } else if (fm.uPwd.value != fm.uPwdConfirm.value) {
-                alert("비밀번호가 일치하지 않습니다.");
+                Swal.fire({
+                    title: "비밀번호 불일치",
+                    text: "비밀번호가 일치하지 않습니다.",
+                    icon: 'warning',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
                 fm.uPwd.value = "";
                 fm.uPwdConfirm.value = "";
                 fm.uPwd.focus();
                 return;
             } else if (fm.uName.value == "") {
-                alert("사용자 이름을 입력해주세요");
+                Swal.fire({
+                    title: "이름 입력",
+                    text: "사용자 이름을 입력해주세요",
+                    icon: 'warning',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
                 fm.uName.focus();
                 return;
             } else if (fm.uGrade.selectedIndex === 0) {
-                alert("직급을 선택하세요");
+                Swal.fire({
+                    title: "직급 선택",
+                    text: "직급을 선택하세요",
+                    icon: 'warning',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
                 fm.uGrade.focus();
                 return;
             } else if (fm.didx.selectedIndex === 0) {
-                alert("부서를 선택하세요");
+                Swal.fire({
+                    title: "부서 선택",
+                    text: "부서를 선택하세요",
+                    icon: 'warning',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
                 fm.didx.focus();
                 return;
             } else if (fm.uHireDate.value == "") {
-                alert("입사일을 입력해주세요");
+                Swal.fire({
+                    title: "입사일 입력",
+                    text: "입사일을 입력해주세요",
+                    icon: 'warning',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
                 fm.uHireDate.focus();
                 return;
             } else if (fm.uPhone.value == "") {
-                alert("핸드폰 번호를 입력해주세요");
+                Swal.fire({
+                    title: "핸드폰번호 입력",
+                    text: "핸드폰 번호를 입력해주세요",
+                    icon: 'warning',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
                 fm.uPhone.focus();
                 return;
             }
 
             // 아이디 중복 체크
             if (checkDupl() != true) {
-            	alert("아이디 중복체크를 해주세요.");
+            	 Swal.fire({
+            	        title: "아이디 중복 체크",
+            	        text: "아이디 중복 체크를 해주세요.",
+            	        icon: 'warning',
+            	        showConfirmButton: false,
+            	        timer: 1500
+            	    });
             	obj = fm.uId.value();
             	var flag = blurId(obj);
             	if (flag == false) {
-            		alert("");
+            		 Swal.fire({
+            	            title: "",
+            	            text: "메시지 내용을 입력하세요.", // 적절한 메시지로 변경
+            	            icon: 'warning',
+            	            showConfirmButton: false,
+            	            timer: 1500
+            	        });
             		return;
             	}
             }
 
-            alert("회원가입이 완료 되었습니다. 로그인 해주세요!");
-            fm.action = "<%=request.getContextPath()%>/user/userJoinAction.do";
-            fm.method = "post";
-            fm.submit();
+            Swal.fire({
+                title: "회원가입 완료",
+                text: "회원가입이 완료되었습니다. 로그인 해주세요!",
+                icon: 'success',
+                showConfirmButton: false,
+                timer: 2500
+            });
+
+            // 3초 후에 페이지 이동
+            setTimeout(function () {
+                fm.action = "<%=request.getContextPath()%>/user/userJoinAction.do";
+                fm.method = "post";
+                fm.submit();
+            }, 2500);
             
             return;
         }
@@ -93,28 +175,60 @@
             var uId = $("#uId").val();
             console.log(uId);
 
-              $.ajax({
-                    type: "post",
-                    url: "<%=request.getContextPath()%>/user/userIdCheck.do",
-                    data: {uId: uId},
-                    dataType: "json",  // 데이터 타입을 JSON으로 명시
-                    success : function(data) {
-                    	console.log(data + "<---data 값"); // 데이터 출력
-                    	if(uId != "") {
-                    		if(data.value == "1") { // data.value로 json형식의 값에대해 접근했음 - 건
-                    			alert("사용중인 아이디 입니다.");
-                    			validationFlag = false;
-                    			validationIdval = "";
-                    		} else {
-                    			alert("사용 가능한 아이디 입니다.");
-                    			validationFlag = true;
-                    			validationIdval = uId;
-                    		}
-                    	} else {
-                    		alert("아이디는 공백일 수 없습니다");
-                    	}
+            $.ajax({
+                type: "post",
+                url: "<%=request.getContextPath()%>/user/userIdCheck.do",
+                data: { uId: uId },
+                dataType: "json",
+                success: function (data) {
+                    console.log(data + "<---data 값");
+
+                    if (uId != "") {
+                        if (data.value == "1") {
+                            // 사용중인 아이디 입니다. 메시지를 SweetAlert2로 변경
+                            Swal.fire({
+                                title: "사용중인 아이디",
+                                text: "사용중인 아이디입니다.",
+                                icon: 'error',
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                            validationFlag = false;
+                            validationIdval = "";
+                        } else {
+                            // 사용 가능한 아이디 입니다. 메시지를 SweetAlert2로 변경
+                            Swal.fire({
+                                title: "사용 가능한 아이디",
+                                text: "사용 가능한 아이디입니다.",
+                                icon: 'success',
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                            validationFlag = true;
+                            validationIdval = uId;
+                        }
+                    } else {
+                        // 아이디는 공백일 수 없습니다 메시지를 SweetAlert2로 변경
+                        Swal.fire({
+                            title: "공백 에러",
+                            text: "아이디는 공백일 수 없습니다.",
+                            icon: 'error',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
                     }
-                });
+                },
+                error: function () {
+                    // 서버 오류 메시지를 SweetAlert2로 변경
+                    Swal.fire({
+                        title: "서버 오류",
+                        text: "서버 오류가 발생했습니다.",
+                        icon: 'error',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                }
+            });
         }
        
       

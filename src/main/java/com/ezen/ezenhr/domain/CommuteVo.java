@@ -10,6 +10,14 @@ public class CommuteVo {
 	private int didx;
 	private String departmentName;
 	private String ctype;
+	private String cReason;
+	
+	public String getcReason() {
+		return cReason;
+	}
+	public void setcReason(String cReason) {
+		this.cReason = cReason;
+	}
 	private String actionType;
 	
 	public String getActionType() {

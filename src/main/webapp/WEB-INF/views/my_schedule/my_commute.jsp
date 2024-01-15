@@ -3,6 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
+
+
 <%
     java.util.Date now = new java.util.Date();
     request.setAttribute("commuteInfo", now);
@@ -38,6 +40,12 @@
 
     <!-- FullCalendar CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css" />
+    
+	    <!-- SweetAlert2 CSS -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.2/dist/sweetalert2.min.css">
+	
+	<!-- SweetAlert2 JS -->
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.2/dist/sweetalert2.all.min.js"></script>
 
     <!-- FullCalendar JavaScript 및 의존성 라이브러리(moment) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
@@ -252,45 +260,63 @@
     <script type="text/javascript">
     
     function check() {
-    	
-    	alert("modiBtn 클릭");
+
         var modiform = document.commuteModifyForm;
-        // 출근/퇴근 구분 값 가져오기
         var cInOrOut = document.getElementById('cInOrOut').value;
-        // 시간 입력란의 값 가져오기
         var modifyTime = document.getElementById('modifyTime').value;
-        // 사유 입력란의 값 가져오기
         var cReason = document.getElementById('cReason').value;
 
-        // 출근/퇴근 구분이 선택되었는지 확인
         if (cInOrOut.trim() === "") {
-            alert("출근 또는 퇴근을 선택해주세요.");
+            Swal.fire('출근 또는 퇴근을 선택해주세요.', '', 'warning');
             modiform.cInOrOut.focus();
             return false;
         }
 
-        // 시간 입력란의 값이 비어있는지 확인
         if (modifyTime.trim() === "") {
-            alert("시간을 설정해주세요.");
+            Swal.fire('시간을 설정해주세요.', '', 'warning');
             modiform.modifyTime.focus();
             return false;
         }
 
-        // 사유 입력란의 값이 비어있는지 확인
         if (cReason.trim() === "") {
-            alert("사유를 입력해주세요.");
+            Swal.fire('사유를 입력해주세요.', '', 'warning');
             modiform.cReason.focus();
             return false;
         }
 
-        // 다른 유효성 검사 또는 처리 로직을 추가할 수 있습니다.
-
-        // 유효성 검사 통과 시 폼 제출
         modiform.action = "<%=request.getContextPath()%>/commute/commuteUpdateAction.do";
         modiform.method = "post";
-        modiform.submit();
 
-        return;
+        // 폼을 직접 서브밋하지 않고 AJAX로 서버에 요청
+        $.ajax({
+            type: modiform.method,
+            url: modiform.action,
+            data: $(modiform).serialize(),
+            success: function (data) {
+                if (data.success) {
+                    // SweetAlert2로 메시지 표시
+                    Swal.fire({
+                        title: data.message,
+                        icon: 'success',
+                        timer: 1500
+                    }).then(function () {
+                        // "redirectURL" 키가 존재하면 해당 URL로 페이지 이동
+                        if (data.redirectURL) {
+                            window.location.href = data.redirectURL;
+                        }
+                    });
+                } else {
+                    // SweetAlert2로 에러 메시지 표시
+                    Swal.fire('에러: ' + data.message, '', 'error');
+                }
+            },
+            error: function () {
+                // SweetAlert2로 서버 오류 메시지 표시
+                Swal.fire('서버 오류', '', 'error');
+            }
+        });
+
+        return false;
     }
     </script>
 </head>

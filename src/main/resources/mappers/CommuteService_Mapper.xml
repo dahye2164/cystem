@@ -36,5 +36,21 @@
     	ORDER BY cInTime;
     </select>
     
+    <!-- 출근 시간 업데이트 -->
+    <update id="updateSignInTime" parameterType="cv">
+        UPDATE CommuteTable
+        SET cInTime = #{cInTime},
+            cReason = #{cReason}
+        WHERE uidx = #{uidx}
+    </update>
+
+    <!-- 퇴근 시간 업데이트 -->
+    <update id="updateSignOutTime" parameterType="cv">
+        UPDATE CommuteTable
+        SET cOutTime = #{cOutTime},
+            cReason = #{cReason}
+        WHERE uidx = #{uidx}
+    </update>
+    
     
 </mapper>

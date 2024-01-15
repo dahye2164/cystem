@@ -18,6 +18,11 @@
         <script src="${path }/resources/js/script.js"></script>
         <!--swiper plugin connect-->
         <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+		          <!-- SweetAlert2 CSS -->
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.2/dist/sweetalert2.min.css">
+		
+		<!-- SweetAlert2 JS -->
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.2/dist/sweetalert2.all.min.js"></script>
         <title>Ezen HR</title>
         <script type="text/javascript">
         function login() {
@@ -58,89 +63,86 @@
                 <nav id="gnb">
                     <ul>
                         <li>
-                        		<c:choose>
-							<c:when test="${uidx == null }">
-								<a href="<%=request.getContextPath()%>"
-									onclick="return alert('로그인이 필요합니다.')">나의일정관리</a>
-							</c:when>
-							<c:otherwise>
-								<a href="<%=request.getContextPath()%>/commute/myCommute.do">나의일정관리</a>
-							</c:otherwise>
-						</c:choose> 
-                            <div class="sub">
-                                <ul>
-                                    <li>
-                                    	<c:choose>
-                                    		<c:when test="${uidx == null }">
-                                    			<a href="<%=request.getContextPath()%>" onclick="return alert('로그인이 필요합니다.')">근태관리</a>
-                                    		</c:when>
-                                    		<c:otherwise>	
-                                        		<a href="<%=request.getContextPath() %>/commute/myCommute.do">근태관리</a>
-                                        	</c:otherwise>
-                                        </c:choose>
-                                    </li>
-                                    <li>
-                                    	<c:choose>
-                                    		<c:when test="${uidx == null }">
-                                    			<a href="<%=request.getContextPath()%>" onclick="return alert('로그인이 필요합니다.')">휴가관리</a>
-                                    		</c:when>
-                                    		<c:otherwise>	
-                                        <a href="<%=request.getContextPath() %>/leave/myLeave.do">휴가관리</a>
-                                        </c:otherwise>
-                                        </c:choose>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li>
-                        	<c:choose>
-                        		<c:when test="${uidx ==null }">
-                            <a href="<%=request.getContextPath() %>" onclick="return alert('로그인이 필요합니다.')">전자결재</a>
-                            	</c:when>
-                            	<c:otherwise>
-                            <a href="<%=request.getContextPath() %>/ea/eaList.do">전자결재</a>
-                            	</c:otherwise>
-                            </c:choose>
-                            <div class="sub">
-                                <ul>
-                                    <li>
-		                                <c:choose>
-		                        			<c:when test="${uidx ==null }">
-		                            			<a href="<%=request.getContextPath() %>" onclick="return alert('로그인이 필요합니다.')">새전자결재</a>
-		                            		</c:when>
-		                            		<c:otherwise>
-		                            			<a href="<%=request.getContextPath() %>/ea/eaWrite.do">새전자결재</a>
-		                            		</c:otherwise>
-		                            	</c:choose>
-                                    </li>
-                                    <li>
-                                    	<c:choose>
-											<c:when test="${uidx ==null }">
-												<a href="<%=request.getContextPath()%>"
-													onclick="return alert('로그인이 필요합니다.')">전자결재목록</a>
-											</c:when>
-											<c:otherwise>
-												<a href="<%=request.getContextPath()%>/ea/eaList.do">전자결재목록</a>
-											</c:otherwise>
-										</c:choose>
-								</li>
-                                     <li>
-                                    	<c:choose>
-											<c:when test="${uidx ==null }">
-												<a href="<%=request.getContextPath()%>"
-													onclick="return alert('로그인이 필요합니다.')">전자결재승인</a>
-											</c:when>
-											<c:otherwise>
-												<a href="<%=request.getContextPath()%>/ea/eaAdminList.do">전자결재승인</a>
-											</c:otherwise>
-										</c:choose>
-									</li>
+					        <c:choose>
+					            <c:when test="${uidx == null}">
+					                <a href="<%=request.getContextPath()%>" onclick="return showAlert('로그인이 필요합니다.')">나의일정관리</a>
+					            </c:when>
+					            <c:otherwise>
+					                <a href="<%=request.getContextPath()%>/commute/myCommute.do">나의일정관리</a>
+					            </c:otherwise>
+					        </c:choose>
+					        <div class="sub">
+					            <ul>
+					                <li>
+					                    <c:choose>
+					                        <c:when test="${uidx == null}">
+					                            <a href="<%=request.getContextPath()%>" onclick="return showAlert('로그인이 필요합니다.')">근태관리</a>
+					                        </c:when>
+					                        <c:otherwise>
+					                            <a href="<%=request.getContextPath() %>/commute/myCommute.do">근태관리</a>
+					                        </c:otherwise>
+					                    </c:choose>
+					                </li>
+					                <li>
+					                    <c:choose>
+					                        <c:when test="${uidx == null}">
+					                            <a href="<%=request.getContextPath()%>" onclick="return showAlert('로그인이 필요합니다.')">휴가관리</a>
+					                        </c:when>
+					                        <c:otherwise>
+					                            <a href="<%=request.getContextPath() %>/leave/myLeave.do">휴가관리</a>
+					                        </c:otherwise>
+					                    </c:choose>
+					                </li>
+					            </ul>
+					        </div>
+					    </li>
+					    <li>
+					        <c:choose>
+					            <c:when test="${uidx == null}">
+					                <a href="<%=request.getContextPath() %>" onclick="return showAlert('로그인이 필요합니다.')">전자결재</a>
+					            </c:when>
+					            <c:otherwise>
+					                <a href="<%=request.getContextPath() %>/ea/eaList.do">전자결재</a>
+					            </c:otherwise>
+					        </c:choose>
+					        <div class="sub">
+					            <ul>
+					                <li>
+					                    <c:choose>
+					                        <c:when test="${uidx == null}">
+					                            <a href="<%=request.getContextPath() %>" onclick="return showAlert('로그인이 필요합니다.')">새전자결재</a>
+					                        </c:when>
+					                        <c:otherwise>
+					                            <a href="<%=request.getContextPath() %>/ea/eaWrite.do">새전자결재</a>
+					                        </c:otherwise>
+					                    </c:choose>
+					                </li>
+					                <li>
+					                    <c:choose>
+					                        <c:when test="${uidx == null}">
+					                            <a href="<%=request.getContextPath()%>" onclick="return showAlert('로그인이 필요합니다.')">전자결재목록</a>
+					                        </c:when>
+					                        <c:otherwise>
+					                            <a href="<%=request.getContextPath()%>/ea/eaList.do">전자결재목록</a>
+					                        </c:otherwise>
+					                    </c:choose>
+					                </li>
+					                <li>
+					                    <c:choose>
+					                        <c:when test="${uidx == null}">
+					                            <a href="<%=request.getContextPath()%>" onclick="return showAlert('로그인이 필요합니다.')">전자결재승인</a>
+					                        </c:when>
+					                        <c:otherwise>
+					                            <a href="<%=request.getContextPath()%>/ea/eaAdminList.do">전자결재승인</a>
+					                        </c:otherwise>
+					                    </c:choose>
+					                </li>
                                     <li>
                                         <a href="#">임시저장함</a>
                                     </li>
                                 </ul>
                             </div>
-                        </li>
+                 
                         <li>
                             <a href="#">쪽지관리</a>
                             <div class="sub">
@@ -390,5 +392,17 @@
                     }
                 };
             </script>
+            
+            <script type="text/javascript">
+		        function showAlert(message) {
+		            Swal.fire({
+		                title: message,
+		                icon: 'warning',
+		                showConfirmButton: false,
+		                timer: 1500
+		            });
+		            return false; // 클릭된 링크로 이동을 막습니다.
+		        }
+    		</script>
         </body>
     </html>

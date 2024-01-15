@@ -18,5 +18,9 @@ public interface CommuteService_Mapper {
 
 	public List<CommuteVo> getCommuteList(int uidx);
 
+	public int updateSignInTime(CommuteVo cv);
+
+	public int updateSignOutTime(CommuteVo cv);
+
 	
 }

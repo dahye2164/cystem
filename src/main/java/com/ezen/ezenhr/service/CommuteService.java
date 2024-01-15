@@ -16,6 +16,7 @@ public interface CommuteService {
 
 	public List<CommuteVo> getCommuteList(int uidx);
 
-	
+	public int updateCommuteTime(CommuteVo cv);
+
 
 }
