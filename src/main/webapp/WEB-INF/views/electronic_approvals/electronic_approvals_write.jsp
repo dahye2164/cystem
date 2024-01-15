@@ -704,7 +704,6 @@
 	        leaveType: $("#leaveType").val(),
 	        cReason: $("#cReason").val(),
 	        selectedUsers: selectedUsers, // 결재자 정보
-	        selectedRefUsers: selectedRefUsers // 참조자 정보
 	    };
 
 	    // 서버로 전송
@@ -752,28 +751,23 @@
 	    if (selectedUser1) {
 	        approvalUsers.push({
 	            uidx: selectedUser1.uidx,
-	            department: selectedUser1.department,
-	            userName: selectedUser1.userName,
-	            type: "first_approver"
+	            uApprovalLevel: 1
 	        });
 	    }
 	    if (selectedUser2) {
 	        approvalUsers.push({
 	            uidx: selectedUser2.uidx,
-	            department: selectedUser2.department,
-	            userName: selectedUser2.userName,
-	            type: "second_approver"
+	            uApprovalLevel: 2
 	        });
 	    }
 	    // 참조자 목록도 추가해야 함
-	    for (var i = 0; i < selectedRefUsers.length; i++) {
+/* 	    for (var i = 0; i < selectedRefUsers.length; i++) {
 	        approvalUsers.push({
 	            uidx: selectedRefUsers[i].uidx,
-	            department: selectedRefUsers[i].department,
-	            userName: selectedRefUsers[i].userName,
+
 	            type: "reference"
 	        });
-	    }
+	    } */
 
 	    // AJAX를 사용하여 서버에 데이터 전송
 	    $.ajax({
