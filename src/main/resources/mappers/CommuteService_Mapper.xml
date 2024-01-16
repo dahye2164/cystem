@@ -58,4 +58,16 @@
     ORDER BY cInTime;
 	</select>
     
+    <select id="getDayCommuteListByDateAndDepartment" parameterType="map" resultType="cv">
+    SELECT * FROM CommuteTable
+    WHERE YEAR(cInTime) = #{year}
+      AND MONTH(cInTime) = #{month}
+      AND DAY(cInTime) = #{day}
+      <if test="departmentName != null and departmentName != ''">
+          AND departmentName = #{departmentName}
+      </if>
+</select>
+
+	
+    
 </mapper>

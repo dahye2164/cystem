@@ -28,5 +28,12 @@ public interface CommuteService_Mapper {
 
 	public List<CommuteVo> getDayCommuteListByDate(@Param("year") int year, @Param("month") int month, @Param("day") int day);
 
+	public List<CommuteVo> getDayCommuteListByDateAndDepartment(
+		    @Param("year") int year, 
+		    @Param("month") int month, 
+		    @Param("day") int day, 
+		    @Param("departmentName") String departmentName
+		);
+
 	
 }

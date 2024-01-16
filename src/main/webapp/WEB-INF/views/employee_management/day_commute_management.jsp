@@ -132,68 +132,70 @@
             </tbody>
             </table>
 
-            <div id="paging_zone">
-                <c:set var="keyword" value="${pm.scri.keyword}" />
-                <c:set var="parm" value="&searchType=${pm.scri.searchType}&keyword=${pm.scri.keyword}" />
-
-                <table border=0 style="width:600px;text-align:center;">
-                    <tr>
-                        <td style="width:100px;text-align:right;">
-                            <c:if test="${pm.prev == true}">
-                                <a href="${pageContext.request.contextPath}/board/boardList.do?page=${pm.startPage-1}${parm}"> ◀</a>
-                                                            </c:if>
-                        </td>
-                        <td>
-                            <c:forEach var="i" begin="${pm.startPage}" end="${pm.endPage}" step="1">
-                                <a href="${pageContext.request.contextPath}/board/boardList.do?page=${i}${parm}">${i}</a> &nbsp;
-                            </c:forEach>
-                        </td>
-                        <td style="width:100px;text-align:left;">
-                            <c:if test="${pm.next == true&&pm.endPage>0}">
-                                <a href="${pageContext.request.contextPath}/board/boardList.do?page=${pm.endPage+1}${parm}"> ▶</a>
-                            </c:if>
-                        </td>
-                    </tr>
-                </table>
-            </div><!-- //#paging_zone -->
+             <!-- 페이징 부분 -->
+<div id="paging_zone">
+    <table border="0" style="width:600px;text-align:center;">
+        <tr>
+            <td style="width:100px;text-align:right;">
+                <c:if test="${pm.prev}">
+                    <a href="${pageContext.request.contextPath}/commute/dayCommuteManagement.do?page=${pm.startPage - 1}&commuteYear=${scri.year}&commuteMonth=${scri.month}&commuteDay=${scri.day}&commuteType=${scri.departmentName}"> ◀</a>
+                </c:if>
+            </td>
+            <td>
+                <c:forEach var="i" begin="${pm.startPage}" end="${pm.endPage}">
+                    <c:choose>
+                        <c:when test="${i eq scri.page}">
+                            <strong>${i}</strong>
+                        </c:when>
+                        <c:otherwise>
+                            <a href="${pageContext.request.contextPath}/commute/dayCommuteManagement.do?page=${i}&commuteYear=${scri.year}&commuteMonth=${scri.month}&commuteDay=${scri.day}&commuteType=${scri.departmentName}">${i}</a> &nbsp;
+                        </c:otherwise>
+                    </c:choose>
+                </c:forEach>
+            </td>
+            <td style="width:100px;text-align:left;">
+                <c:if test="${pm.next && pm.endPage > 0}">
+                    <a href="${pageContext.request.contextPath}/commute/dayCommuteManagement.do?page=${pm.endPage + 1}&commuteYear=${scri.year}&commuteMonth=${scri.month}&commuteDay=${scri.day}&commuteType=${scri.departmentName}"> ▶</a>
+                </c:if>
+            </td>
+        </tr>
+    </table>
+</div>
+<!-- 페이징 부분 끝 -->
         </div><!-- //#main_zone -->
-
-        <script>
-            $(document).ready(function() {
-                function updateDate(selectedDate) {
-                    var currentDate = selectedDate || new Date();
-                    var year = currentDate.getFullYear();
-                    var month = ('0' + (currentDate.getMonth() + 1)).slice(-2);
-                    var day = ('0' + currentDate.getDate()).slice(-2);
-                    var dayOfWeek = ['일', '월', '화', '수', '목', '금', '토'][currentDate.getDay()];
-
-                    $('#currentDate').text(year + '.' + month + '.' + day + ' (' + dayOfWeek + ')');
-                }
-
-                // 초기화
-                updateDate();
-
-                // 어제 버튼 클릭 시
-                $('#prevDayBtn').on('click', function() {
-                    var currentDate = new Date($('#currentDate').text());
-                    currentDate.setDate(currentDate.getDate() - 1);
-                    updateDate(currentDate);
-                });
-
-                // 오늘 버튼 클릭 시
-                $('#nextDayBtn').on('click', function() {
-                    var currentDate = new Date($('#currentDate').text());
-                    currentDate.setDate(currentDate.getDate() + 1);
-                    updateDate(currentDate);
-                });
-            });
-
-            function toggleSidebar() {
-                const sidebar = document.getElementById('sidebar');
-                sidebar.classList.toggle('active');
-            }
-        </script>
     </main>
+    <script>
+    function updateDate(selectedDate) {
+        var currentDate = selectedDate || new Date();
+        var year = currentDate.getFullYear();
+        var month = ('0' + (currentDate.getMonth() + 1)).slice(-2);
+        var day = ('0' + currentDate.getDate()).slice(-2);
+        var dayOfWeek = ['일', '월', '화', '수', '목', '금', '토'][currentDate.getDay()];
+
+        $('#currentDate').text(year + '.' + month + '.' + day + ' (' + dayOfWeek + ')');
+    }
+
+    function searchByDate() {
+        var selectedYear = $('#commuteYear').val();
+        var selectedMonth = $('#commuteMonth').val();
+        var selectedDay = $('#commuteDay').val();
+        var selectedDate = new Date(selectedYear, selectedMonth - 1, selectedDay); 
+
+        // 여기서부터 수정
+        // 검색 로직을 수행하지 않고, 바로 날짜를 업데이트
+        updateDate(selectedDate);
+        // 여기까지 수정
+    }
+
+    $(document).ready(function() {
+        // 초기화
+        updateDate();
+    });
+
+    function toggleSidebar() {
+        const sidebar = document.getElementById('sidebar');
+        sidebar.classList.toggle('active');
+    }
+</script>
 </body>
 </html>
-                                

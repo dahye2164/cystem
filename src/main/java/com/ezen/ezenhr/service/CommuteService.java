@@ -20,5 +20,7 @@ public interface CommuteService {
 
 	public List<CommuteVo> getDayCommuteListByDate(int year, int month, int day);
 
+	public List<CommuteVo> getDayCommuteListByDateAndDepartment(int year, int month, int day, String department);
+
 
 }

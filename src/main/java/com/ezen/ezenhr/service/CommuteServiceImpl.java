@@ -68,6 +68,12 @@ public class CommuteServiceImpl implements CommuteService {
 		return dayCommuteList;
 	}
 
+	@Override
+	public List<CommuteVo> getDayCommuteListByDateAndDepartment(int year, int month, int day, String departmentName) {
+		List<CommuteVo> dayCommuteList = csm.getDayCommuteListByDateAndDepartment(year, month, day, departmentName);
+		return dayCommuteList;
+	}
+
 	/*
 	 * @Override public int saveCommuteInfo(CommuteInfoVo civ) { int value2 =
 	 * csm.saveCommuteInfo(civ);
