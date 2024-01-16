@@ -97,7 +97,7 @@
 	<div id="select_zone">
 	    <label>부서별 :</label>
 	    <select name="commuteType" id="commuteType">
-	        <option value="전체" selected>전체</option>
+	        <option value="" selected>전체</option>
 	        <option value="기획부">기획부</option>
 	        <option value="개발부">개발부</option>
 	        <option value="영업부">영업부</option>
@@ -138,25 +138,23 @@
         <tr>
             <td style="width:100px;text-align:right;">
                 <c:if test="${pm.prev}">
-                    <a href="${pageContext.request.contextPath}/commute/dayCommuteManagement.do?page=${pm.startPage - 1}&commuteYear=${scri.year}&commuteMonth=${scri.month}&commuteDay=${scri.day}&commuteType=${scri.departmentName}"> ◀</a>
-                </c:if>
-            </td>
-            <td>
-                <c:forEach var="i" begin="${pm.startPage}" end="${pm.endPage}">
-                    <c:choose>
-                        <c:when test="${i eq scri.page}">
-                            <strong>${i}</strong>
-                        </c:when>
-                        <c:otherwise>
-                            <a href="${pageContext.request.contextPath}/commute/dayCommuteManagement.do?page=${i}&commuteYear=${scri.year}&commuteMonth=${scri.month}&commuteDay=${scri.day}&commuteType=${scri.departmentName}">${i}</a> &nbsp;
-                        </c:otherwise>
-                    </c:choose>
-                </c:forEach>
-            </td>
-            <td style="width:100px;text-align:left;">
-                <c:if test="${pm.next && pm.endPage > 0}">
-                    <a href="${pageContext.request.contextPath}/commute/dayCommuteManagement.do?page=${pm.endPage + 1}&commuteYear=${scri.year}&commuteMonth=${scri.month}&commuteDay=${scri.day}&commuteType=${scri.departmentName}"> ▶</a>
-                </c:if>
+    <a href="${pageContext.request.contextPath}/commute/dayCommuteManagement.do?page=${pm.startPage - 1}&commuteYear=${scri.year}&commuteMonth=${scri.month}&commuteDay=${scri.day}&commuteType=${scri.departmentName}"> ◀</a>
+</c:if>
+
+<c:forEach var="i" begin="${pm.startPage}" end="${pm.endPage}">
+    <c:choose>
+        <c:when test="${i eq scri.page}">
+            <strong>${i}</strong>
+        </c:when>
+        <c:otherwise>
+            <a href="${pageContext.request.contextPath}/commute/dayCommuteManagement.do?page=${i}&commuteYear=${scri.year}&commuteMonth=${scri.month}&commuteDay=${scri.day}&commuteType=${scri.departmentName}">${i}</a> &nbsp;
+        </c:otherwise>
+    </c:choose>
+</c:forEach>
+
+<c:if test="${pm.next && pm.endPage > 0}">
+    <a href="${pageContext.request.contextPath}/commute/dayCommuteManagement.do?page=${pm.endPage + 1}&commuteYear=${scri.year}&commuteMonth=${scri.month}&commuteDay=${scri.day}&commuteType=${scri.departmentName}"> ▶</a>
+</c:if>
             </td>
         </tr>
     </table>

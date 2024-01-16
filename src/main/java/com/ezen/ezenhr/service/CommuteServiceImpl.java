@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.ezen.ezenhr.domain.CommuteInfoVo;
 import com.ezen.ezenhr.domain.CommuteVo;
+import com.ezen.ezenhr.domain.SearchCriteria;
 import com.ezen.ezenhr.persistance.CommuteService_Mapper;
 
 @Service
@@ -72,6 +73,16 @@ public class CommuteServiceImpl implements CommuteService {
 	public List<CommuteVo> getDayCommuteListByDateAndDepartment(int year, int month, int day, String departmentName) {
 		List<CommuteVo> dayCommuteList = csm.getDayCommuteListByDateAndDepartment(year, month, day, departmentName);
 		return dayCommuteList;
+	}
+
+	@Override
+	public List<CommuteVo> getDayCommuteListByDateAndDepartmentWithPaging(SearchCriteria scri) {
+		 return csm.getDayCommuteListByDateAndDepartmentWithPaging(scri);
+	}
+
+	@Override
+	public int getDayCommuteListCount(SearchCriteria scri) {
+		return csm.getDayCommuteListCount(scri);
 	}
 
 	/*
