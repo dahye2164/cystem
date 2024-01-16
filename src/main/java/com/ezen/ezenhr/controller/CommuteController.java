@@ -250,11 +250,17 @@ public class CommuteController {
     public String dayCommuteManagementList(Model model) {
     	
     	List<CommuteVo> clist = cs.getDayCommuteList();
+    	List<String> uNames = new ArrayList<>();
     	
-    	List<UserVo> uList = us.getAllUsers();
+    	for (CommuteVo cv : clist) {
+            UserVo uv = us.getUserInfo(cv.getUidx());
+            System.out.println(uv+"--------uv");
+            uNames.add(uv.getuName());
+            System.out.println(uNames+"uNames++++++++++++");
+        }
     	
     	model.addAttribute("clist", clist);
-    	model.addAttribute("uList", uList);
+    	model.addAttribute("uNames", uNames);
     	
     	return "/employee_management/day_commute_management";
     }

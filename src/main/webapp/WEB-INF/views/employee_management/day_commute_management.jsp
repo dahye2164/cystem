@@ -116,16 +116,11 @@
 				  </tr>
 				</thead>
 				<tbody>
-			    <c:forEach var="commute" items="${clist}">
+			    <c:forEach var="commute" items="${clist}" varStatus="loop">
+			     <c:set var="currentIndex" value="${loop.index}" />
 			        <tr>
 			            <td>${commute.departmentName}</td>
-						<td>
-            <!-- 디버깅을 위한 코드 추가 -->
-            <c:if test="${userMap.get(commute.uidx) == null}">
-                <strong>User not found for uidx: ${commute.uidx}</strong>
-            </c:if>
-            ${userMap.get(commute.uidx)}
-        </td>
+						<td>${uNames[currentIndex]}</td>
 			            <td>${commute.cInTime}</td>
 			            <td>${commute.cOutTime}</td>
 			            <td>${commute.ctype}</td>

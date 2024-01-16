@@ -46,7 +46,7 @@
 					<div id="date_select">
 						<select name="leaveYear" id="leaveYear">
 							<% 
-								for (int year = 2018; year <= 2023; year++) {
+								for (int year = 2018; year <= 2024; year++) {
 								String formattedYear = String.format("%04d", year); // 연도를 4자리로 표현
 							%>
 							<option value="<%= formattedYear %>"<%= (formattedYear.equals(year)) ? "selected" : "" %>><%= formattedYear %></option>
@@ -99,86 +99,17 @@
 				  </tr>
 				</thead>
 				<tbody>
-				  <tr>
-					<td>연차</td>
-                    <td>최대리</td>
-					<td>연차휴가 신청의 건</td>
-					<td>2023.11.01~2023.11.01 (1일)</td>
-					<td>승인대기</td>
-					<td>2023.10.23</td>
-				  </tr>
-				  <tr>
-					<td>연차</td>
-                    <td>안부장</td>
-					<td>연차휴가 신청의 건</td>
-					<td>2023.11.01~2023.11.01 (1일)</td>
-					<td>승인완료</td>
-					<td>2023.10.23</td>
-				  </tr>
-				  <tr>
-					<td>연차</td>
-                    <td>오사원</td>
-					<td>연차휴가 신청의 건</td>
-					<td>2023.11.01~2023.11.01 (1일)</td>
-					<td>승인완료</td>
-					<td>2023.10.23</td>
-				  </tr>
-				  <tr>
-					<td>연차</td>
-                    <td>임과장</td>
-					<td>연차휴가 신청의 건</td>
-					<td>2023.11.01~2023.11.01 (1일)</td>
-					<td>승인완료</td>
-					<td>2023.10.23</td>
-				  </tr>
-				  <tr>
-					<td>연차</td>
-                    <td>김사원</td>
-					<td>연차휴가 신청의 건</td>
-					<td>2023.11.01~2023.11.01 (1일)</td>
-					<td>승인완료</td>
-					<td>2023.10.23</td>
-				  </tr>
-				  <tr>
-					<td>연차</td>
-                    <td>김사원</td>
-					<td>연차휴가 신청의 건</td>
-					<td>2023.11.01~2023.11.01 (1일)</td>
-					<td>승인완료</td>
-					<td>2023.10.23</td>
-				  </tr>
-				  <tr>
-					<td>연차</td>
-                    <td>김사원</td>
-					<td>연차휴가 신청의 건</td>
-					<td>2023.11.01~2023.11.01 (1일)</td>
-					<td>승인완료</td>
-					<td>2023.10.23</td>
-				  </tr>
-				  <tr>
-					<td>연차</td>
-                    <td>김사원</td>
-					<td>연차휴가 신청의 건</td>
-					<td>2023.11.01~2023.11.01 (1일)</td>
-					<td>승인완료</td>
-					<td>2023.10.23</td>
-				  </tr>
-				  <tr>
-					<td>연차</td>
-                    <td>김사원</td>
-					<td>연차휴가 신청의 건</td>
-					<td>2023.11.01~2023.11.01 (1일)</td>
-					<td>승인완료</td>
-					<td>2023.10.23</td>
-				  </tr>
-				  <tr>
-					<td>연차</td>
-                    <td>김사원</td>
-					<td>연차휴가 신청의 건</td>
-					<td>2023.11.01~2023.11.01 (1일)</td>
-					<td>승인완료</td>
-					<td>2023.10.23</td>
-				  </tr>
+				     <!-- 여기에 전자결재목록 데이터를 동적으로 추가 -->
+                    <c:forEach var="approval" items="${approvalList}">
+                        <tr>
+                            <td>${approval.lType}</td>
+                            <td>${approval.userName}</td>
+                            <td>${approval.lReason}</td>
+                            <td>${approval.lStart} ~ ${approval.lEnd} (${approval.leaveDays}일)</td>
+                            <td>${approval.approvalStatus}</td>
+                            <td>${approval.aDate}</td>
+                        </tr>
+                    </c:forEach>
 				</tbody>
 			</table>
 				  

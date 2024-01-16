@@ -47,7 +47,7 @@
 					<div id="date_select">
 						<select name="leaveYear" id="leaveYear">
 							<% 
-								for (int year = 2018; year <= 2023; year++) {
+								for (int year = 2018; year <= 2024; year++) {
 								String formattedYear = String.format("%04d", year); // 연도를 4자리로 표현
 							%>
 							<option value="<%= formattedYear %>"<%= (formattedYear.equals(year)) ? "selected" : "" %>><%= formattedYear %></option>
@@ -97,77 +97,16 @@
 				  </tr>
 				</thead>
 				<tbody>
-				  <tr>
-					<td>연차</td>
-					<td>연차휴가 신청의 건</td>
-					<td>2023.11.01~2023.11.01 (1일)</td>
-					<td>승인완료</td>
-					<td>2023.10.23</td>
-				  </tr>
-				  <tr>
-					<td>연차</td>
-					<td>연차휴가 신청의 건</td>
-					<td>2023.11.01~2023.11.01(1일)</td>
-					<td>승인완료</td>
-					<td>2023.10.23</td>
-				  </tr>
-				  <tr>
-					<td>연차</td>
-					<td>연차휴가 신청의 건</td>
-					<td>2023.11.01~2023.11.01(1일)</td>
-					<td>승인완료</td>
-					<td>2023.10.23</td>
-				  </tr>
-				  <tr>
-					<td>연차</td>
-					<td>연차휴가 신청의 건</td>
-					<td>2023.11.01~2023.11.01(1일)</td>
-					<td>승인완료</td>
-					<td>2023.10.23</td>
-				  </tr>
-				  <tr>
-					<td>연차</td>
-					<td>연차휴가 신청의 건</td>
-					<td>2023.11.01~2023.11.01(1일)</td>
-					<td>승인완료</td>
-					<td>2023.10.23</td>
-				  </tr>
-				  <tr>
-					<td>연차</td>
-					<td>연차휴가 신청의 건</td>
-					<td>2023.11.01~2023.11.01(1일)</td>
-					<td>승인완료</td>
-					<td>2023.10.23</td>
-				  </tr>
-				  <tr>
-					<td>연차</td>
-					<td>연차휴가 신청의 건</td>
-					<td>2023.11.01~2023.11.01(1일)</td>
-					<td>승인완료</td>
-					<td>2023.10.23</td>
-				  </tr>
-				  <tr>
-					<td>연차</td>
-					<td>연차휴가 신청의 건</td>
-					<td>2023.11.01~2023.11.01(1일)</td>
-					<td>승인완료</td>
-					<td>2023.10.23</td>
-				  </tr>
-				  <tr>
-					<td>연차</td>
-					<td>연차휴가 신청의 건</td>
-					<td>2023.11.01~2023.11.01(1일)</td>
-					<td>승인완료</td>
-					<td>2023.10.23</td>
-				  </tr>
-				  <tr>
-					<td>연차</td>
-					<td>연차휴가 신청의 건</td>
-					<td>2023.11.01~2023.11.01(1일)</td>
-					<td>승인완료</td>
-					<td>2023.10.23</td>
-				  </tr>
-				</tbody>
+					<c:forEach var="eav" items="${eaList}">
+			            <tr>
+			                <td>${eav.lType}</td>
+			                <td>${eav.lReason}</td>
+			                <td>${eav.period}</td>
+			                <td>${eav.status}</td>
+			                <td>${eav.aDate}</td>
+			            </tr>
+		        	</c:forEach>
+				 </tbody>
 			</table>
 				  
 
