@@ -246,5 +246,17 @@ public class CommuteController {
         return result;
     }
     
+    @RequestMapping(value = "dayCommuteManagement.do")
+    public String dayCommuteManagementList(Model model) {
+    	
+    	List<CommuteVo> clist = cs.getDayCommuteList();
+    	
+    	List<UserVo> uList = us.getAllUsers();
+    	
+    	model.addAttribute("clist", clist);
+    	model.addAttribute("uList", uList);
+    	
+    	return "/employee_management/day_commute_management";
+    }
     
 }

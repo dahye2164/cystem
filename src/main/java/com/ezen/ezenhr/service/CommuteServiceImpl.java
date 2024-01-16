@@ -62,6 +62,12 @@ public class CommuteServiceImpl implements CommuteService {
 	    }
 	}
 
+	@Override
+	public List<CommuteVo> getDayCommuteList() {
+		List<CommuteVo> dayCommuteList = csm.getDayCommuteList();
+		return dayCommuteList;
+	}
+
 	/*
 	 * @Override public int saveCommuteInfo(CommuteInfoVo civ) { int value2 =
 	 * csm.saveCommuteInfo(civ);

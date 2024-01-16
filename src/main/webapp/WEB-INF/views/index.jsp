@@ -56,7 +56,7 @@
             <div class="inner">
                 <div id="logo">
                     <h1>
-                        <a href="/">Ezen HR</a>
+                        <a href="${path }">Ezen HR</a>
                     </h1>
                 </div>
 
@@ -162,14 +162,30 @@
                                 </ul>
                             </div>
                         </li>
-
+						
                         <li>
-                            <a href="#">사원관리</a>
+                        		<c:choose>
+	                        		<c:when test="${uidx == null}">
+	                        			<a href="<%=request.getContextPath() %>" onclick="return showAlert('로그인이 필요합니다.')"> 사원관리</a>
+	                        		</c:when>
+	                        		<c:otherwise>
+	                            <a href="<%=request.getContextPath() %>/commute/dayCommuteManagement.do">사원관리</a>
+	                            	</c:otherwise>
+	                            </c:choose>
+	                            
+	                            
                             <div class="sub">
                                 <ul>
                                     <li>
-                                        <a href="#">일일근태조회</a>
-                                    </li>
+					                    <c:choose>
+					                        <c:when test="${uidx == null}">
+					                            <a href="<%=request.getContextPath()%>" onclick="return showAlert('로그인이 필요합니다.')">일일근태조회</a>
+					                        </c:when>
+					                        <c:otherwise>
+					                            <a href="<%=request.getContextPath() %>/commute/dayCommuteManagement.do">일일근태조회</a>
+					                        </c:otherwise>
+					                    </c:choose>
+					                </li>
                                     <li>
                                         <a href="#">상세근태조회</a>
                                     </li>

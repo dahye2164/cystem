@@ -52,5 +52,10 @@
         WHERE uidx = #{uidx}
     </update>
     
+    <select id="getDayCommuteList" resultType="cv">
+    	SELECT
+    	*
+    	FROM CommuteTable
+    </select>
     
 </mapper>

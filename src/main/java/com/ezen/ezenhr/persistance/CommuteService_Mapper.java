@@ -22,5 +22,7 @@ public interface CommuteService_Mapper {
 
 	public int updateSignOutTime(CommuteVo cv);
 
+	public List<CommuteVo> getDayCommuteList();
+
 	
 }
