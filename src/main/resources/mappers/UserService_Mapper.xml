@@ -38,7 +38,7 @@ select * FROM UserTable where uidx = #{uidx}
         FROM UserTable
         WHERE uidx = #{uidx}
     </select>
-    
+     
 <select id="getUidxByDidx" resultType="uv">
 	SELECT *
 	FROM UserTable
