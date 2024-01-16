@@ -274,7 +274,7 @@
            var didx = $("#departmentSelect1").val();
            if (!didx) {
                // "전체"가 선택되었을 때 loadAllUsers 호출 
-               loadAllUsers();
+               loadAllUsers(); 
                return;
            }
    
