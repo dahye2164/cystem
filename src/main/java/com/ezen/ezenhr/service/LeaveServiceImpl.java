@@ -1,5 +1,7 @@
 package com.ezen.ezenhr.service;
 
+import java.util.HashMap;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +24,13 @@ public class LeaveServiceImpl implements LeaveService {
 	public int leaveInsert(LeaveVo lv) {
 		int value = lsm.leaveInsert(lv);
 		return value;
+	}
+
+
+	@Override
+	public HashMap<String, Object> getLeaveDataWithUsernameByAidx(int aidx) {
+	
+		return lsm.getLeaveDataWithUsernameByAidx(aidx);
 	}
 
 }

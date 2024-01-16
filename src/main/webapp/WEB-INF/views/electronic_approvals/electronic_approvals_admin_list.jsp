@@ -93,23 +93,23 @@
 					<th>휴가유형</th>
                     <th>사원명</th>
 					<th>사유</th>
-					<th>사용기간 (일수)</th>
+					<th>사용기간</th>
 					<th>승인상태</th>
 					<th>신청일</th>
 				  </tr>
 				</thead>
 				<tbody>
 				     <!-- 여기에 전자결재목록 데이터를 동적으로 추가 -->
-                    <c:forEach var="approval" items="${approvalList}">
-                        <tr>
-                            <td>${approval.lType}</td>
-                            <td>${approval.userName}</td>
-                            <td>${approval.lReason}</td>
-                            <td>${approval.lStart} ~ ${approval.lEnd} (${approval.leaveDays}일)</td>
-                            <td>${approval.approvalStatus}</td>
-                            <td>${approval.aDate}</td>
-                        </tr>
-                    </c:forEach>
+	         		  <c:forEach var="al" items="${alList}">
+					    <tr>
+					        <td>${al.lType}</td>
+					        <td>${al.uName}</td>
+					        <td>${al.lReason}</td>
+					        <td>${al.lStart} ~ ${al.lEnd}</td>
+					        <td>${al.lAcpYn}</td>
+					          <td>${al.aDate}</td>
+					    </tr>
+					</c:forEach>
 				</tbody>
 			</table>
 				  

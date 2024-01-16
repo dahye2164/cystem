@@ -12,10 +12,13 @@
 	    VALUES ('W', now(), #{uidx}, #{approvalUidx1}, #{approvalUidx2})
 	</insert>
 	
-	<select id="getEAListByApproverUidx" resultType="eav">
-        <![CDATA[
-            SELECT * FROM ElectronicApprovals
-            WHERE approvalUidx1 = #{uidx} OR approvalUidx2 = #{uidx}
-        ]]>
-    </select>
+<select id="getEAListByApproverUidxWithAdate" resultType="java.util.Map" parameterType="int">
+    <![CDATA[
+        SELECT eav.*, ea.adate
+        FROM ElectronicApprovals eav
+        LEFT JOIN LeaveTable lt ON eav.aidx = lt.aidx
+        LEFT JOIN ElectronicApprovals ea ON eav.aidx = ea.aidx
+        WHERE eav.approvalUidx1 = #{uidx} OR eav.approvalUidx2 = #{uidx}
+    ]]>
+</select>
 </mapper>

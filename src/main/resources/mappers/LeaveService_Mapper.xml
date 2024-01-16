@@ -7,6 +7,15 @@
 		INSERT INTO LeaveTable (lType, lStart, lEnd, lState, lAcpYn, lReason, aidx, uidx)
 		VALUES (#{lType}, #{lStart}, #{lEnd}, 'W',  'N', #{lReason},  #{aidx},  #{uidx})
 	</insert>
-
-
+	
+	
+ <select id="getLeaveDataWithUsernameByAidx" parameterType="int" resultType="java.util.HashMap">
+        <![CDATA[
+            SELECT ea.aDate, lt.*, ut.uName
+            FROM LeaveTable lt
+            LEFT JOIN ElectronicApprovals ea ON lt.aidx = ea.aidx
+            LEFT JOIN UserTable ut ON lt.uidx = ut.uidx
+            WHERE lt.aidx = #{aidx}
+        ]]>
+    </select>
 </mapper>

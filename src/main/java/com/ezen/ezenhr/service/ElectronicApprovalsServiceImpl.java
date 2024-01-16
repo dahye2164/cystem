@@ -1,6 +1,7 @@
 package com.ezen.ezenhr.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,9 +30,14 @@ public class ElectronicApprovalsServiceImpl implements ElectronicApprovalsServic
 
 
 	@Override
-	public List<ElectronicApprovalsVo> getEAListByApproverUidx(int uidx) {
-		List<ElectronicApprovalsVo> eaaList =easm.getEAListByApproverUidx(uidx);
-		return eaaList;
+	public List<Map<String, Object>> getEAListByApproverUidxWithAdate(int uidx) {
+		// TODO Auto-generated method stub
+		return easm.getEAListByApproverUidxWithAdate(uidx) ;
 	}
+
+
+
+
+
 
 }

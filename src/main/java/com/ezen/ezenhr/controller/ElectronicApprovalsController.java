@@ -1,6 +1,9 @@
 package com.ezen.ezenhr.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -14,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ezen.ezenhr.domain.ElectronicApprovalsVo;
+import com.ezen.ezenhr.domain.LeaveVo;
 import com.ezen.ezenhr.service.ElectronicApprovalsService;
+import com.ezen.ezenhr.service.LeaveService;
 
 @Controller
 @RequestMapping(value="/ea")
@@ -22,6 +27,9 @@ public class ElectronicApprovalsController {
 	
 	@Autowired
 	ElectronicApprovalsService eas;
+	
+	@Autowired
+	LeaveService ls;
 	
 	
 	@RequestMapping(value="/eaList.do", method = RequestMethod.GET)
@@ -55,25 +63,48 @@ public class ElectronicApprovalsController {
     }
 	
 	@RequestMapping(value="/eaAdminList.do", method = RequestMethod.GET)
-	public String eaAdminList(Model model, HttpSession session,
-															        @RequestParam(required = false, defaultValue = "1") int page,
-															        @RequestParam(required = false, defaultValue = "") String searchType,
-															        @RequestParam(required = false, defaultValue = "") String keyword) {
-
+	public String eaAdminList(Model model, HttpSession session) {
 	    // 세션에서 로그인한 사용자 정보를 가져옴
-		int uidx = (Integer)session.getAttribute("uidx");
-
-	
+	    int uidx = (Integer)session.getAttribute("uidx");
 
 	    // 페이징 처리를 위한 Logic 생략 (위와 동일)
 
-	    // 전자 결재 리스트 가져오기 (로그인한 사용자의 idx를 파라미터로 전달)
-	    List<ElectronicApprovalsVo> eaaList = eas.getEAListByApproverUidx(uidx);
+	 // 전자 결재 리스트 가져오기 (로그인한 사용자의 idx를 파라미터로 전달)
+	    List<Map<String, Object>> eaaList = eas.getEAListByApproverUidxWithAdate(uidx);
+	    System.out.println(eaaList + "eaaList");
+
+	    // 해당 결재 리스트의 aidx 추출
+	    List<Integer> aidxList = new ArrayList<>();
+	    for (Map<String, Object> eav : eaaList) {
+	        aidxList.add((Integer) eav.get("aidx"));
+	        System.out.println(aidxList + "aidxList");
+	    }
+
+	 // 휴가 테이블에서 해당 aidx에 해당하는 데이터 검색
+	    List<HashMap<String, Object>> alList = new ArrayList<>();
+	    for (Integer aidx : aidxList) {
+	        HashMap<String, Object> leaveData = ls.getLeaveDataWithUsernameByAidx(aidx);
+	        System.out.println("Leave data for aidx " + aidx + ": " + leaveData);
+	        if (leaveData != null) {
+	            alList.add(leaveData);
+	            System.out.println(alList + "alList");
+
+	            // 로그 추가
+	            System.out.println("adate from leaveData: " + leaveData.get("adate"));
+	        } else {
+	            // 추가한 로그
+	            System.out.println("Leave data is null for aidx: " + aidx);
+	        }
+	    }
+
+	    // adate 필드를 추가
+
+
+
+
 
 	    // 모델에 전자 결재 리스트 추가
-	    model.addAttribute("eaaList", eaaList);
-
-	    // 페이징 처리 Logic 생략 (위와 동일)
+	    model.addAttribute("alList", alList);
 
 	    return "/electronic_approvals/electronic_approvals_admin_list";
 	}
