@@ -52,10 +52,42 @@
         WHERE uidx = #{uidx}
     </update>
     
-    <select id="getDayCommuteList" resultType="cv">
-    	SELECT
-    	*
-    	FROM CommuteTable
-    </select>
+    <select id="getDayCommuteListByDate" resultType="cv">
+    SELECT * FROM CommuteTable
+    WHERE YEAR(cInTime) = #{year} AND MONTH(cInTime) = #{month} AND DAY(cInTime) = #{day}
+    ORDER BY cInTime;
+	</select>
+    
+    <select id="getDayCommuteListByDateAndDepartment" parameterType="map" resultType="cv">
+    SELECT * FROM CommuteTable
+    WHERE YEAR(cInTime) = #{year}
+      AND MONTH(cInTime) = #{month}
+      AND DAY(cInTime) = #{day}
+      <if test="departmentName != null and departmentName != ''">
+          AND departmentName = #{departmentName}
+      </if>
+</select>
+
+<select id="getDayCommuteListByDateAndDepartmentWithPaging" parameterType="com.ezen.ezenhr.domain.SearchCriteria" resultType="cv">
+    <![CDATA[
+        SELECT * 
+        FROM CommuteTable
+        WHERE YEAR(cInTime) = #{year} AND MONTH(cInTime) = #{month} AND DAY(cInTime) = #{day}
+        AND (departmentName IS NULL OR departmentName = #{departmentName} OR #{departmentName} = '전체' OR #{departmentName} = '')
+        ORDER BY cInTime
+        LIMIT #{page}, #{perPageNum}
+    ]]>
+</select>
+
+<!-- 페이징을 적용한 일일 근태 조회 결과의 전체 개수 -->
+<select id="getDayCommuteListCount" parameterType="com.ezen.ezenhr.domain.SearchCriteria" resultType="int">
+    <![CDATA[
+        SELECT COUNT(*) 
+        FROM CommuteTable
+        WHERE YEAR(cInTime) = #{year} AND MONTH(cInTime) = #{month} AND DAY(cInTime) = #{day}
+        AND (departmentName IS NULL OR departmentName = #{departmentName} OR #{departmentName} = '전체' OR #{departmentName} = '')
+    ]]>
+</select>
+	
     
 </mapper>

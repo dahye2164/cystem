@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.ezen.ezenhr.domain.CommuteInfoVo;
 import com.ezen.ezenhr.domain.CommuteVo;
+import com.ezen.ezenhr.domain.SearchCriteria;
 
 public interface CommuteService {
 	
@@ -18,7 +19,13 @@ public interface CommuteService {
 
 	public int updateCommuteTime(CommuteVo cv);
 
-	public List<CommuteVo> getDayCommuteList();
+	public List<CommuteVo> getDayCommuteListByDate(int year, int month, int day);
+
+	public List<CommuteVo> getDayCommuteListByDateAndDepartment(int year, int month, int day, String department);
+
+	public List<CommuteVo> getDayCommuteListByDateAndDepartmentWithPaging(SearchCriteria scri);
+
+	public int getDayCommuteListCount(SearchCriteria scri);
 
 
 }

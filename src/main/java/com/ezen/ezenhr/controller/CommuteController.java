@@ -14,15 +14,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ezen.ezenhr.domain.CommuteVo;
+import com.ezen.ezenhr.domain.PageMaker;
+import com.ezen.ezenhr.domain.SearchCriteria;
 import com.ezen.ezenhr.domain.UserVo;
 import com.ezen.ezenhr.service.CommuteService;
 import com.ezen.ezenhr.service.UserService;
+
 
 @Controller
 @RequestMapping(value="/commute")
@@ -247,22 +251,57 @@ public class CommuteController {
     }
     
     @RequestMapping(value = "dayCommuteManagement.do")
-    public String dayCommuteManagementList(Model model) {
-    	
-    	List<CommuteVo> clist = cs.getDayCommuteList();
-    	List<String> uNames = new ArrayList<>();
-    	
-    	for (CommuteVo cv : clist) {
-            UserVo uv = us.getUserInfo(cv.getUidx());
-            System.out.println(uv+"--------uv");
-            uNames.add(uv.getuName());
-            System.out.println(uNames+"uNames++++++++++++");
+    public String dayCommuteManagementList(Model model,
+            @RequestParam(value = "commuteYear", required = false, defaultValue = "0") int year,
+            @RequestParam(value = "commuteMonth", required = false, defaultValue = "0") int month,
+            @RequestParam(value = "commuteDay", required = false, defaultValue = "0") int day,
+            @RequestParam(value = "commuteType", required = false, defaultValue = "") String departmentName,
+            SearchCriteria scri) {
+
+        if (year == 0 || month == 0 || day == 0) {
+            // 날짜가 선택되지 않았을 때의 처리 (예: 오늘 날짜로 설정)
+            LocalDate currentDate = LocalDate.now();
+            year = currentDate.getYear();
+            month = currentDate.getMonthValue();
+            day = currentDate.getDayOfMonth();
         }
-    	
-    	model.addAttribute("clist", clist);
-    	model.addAttribute("uNames", uNames);
-    	
-    	return "/employee_management/day_commute_management";
+
+        if ("전체".equals(departmentName)) {
+            // 전체 부서 선택 시 부서 정보를 null 또는 빈 문자열로 설정
+            departmentName = "";  // 또는 department = null;
+        }
+
+        // SearchCriteria에 검색 조건 설정
+        scri.setYear(year);
+        scri.setMonth(month);
+        scri.setDay(day);
+        scri.setDepartmentName(departmentName);
+
+        // PageMaker 생성 및 검색 조건 설정
+        PageMaker pm = new PageMaker();
+        pm.setScri(scri);
+
+        // 해당 페이지의 근태 리스트 및 전체 카운트 가져오기
+        List<CommuteVo> clist = cs.getDayCommuteListByDateAndDepartmentWithPaging(scri);
+        int totalCount = cs.getDayCommuteListCount(scri);
+
+        List<String> uNames = new ArrayList<>();
+        for (CommuteVo cv : clist) {
+            UserVo uv = us.getUserInfo(cv.getUidx());
+            System.out.println(uv + "--------uv");
+            uNames.add(uv.getuName());
+            System.out.println(uNames + "uNames++++++++++++");
+        }
+
+        // PageMaker에 전체 카운트 설정 후 페이징 계산
+        pm.setTotalCount(totalCount);
+        pm.calcData();
+
+        model.addAttribute("clist", clist);
+        model.addAttribute("uNames", uNames);
+        model.addAttribute("pm", pm);
+
+        return "/employee_management/day_commute_management";
     }
-    
 }
+    
