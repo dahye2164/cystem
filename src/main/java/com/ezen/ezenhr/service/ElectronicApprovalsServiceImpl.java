@@ -1,5 +1,7 @@
 package com.ezen.ezenhr.service;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +25,13 @@ public class ElectronicApprovalsServiceImpl implements ElectronicApprovalsServic
 	public int insertElectronicApproval(ElectronicApprovalsVo eav) {
 		int value = easm.insertElectronicApproval(eav);
 		return value;
+	}
+
+
+	@Override
+	public List<ElectronicApprovalsVo> getEAListByApproverUidx(int uidx) {
+		List<ElectronicApprovalsVo> eaaList =easm.getEAListByApproverUidx(uidx);
+		return eaaList;
 	}
 
 }

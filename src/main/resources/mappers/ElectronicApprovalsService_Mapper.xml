@@ -11,4 +11,11 @@
 	    INSERT INTO ElectronicApprovals (approvalStatus, aDate, uidx, approvalUidx1, approvalUidx2)
 	    VALUES ('W', now(), #{uidx}, #{approvalUidx1}, #{approvalUidx2})
 	</insert>
+	
+	<select id="getEAListByApproverUidx" resultType="eav">
+        <![CDATA[
+            SELECT * FROM ElectronicApprovals
+            WHERE approvalUidx1 = #{uidx} OR approvalUidx2 = #{uidx}
+        ]]>
+    </select>
 </mapper>
