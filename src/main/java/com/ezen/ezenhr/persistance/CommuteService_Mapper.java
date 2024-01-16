@@ -6,6 +6,10 @@ import java.util.List;
 import com.ezen.ezenhr.domain.CommuteInfoVo;
 import com.ezen.ezenhr.domain.CommuteVo;
 
+import org.apache.ibatis.annotations.Param; // 반드시 추가해야 합니다.
+
+
+
 public interface CommuteService_Mapper {
 	
 	public int saveSignInTime(CommuteVo cv); 
@@ -22,7 +26,7 @@ public interface CommuteService_Mapper {
 
 	public int updateSignOutTime(CommuteVo cv);
 
-	public List<CommuteVo> getDayCommuteList();
+	public List<CommuteVo> getDayCommuteListByDate(@Param("year") int year, @Param("month") int month, @Param("day") int day);
 
 	
 }

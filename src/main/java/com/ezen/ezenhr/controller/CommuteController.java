@@ -247,9 +247,20 @@ public class CommuteController {
     }
     
     @RequestMapping(value = "dayCommuteManagement.do")
-    public String dayCommuteManagementList(Model model) {
+    public String dayCommuteManagementList(Model model,
+            @RequestParam(value = "commuteYear", required = false, defaultValue = "0") int year,
+            @RequestParam(value = "commuteMonth", required = false, defaultValue = "0") int month,
+            @RequestParam(value = "commuteDay", required = false, defaultValue = "0") int day) {
     	
-    	List<CommuteVo> clist = cs.getDayCommuteList();
+    	 if (year == 0 || month == 0 || day == 0) {
+    	        // 날짜가 선택되지 않았을 때의 처리 (예: 오늘 날짜로 설정)
+    	        LocalDate currentDate = LocalDate.now();
+    	        year = currentDate.getYear();
+    	        month = currentDate.getMonthValue();
+    	        day = currentDate.getDayOfMonth();
+    	    }
+    	
+    	List<CommuteVo> clist = cs.getDayCommuteListByDate(year, month, day);
     	List<String> uNames = new ArrayList<>();
     	
     	for (CommuteVo cv : clist) {

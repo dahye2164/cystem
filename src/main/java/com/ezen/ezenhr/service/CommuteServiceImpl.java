@@ -63,8 +63,8 @@ public class CommuteServiceImpl implements CommuteService {
 	}
 
 	@Override
-	public List<CommuteVo> getDayCommuteList() {
-		List<CommuteVo> dayCommuteList = csm.getDayCommuteList();
+	public List<CommuteVo> getDayCommuteListByDate(int year, int month, int day) {
+		List<CommuteVo> dayCommuteList = csm.getDayCommuteListByDate(year, month, day);
 		return dayCommuteList;
 	}
 

@@ -52,10 +52,10 @@
         WHERE uidx = #{uidx}
     </update>
     
-    <select id="getDayCommuteList" resultType="cv">
-    	SELECT
-    	*
-    	FROM CommuteTable
-    </select>
+    <select id="getDayCommuteListByDate" resultType="cv">
+    SELECT * FROM CommuteTable
+    WHERE YEAR(cInTime) = #{year} AND MONTH(cInTime) = #{month} AND DAY(cInTime) = #{day}
+    ORDER BY cInTime;
+	</select>
     
 </mapper>

@@ -18,7 +18,7 @@ public interface CommuteService {
 
 	public int updateCommuteTime(CommuteVo cv);
 
-	public List<CommuteVo> getDayCommuteList();
+	public List<CommuteVo> getDayCommuteListByDate(int year, int month, int day);
 
 
 }
