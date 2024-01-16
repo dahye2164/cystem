@@ -680,6 +680,93 @@
 	    addSelectedRefUser();
 	});
 	    
+	function validateForm() {
+		var startDate = $("#startDate").val();
+	    var endDate = $("#endDate").val();
+
+	    // 입력값이 없는 경우 에러 메시지 출력
+	    if (!startDate || !endDate) {
+	        Swal.fire({
+	            title: "입력 오류",
+	            text: "기간을 모두 입력해주세요.",
+	            icon: 'error',
+	            showConfirmButton: false,
+	            timer: 1500
+	        });
+	        return false;
+	    }
+
+	    // 날짜 형식으로 변환
+	    var startDateObj = new Date(startDate);
+	    var endDateObj = new Date(endDate);
+
+	    // 시작일자가 종료일자보다 늦으면 에러 메시지 출력
+	    if (startDateObj > endDateObj) {
+	        Swal.fire({
+	            title: "입력 오류",
+	            text: "시작 일자는 종료 일자보다 이전이어야 합니다.",
+	            icon: 'error',
+	            showConfirmButton: false,
+	            timer: 1500
+	        });
+	        return false;
+	    }
+
+
+	    // 종류 선택 확인
+	    var lType = $("#lType").val();
+	    if (!lType || lType === "전체") {
+	        Swal.fire({
+	            title: "입력 오류",
+	            text: "종류를 선택해주세요.",
+	            icon: 'error',
+	            showConfirmButton: false,
+	            timer: 1500
+	        });
+	        return false;
+	    }
+
+	    // 사유 입력 확인
+	    var lReason = $("#lReason").val();
+	    if (!lReason) {
+	        Swal.fire({
+	            title: "입력 오류",
+	            text: "사유를 입력해주세요.",
+	            icon: 'error',
+	            showConfirmButton: false,
+	            timer: 1500
+	        });
+	        return false;
+	    }
+
+	 // 1차 결재자 선택 확인
+	    if (!selectedUser1) {
+        Swal.fire({
+            title: "입력 오류",
+            text: "1차 결재자를 선택해주세요.",
+            icon: 'error',
+            showConfirmButton: false,
+            timer: 1500
+       	 });
+        return false;
+	    }
+
+	    // 2차 결재자 선택 확인
+	  if (!selectedUser2) {
+        Swal.fire({
+            title: "입력 오류",
+            text: "2차 결재자를 선택해주세요.",
+            icon: 'error',
+            showConfirmButton: false,
+            timer: 1500
+       	 });
+        return false;
+	    }
+
+	    return true; // 모든 유효성 검사를 통과하면 true 반환
+	}
+
+	
 	 // 페이지 로드 시 초기화
     $(document).ready(function () {
     	  // 처음에 페이지 로드될 때 두 번째 셀렉트박스에 전체 사원이름을 추가
@@ -688,9 +775,11 @@
 	    loadAllUsers3();
         initialize();
         
-     // 제출 버튼 클릭 시 이벤트 처리
+     // 제출 버튼 클릭 시 유효성 검사 후 제출
         $("#modiBtn").click(function () {
-            submitForm();
+            if (validateForm()) {
+                submitForm();
+            }
         });
     });
 	</script>
@@ -703,19 +792,7 @@
 	    // 파일 첨부 관련 코드도 추가해야 함
 
 	    // 선택된 결재자 및 참조자 목록 수집
-	    var approvalUsers = [];
-	    if (selectedUser1) {
-	        approvalUsers.push({
-	            uidx: selectedUser1.uidx,
-	            uApprovalLevel: 1
-	        });
-	    }
-	    if (selectedUser2) {
-	        approvalUsers.push({
-	            uidx: selectedUser2.uidx,
-	            uApprovalLevel: 2
-	        });
-	    }
+
 	
 	    // 참조자 목록도 추가해야 함
 /* 	    for (var i = 0; i < selectedRefUsers.length; i++) {
