@@ -63,7 +63,7 @@
 							<input type="date" id="endDate" name="endDate" />
 						</div><!-- //#date_zone -->
 						<div id="type_zone">
-							<label>종류</label> <select name="leaveType" id="leaveType">
+							<label>종류</label> <select name="lType" id="lType">
 								<option value="전체" selected>전체</option>
 								<option value="연차">연차</option>
 								<option value="반차">반차</option>
@@ -76,7 +76,7 @@
 				</div><!-- //#input_zone-->
 				<div id="reason_file">
 					<label>사유</label>
-				<textarea name="cReason" id="cReason" placeholder="사유를 입력하고 제출 버튼을 눌러주세요. 제출 버튼 클릭시 결제 대기 상태로 변경됩니다."></textarea>
+				<textarea name="lReason" id="lReason" placeholder="사유를 입력하고 제출 버튼을 눌러주세요. 제출 버튼 클릭시 결제 대기 상태로 변경됩니다."></textarea>
 					</div><!-- //#reason_file-->
 					<div id="file_zone">
 								<label>증빙서류</label>
@@ -148,7 +148,7 @@
 				
 				<div id="button_zone">
 					<button type="submit" id="saveBtn">임시저장</button>
-					<button type="submit" id="modiBtn">제출</button>
+					<button type="button" id="modiBtn">제출</button>
 					<button type="button" id="backBtn" onclick="history.back">취소</button>
 				</div><!-- //#button_zone-->
 			</form>
@@ -696,54 +696,10 @@
 	</script>
 	
 	<script>
-	$("#modiBtn").click(function () {
-	    // 전송할 데이터 준비
-	    var data = {
-	        startDate: $("#startDate").val(),
-	        endDate: $("#endDate").val(),
-	        leaveType: $("#leaveType").val(),
-	        cReason: $("#cReason").val(),
-	        selectedUsers: selectedUsers, // 결재자 정보
-	    };
-
-	    // 서버로 전송
-	    $.ajax({
-	        type: "POST",
-	        url: "<%=request.getContextPath()%>/ea/submitElectronicApproval.do",
-	        contentType: "application/json;charset=UTF-8",
-	        data: JSON.stringify(data),
-	        success: function (response) {
-	            if (response.success) {
-	            	 Swal.fire({
-	            	        title: "전자결재 제출 성공",
-	            	        text: "전자결재가 제출되었습니다.",
-	            	        icon: 'success',
-	            	        showConfirmButton: false,
-	            	        timer: 1500
-	            	    });
-	                // 성공적으로 제출되면 페이지 이동 등을 처리할 수 있습니다.
-	            } else {
-	            	Swal.fire({
-	                    title: "전자결재 제출 실패",
-	                    text: "전자결재 제출에 실패했습니다.",
-	                    icon: 'error',
-	                    showConfirmButton: false,
-	                    timer: 1500
-	                });
-	            }
-	        },
-	        error: function () {
-	            console.error("Failed to submit electronic approval");
-	        }
-	    });
-	});
 	
 	function submitForm() {
 	    // 각 입력 폼에서 데이터 수집
-	    var startDate = $("#startDate").val();
-	    var endDate = $("#endDate").val();
-	    var leaveType = $("#leaveType").val();
-	    var cReason = $("#cReason").val();
+	    
 	    // 파일 첨부 관련 코드도 추가해야 함
 
 	    // 선택된 결재자 및 참조자 목록 수집
@@ -760,6 +716,7 @@
 	            uApprovalLevel: 2
 	        });
 	    }
+	
 	    // 참조자 목록도 추가해야 함
 /* 	    for (var i = 0; i < selectedRefUsers.length; i++) {
 	        approvalUsers.push({
@@ -768,28 +725,80 @@
 	            type: "reference"
 	        });
 	    } */
-
-	    // AJAX를 사용하여 서버에 데이터 전송
-	    $.ajax({
+	 // AJAX를 사용하여 서버에 데이터 전송
+	  $.ajax({
 	        type: "POST",
-	        url: "<%=request.getContextPath()%>/submitFormData", // 적절한 서버 URL로 변경
-	        data: {
-	            startDate: startDate,
-	            endDate: endDate,
-	            leaveType: leaveType,
-	            cReason: cReason,
-	            approvalUsers: JSON.stringify(approvalUsers)
-	        },
+	        url: "<%=request.getContextPath()%>/ea/submitElectronicApproval.do",
+	        contentType: "application/json", // JSON 데이터 전송 시에는 Content-Type을 명시
+	        data: JSON.stringify({
+	        	approvalStatus:"W",
+	            approvalUidx1: selectedUser1 ? selectedUser1.uidx : null,
+	            approvalUidx2: selectedUser2 ? selectedUser2.uidx : null
+	        }),
 	        success: function (response) {
+	            Swal.fire({
+	                title: "전자결재 제출 성공",
+	                text: "전자결재가 제출되었습니다.",
+	                icon: 'success',
+	                showConfirmButton: false,
+	                timer: 1500
+	            });
+
 	            // 성공적으로 전송되었을 때의 처리
 	            console.log("Form submitted successfully:", response);
+	            var aidx = response.aidx;
+	            submitLeave(aidx);
 	        },
 	        error: function () {
 	            // 전송 실패 시의 처리
 	            console.error("Failed to submit form data");
 	        }
 	    });
+	 
+	 
+	 
 	}
+	 
+	 
+	function submitLeave(aidx) {
+		
+		var startDate = $("#startDate").val();
+	    var endDate = $("#endDate").val();
+	    var lReason = $("#lReason").val();
+	    var lType= $("#lType").val();
+	    $.ajax({
+	        type: "POST",
+	        url: "<%=request.getContextPath()%>/leave/submitLeave.do",
+	        data: {
+	        	  lStart: startDate,
+	              lEnd: endDate,
+	              lState:"W",
+	              lAcpYn:"N",
+	              lType: lType,
+	              lReason: lReason,
+	              aidx: aidx
+	        },
+	        success: function (response) {
+
+	        },
+	        error: function () {
+	            // 전송 실패 시의 처리
+	            console.error("Failed to submit form data");
+	        }
+	    });
+	 
+	}
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	   
 	</script>
 	</main>
 </body>

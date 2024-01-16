@@ -5,7 +5,8 @@ public class ElectronicApprovalsVo {
 	private String approvalStatus;
 	private String aDate;
 	private int uidx;
-	private int approvalUidx;
+	private int approvalUidx1;
+	private int approvalUidx2;
 	private int didx;
 	
 	public int getAidx() {
@@ -32,11 +33,18 @@ public class ElectronicApprovalsVo {
 	public void setUidx(int uidx) {
 		this.uidx = uidx;
 	}
-	public int getApprovalUidx() {
-		return approvalUidx;
+	
+	public int getApprovalUidx1() {
+		return approvalUidx1;
 	}
-	public void setApprovalUidx(int approvalUidx) {
-		this.approvalUidx = approvalUidx;
+	public void setApprovalUidx1(int approvalUidx1) {
+		this.approvalUidx1 = approvalUidx1;
+	}
+	public int getApprovalUidx2() {
+		return approvalUidx2;
+	}
+	public void setApprovalUidx2(int approvalUidx2) {
+		this.approvalUidx2 = approvalUidx2;
 	}
 	public int getDidx() {
 		return didx;

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ezen.ezenhr.persistance.LeaveService_Mapper">
+	<insert id="leaveInsert" parameterType="lv">
+		INSERT INTO LeaveTable (lType, lStart, lEnd, lState, lAcpYn, lReason, aidx, uidx)
+		VALUES (#{lType}, #{lStart}, #{lEnd}, 'W',  'N', #{lReason},  #{aidx},  #{uidx})
+	</insert>
+
+
+</mapper>
