@@ -44,7 +44,7 @@ select * FROM UserTable where uidx = #{uidx}
 	FROM UserTable
 	WHERE didx = #{didx}
 </select>
-
+ 
 <select id="getAllUsers" resultType="uv">
         SELECT *
         FROM UserTable
