@@ -216,6 +216,11 @@
                     if (response.success) {
                         sessionStorage.setItem('isSignedIn', 'true');
                         updateButtonState('true');
+                        Swal.fire({
+                            title: '출근 처리 완료',
+                            icon: 'success',
+                            timer: 1500
+                        });
                     } else {
                         alert('출근 정보 전송 실패');
                     }
@@ -245,6 +250,12 @@
                     if (response.success) {
                         sessionStorage.removeItem('isSignedIn');
                         updateButtonState('false');
+                        
+                        Swal.fire({
+                            title: '퇴근 처리 완료',
+                            icon: 'success',
+                            timer: 1500
+                        });
                     } else {
                         alert('퇴근 정보 전송 실패');
                     }
@@ -415,14 +426,6 @@
 
 
     </div><!--//#main_zone-->
-    
-  <div id = "commuteInfo">
-    	<h3>출퇴근 정보</h3>
-    	 <p>
-          출근시각 :  ${cv.cInTime}<br>
-          퇴근시각 :  ${cv.cOutTime}
-        </p>
-    </div>
     
 </main>
 

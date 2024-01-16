@@ -9,25 +9,6 @@
 <%@ page import="com.ezen.ezenhr.domain.UserVo" %>
 <%@ page import="java.util.List" %>
 
-
-
-
-<%
-    List<UserVo> uList = (List<UserVo>)request.getAttribute("uList");
-%>
-
-<%
-    // uList를 Map으로 변환
-    Map<Integer, String> userMap = new HashMap<>();
-    for (UserVo user : uList) {
-        userMap.put(user.getUidx(), user.getuName());
-    }
-%>
-
-<%-- Debugging: Print uList to console --%>
-<%
-    System.out.println("uList: " + uList);
-%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -117,10 +98,9 @@
 				</thead>
 				<tbody>
 			    <c:forEach var="commute" items="${clist}" varStatus="loop">
-			     <c:set var="currentIndex" value="${loop.index}" />
 			        <tr>
 			            <td>${commute.departmentName}</td>
-						<td>${uNames[currentIndex]}</td>
+						<td>${uNames[loop.index]}</td>
 			            <td>${commute.cInTime}</td>
 			            <td>${commute.cOutTime}</td>
 			            <td>${commute.ctype}</td>
