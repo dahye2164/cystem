@@ -32,7 +32,7 @@ select * FROM UserTable where uidx = #{uidx}
 <select id="getDepartmentName" parameterType="int" resultType="string">
 	SELECT dName FROM DepartmentTable WHERE didx = #{didx}
 </select>
-
+ 
  <select id="getUserDepartmentId" resultType="int" parameterType="int">
         SELECT didx
         FROM UserTable
