@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,8 +19,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ezen.ezenhr.domain.ElectronicApprovalsVo;
 import com.ezen.ezenhr.domain.LeaveVo;
+import com.ezen.ezenhr.domain.UserVo;
 import com.ezen.ezenhr.service.ElectronicApprovalsService;
 import com.ezen.ezenhr.service.LeaveService;
+import com.ezen.ezenhr.service.UserService;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
 @RequestMapping(value="/ea")
@@ -31,11 +36,16 @@ public class ElectronicApprovalsController {
 	@Autowired
 	LeaveService ls;
 	
+	@Autowired
+	UserService us;
+	
 	
 	@RequestMapping(value="/eaList.do", method = RequestMethod.GET)
 	public String eaList() {
 		return "/electronic_approvals/electronic_approvals_list";
 	}
+	
+
 	
 	@RequestMapping(value="/eaWrite.do", method = RequestMethod.GET)
 	public String eaWrite() {
@@ -110,4 +120,97 @@ public class ElectronicApprovalsController {
 	}
 	
 	
+	@RequestMapping(value="/eaAgree.do", method = RequestMethod.GET)
+	public String eaAgree(Model model, HttpSession session, int aidx) throws Exception {
+		LeaveVo lv = ls.selectLeaveByAidx(aidx);
+		
+		ElectronicApprovalsVo eav = eas.selectEAByAidx(aidx);
+		
+		
+		UserVo uv1 = us.getUserInfo(eav.getApprovalUidx1());
+
+		
+		UserVo uv2 = us.getUserInfo(eav.getApprovalUidx2());
+		
+		UserVo uv3 = us.getUserInfo(eav.getUidx());
+		
+		model.addAttribute("lv", lv);
+		model.addAttribute("uv1",uv1);
+		model.addAttribute("uv2",uv2);
+		model.addAttribute("uv3",uv3);
+		
+		
+	
+		
+		return "/electronic_approvals/electronic_approvals_admin_agree";
+	}
+	@RequestMapping(value = "/agreeApproval.do", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
+	@ResponseBody
+	@Transactional
+	public String agreeApproval(@RequestBody Map<String, Integer> data, HttpSession session) {
+	    try {
+	        int uidx = (Integer) session.getAttribute("uidx");
+	        int aidx = data.get("aidx");
+	        System.out.println(aidx);
+
+	        // 결재자 역할 확인
+	        ElectronicApprovalsVo eav = eas.selectEAByAidx(aidx);
+	        if (eav != null) {
+	            if (eav.getApprovalUidx1() == uidx) {
+	                // 1차 결재자인 경우
+	                LeaveVo lv = new LeaveVo();
+	                lv.setlAcpYn("1차결재완료");  // 변경된 휴가 승인 상태를 'Y'로 설정
+	                lv.setlState("1차결재완료");
+
+	                // 전자결재 테이블 업데이트
+	                eav.setApprovalStatus("1차결재완료");  // 1차 결재자의 결재 상태를 업데이트
+	                int updateEAStatus = eas.updateElectronicApprovalStatus(eav);
+	                if (updateEAStatus <= 0) {
+	                    System.err.println("EA Update Error: " + eav);
+	                    return "afailure"; // 전자결재 테이블 업데이트 실패
+	                }
+
+	                // 휴가 테이블 업데이트
+	                int updateVacationResult = ls.updateLeaveStatus(lv);
+	                System.out.println(updateVacationResult);
+	                if (updateVacationResult > 0) {
+	                    return "success";
+	                } else {
+	                    System.err.println("Leave Update Error: " + lv);
+	                    return "bfailure"; // 휴가 테이블 업데이트 실패
+	                }
+	            } else if (eav.getApprovalUidx2() == uidx) {
+	                // 2차 결재자인 경우
+	                LeaveVo lv = new LeaveVo();
+	                lv.setlAcpYn("2차결재완료");  // 변경된 휴가 승인 상태를 'Y'로 설정
+	                lv.setlState("2차결재완료");
+
+	                // 전자결재 테이블 업데이트
+	                eav.setApprovalStatus("2차결재완료");  // 2차 결재자의 결재 상태를 업데이트
+	                int updateEAStatus = eas.updateElectronicApprovalStatus(eav);
+	                if (updateEAStatus <= 0) {
+	                    System.err.println("EA Update Error: " + eav);
+	                    return "cfailure"; // 전자결재 테이블 업데이트 실패
+	                }
+
+	                // 휴가 테이블 업데이트
+	                int updateVacationResult = ls.updateLeaveStatus(lv);
+	                if (updateVacationResult > 0) {
+	                    return "success";
+	                } else {
+	                    System.err.println("Leave Update Error: " + lv);
+	                    return "dfailure"; // 휴가 테이블 업데이트 실패
+	                }
+	            } else {
+	                return "efailure"; // 본인이 결재자가 아닌 경우
+	            }
+	        } else {
+	            return "ffailure"; // 결재 정보를 찾을 수 없는 경우
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        System.err.println("Exception in agreeApproval: " + e.getMessage()); // 추가된 로깅
+	        return "error"; // 에러 발생
+	    }
+	}
 }

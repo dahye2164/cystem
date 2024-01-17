@@ -18,4 +18,17 @@
             WHERE lt.aidx = #{aidx}
         ]]>
     </select>
+    
+    <select id="selectLeaveByAidx" parameterType="int" resultType="lv">
+    SELECT * FROM LeaveTable where aidx = #{aidx}
+    </select>
+    
+     <update id="updateLeaveStatus" parameterType="lv">
+        UPDATE LeaveTable
+        SET
+            lAcpYn = #{lAcpYn},
+            lState = #{lState}
+        WHERE
+            aidx = #{aidx}
+    </update>
 </mapper>

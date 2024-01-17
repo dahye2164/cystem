@@ -36,6 +36,22 @@ public class ElectronicApprovalsServiceImpl implements ElectronicApprovalsServic
 	}
 
 
+	@Override
+	public ElectronicApprovalsVo selectEAByAidx(int aidx) {
+
+		return easm.selectEAByAidx(aidx);
+	}
+
+
+	@Override
+	public int updateElectronicApprovalStatus(ElectronicApprovalsVo eav) {
+		int value = easm.updateElectronicApprovalStatus(eav);
+		return value;
+	}
+
+
+
+
 
 
 

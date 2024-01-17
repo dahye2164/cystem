@@ -10,5 +10,9 @@ public interface ElectronicApprovalsService {
 	
 
 	public List<Map<String, Object>> getEAListByApproverUidxWithAdate(int uidx);
+	
+	public ElectronicApprovalsVo selectEAByAidx(int aidx);
+	
+	public int updateElectronicApprovalStatus(ElectronicApprovalsVo eav);
 
 }

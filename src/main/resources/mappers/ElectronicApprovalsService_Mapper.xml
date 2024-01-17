@@ -12,13 +12,34 @@
 	    VALUES ('W', now(), #{uidx}, #{approvalUidx1}, #{approvalUidx2})
 	</insert>
 	
-<select id="getEAListByApproverUidxWithAdate" resultType="java.util.Map" parameterType="int">
-    <![CDATA[
-        SELECT eav.*, ea.adate
-        FROM ElectronicApprovals eav
-        LEFT JOIN LeaveTable lt ON eav.aidx = lt.aidx
-        LEFT JOIN ElectronicApprovals ea ON eav.aidx = ea.aidx
-        WHERE eav.approvalUidx1 = #{uidx} OR eav.approvalUidx2 = #{uidx}
-    ]]>
-</select>
+	<select id="getEAListByApproverUidxWithAdate" resultType="java.util.Map" parameterType="int">
+	    <![CDATA[
+	        SELECT eav.*, ea.adate
+	        FROM ElectronicApprovals eav
+	        LEFT JOIN LeaveTable lt ON eav.aidx = lt.aidx
+	        LEFT JOIN ElectronicApprovals ea ON eav.aidx = ea.aidx
+	        WHERE eav.approvalUidx1 = #{uidx} OR eav.approvalUidx2 = #{uidx}
+	    ]]>
+	</select>
+	
+	<select id="selectEAByAidx" resultType="eav" parameterType="int">
+		SELECT * FROM ElectronicApprovals where aidx = #{aidx};
+	</select>
+	
+    
+      <!-- 전자결재 상태 업데이트 및 2차 결재자 uidx 가져오기 -->
+    <update id="updateElectronicApprovalStatus" parameterType="eav">
+        UPDATE ElectronicApprovals
+        SET
+            approvalStatus = #{approvalStatus},
+            approvalUidx2 = (
+                CASE 
+                    WHEN #{approvalStatus} = '1차결재완료' THEN (SELECT approvalUidx2 FROM ElectronicApprovals WHERE aidx = #{aidx})
+                    ELSE NULL
+                END
+            )
+        WHERE
+            aidx = #{aidx}
+    </update>
+
 </mapper>

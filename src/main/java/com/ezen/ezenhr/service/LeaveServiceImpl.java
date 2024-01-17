@@ -33,4 +33,20 @@ public class LeaveServiceImpl implements LeaveService {
 		return lsm.getLeaveDataWithUsernameByAidx(aidx);
 	}
 
+
+	@Override
+	public LeaveVo selectLeaveByAidx(int aidx) {
+		
+		return lsm.selectLeaveByAidx(aidx);
+	}
+
+
+	@Override
+	public int updateLeaveStatus(LeaveVo lv) {
+		int value = lsm.updateLeaveStatus(lv);
+		return value;
+	}
+
+
+	
 }

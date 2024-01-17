@@ -102,12 +102,13 @@
 				     <!-- 여기에 전자결재목록 데이터를 동적으로 추가 -->
 	         		  <c:forEach var="al" items="${alList}">
 					    <tr>
-					        <td>${al.lType}</td>
-					        <td>${al.uName}</td>
-					        <td>${al.lReason}</td>
-					        <td>${al.lStart} ~ ${al.lEnd}</td>
-					        <td>${al.lAcpYn}</td>
-					          <td>${al.aDate}</td>
+					        <td><a href="${pageContext.request.contextPath}/ea/eaAgree.do?aidx=${al.aidx}">${al.lType}</a></td>
+					        <td><a href="${pageContext.request.contextPath}/ea/eaAgree.do?aidx=${al.aidx}">${al.uName}</a></td>
+					        <td><a href="${pageContext.request.contextPath}/ea/eaAgree.do?aidx=${al.aidx}">${al.lReason}</a></td>
+					        <td><a href="${pageContext.request.contextPath}/ea/eaAgree.do?aidx=${al.aidx}">${al.lStart} ~ ${al.lEnd}</a></td>
+					        <td><a href="${pageContext.request.contextPath}/ea/eaAgree.do?aidx=${al.aidx}">${al.lAcpYn}</a></td>
+					          <td><a href="${pageContext.request.contextPath}/ea/eaAgree.do?aidx=${al.aidx}">${al.aDate}</a></td>
+					      
 					    </tr>
 					</c:forEach>
 				</tbody>
