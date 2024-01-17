@@ -24,5 +24,7 @@ public interface UserService_Mapper {
 	public List<UserVo> getUidxByDidx(int didx);
 	
 	public List<UserVo> getAllUsers();
+
+	public void updateUser(UserVo user);
 	
 }

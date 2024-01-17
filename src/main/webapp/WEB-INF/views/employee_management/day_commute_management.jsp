@@ -133,32 +133,7 @@
             </table>
 
              <!-- 페이징 부분 -->
-<div id="paging_zone">
-    <table border="0" style="width:600px;text-align:center;">
-        <tr>
-            <td style="width:100px;text-align:right;">
-                <c:if test="${pm.prev}">
-    <a href="${pageContext.request.contextPath}/commute/dayCommuteManagement.do?page=${pm.startPage - 1}&commuteYear=${scri.year}&commuteMonth=${scri.month}&commuteDay=${scri.day}&commuteType=${scri.departmentName}"> ◀</a>
-</c:if>
 
-<c:forEach var="i" begin="${pm.startPage}" end="${pm.endPage}">
-    <c:choose>
-        <c:when test="${i eq scri.page}">
-            <strong>${i}</strong>
-        </c:when>
-        <c:otherwise>
-            <a href="${pageContext.request.contextPath}/commute/dayCommuteManagement.do?page=${i}&commuteYear=${scri.year}&commuteMonth=${scri.month}&commuteDay=${scri.day}&commuteType=${scri.departmentName}">${i}</a> &nbsp;
-        </c:otherwise>
-    </c:choose>
-</c:forEach>
-
-<c:if test="${pm.next && pm.endPage > 0}">
-    <a href="${pageContext.request.contextPath}/commute/dayCommuteManagement.do?page=${pm.endPage + 1}&commuteYear=${scri.year}&commuteMonth=${scri.month}&commuteDay=${scri.day}&commuteType=${scri.departmentName}"> ▶</a>
-</c:if>
-            </td>
-        </tr>
-    </table>
-</div>
 <!-- 페이징 부분 끝 -->
         </div><!-- //#main_zone -->
     </main>

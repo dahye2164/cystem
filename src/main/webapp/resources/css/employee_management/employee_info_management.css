@@ -1,0 +1,168 @@
+@charset "UTF-8";
+/*해당 네브 메뉴 색상 변경*/
+main {
+  width: 70%;
+  margin-top: 9%;
+  margin-right: auto;
+  margin-left: auto;
+  min-height: 100vh;
+}
+
+main h2 {
+  font-size: 30px;
+  font-weight: bold;
+}
+
+main p {
+  font-size: 15px;
+  width: 800px;
+}
+
+#info {
+  display: flex;
+  align-items: center;
+}
+
+#info button {
+  font-size: 14px;
+  width: 80px;
+  height: 37px;
+  background-color: #f83e3e;
+  color: white;
+  padding: 6px 10px;
+  border: 0px;
+  border-radius: 9px;
+  cursor: pointer;
+  box-shadow: 2px 2px 5px rgb(0, 0, 0, 0.5);
+  margin-left: 75px;
+}
+
+#main_zone {
+  margin: 30px auto;
+  width: 100%;
+  height: 850px;
+  border: 0.5px solid #ccaadd;
+}
+
+#date_select p {
+  font-size: 16px;
+}
+
+#sFrm {
+  display: flex;
+  margin-top: 10px;
+  justify-content: space-between;
+  margin-right: 10px;
+}
+
+#date_select {
+  display: flex;
+  align-items: flex-end;
+}
+
+#leaveYear {
+  margin-left: 10px;
+}
+
+#leaveMonth {
+  margin-left: 10px;
+}
+
+#select_zone label {
+  margin-left: 5px;
+  font-size: 16px;
+  margin-right: 5px;
+}
+
+#select_zone {
+  display: flex;
+  align-items: center;
+}
+
+select {
+  padding: 6px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 12px;
+  background-color: white;
+  color: #333;
+  margin-right: 5px;
+}
+
+#select_zone button {
+  margin-left: 5px;
+  padding: 7px 7px;
+  border: none;
+  background-color: #ffc0cb;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  border-radius: 5px;
+}
+
+#select_zone button:hover {
+  background-color: #ff69b4;
+}
+
+#main_table {
+  border-collapse: collapse;
+  width: 98%;
+  margin: 30px auto;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+#main_table thead th {
+  background-color: #f8f9fa;
+  color: #212529;
+  text-align: center;
+  border-bottom: 2px solid #dee2e6;
+  padding: 12px;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+#main_table tbody tr:nth-child(even) {
+  background-color: #f8f9fa;
+}
+
+#main_table tbody tr:hover {
+  background-color: #e9ecef;
+  cursor: pointer;
+}
+
+#main_table tbody td {
+  border-bottom: 1px solid #dee2e6;
+  font-size: 14px;
+  color: #212529;
+  padding: 12px;
+  text-align: center;
+}
+
+#bottomButton {
+  float: right;
+  margin-right: 25.63px;
+}
+
+#bottomButton button {
+  font-size: 14px;
+  width: 80px;
+  height: 37px;
+  color: white;
+  padding: 6px 10px;
+  border: 0px;
+  border-radius: 9px;
+  cursor: pointer;
+  box-shadow: 2px 2px 5px rgb(0, 0, 0, 0.5);
+}
+
+.edit {
+  background-color: #d5abd5;
+}
+
+.cancel {
+  background-color: #c4c4c4;
+  margin-left: 10px;
+}

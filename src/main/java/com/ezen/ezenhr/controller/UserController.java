@@ -20,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ezen.ezenhr.domain.UserVo;
 import com.ezen.ezenhr.service.UserService;
+import com.ezen.ezenhr.service.UserUpdateForm;
 
 @Controller
 @RequestMapping(value="/user")
@@ -140,6 +141,39 @@ public class UserController {
            // didx에 해당하는 부서의 사용자 목록을 가져옴
            return us.getUidxByDidx(didx);
        }
+   }
+   
+   @RequestMapping(value = "/userInfoManage.do", method = RequestMethod.GET)
+   public String userInfoManage(Model model) {
+       // 데이터베이스에서 사용자 데이터 검색
+       List<UserVo> userList = us.getAllUsers();
+
+       // 사용자 데이터를 뷰에 전달
+       model.addAttribute("userList", userList);
+       
+       return "employee_management/employee_info_management";
+   }
+   
+   @RequestMapping(value = "/updateUsers", method = RequestMethod.POST)
+   public String updateUsers(UserUpdateForm form, HttpSession session, Model model) {
+       // 사용자 업데이트 로직 수행
+       List<UserVo> userList = form.getUserList();
+
+       try {
+           us.updateUsers(userList);
+           // 업데이트 성공 시, 세션 스토리지에 출근 여부 저장
+           session.setAttribute("isSignedIn", true);
+       } catch (Exception e) {
+           e.printStackTrace();
+           // 업데이트 실패 시, 에러 메시지 등을 처리
+           model.addAttribute("error", "업데이트에 실패하였습니다.");
+       }
+
+       // 사용자 정보를 다시 불러와서 뷰에 전달
+       List<UserVo> updatedUserList = us.getAllUsers();
+       model.addAttribute("userList", updatedUserList);
+
+       return "employee_management/employee_info_management";
    }
 	
 

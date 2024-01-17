@@ -169,8 +169,15 @@
                                         <a href="#">상세휴가조회</a>
                                     </li>
                                     <li>
-                                        <a href="#">사원정보관리</a>
-                                    </li>
+					                    <c:choose>
+					                        <c:when test="${uidx == null}">
+					                            <a href="<%=request.getContextPath()%>" onclick="return showAlert('로그인이 필요합니다.')">사원정보관리</a>
+					                        </c:when>
+					                        <c:otherwise>
+					                            <a href="<%=request.getContextPath() %>/user/userInfoManage.do">사원정보관리</a>
+					                        </c:otherwise>
+					                    </c:choose>
+					                </li>
                                 </ul>
                             </div>
                         </li>

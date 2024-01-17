@@ -90,4 +90,18 @@ public class UserServiceImpl implements UserService {
 		// TODO Auto-generated method stub
 		return usm.getAllUsers();
 	}
+
+	@Override
+	public void updateUsers(List<UserVo> userList) {
+		for (UserVo user : userList) {
+			usm.updateUser(user);
+		}
+		
+	}
+
+//	@Override
+//	public String getDepartmentNameByDidx(int didx) {
+//		
+//		return usm.getDepartmentNameByDidx
+//	}
 }

@@ -23,4 +23,8 @@ public interface UserService {
 	public List<UserVo> getUidxByDidx(int didx);
 	
 	public List<UserVo> getAllUsers();
+
+	public void updateUsers(List<UserVo> userList);
+
+//	public String getDepartmentNameByDidx(int didx);
 }

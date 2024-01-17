@@ -50,4 +50,13 @@ select * FROM UserTable where uidx = #{uidx}
         FROM UserTable
 </select>
 
+<update id="updateUser" parameterType="uv">
+        UPDATE user
+        SET
+        uGrade = #{uGrade},
+        uHireDate = #{uHireDate},
+        uApprovalLevel = #{uApprovalLevel}
+        WHERE uidx = #{uidx}
+    </update>
+
 </mapper>
