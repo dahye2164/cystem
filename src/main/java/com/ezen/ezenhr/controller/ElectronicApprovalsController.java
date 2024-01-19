@@ -77,8 +77,6 @@ public class ElectronicApprovalsController {
 	    // 세션에서 로그인한 사용자 정보를 가져옴
 	    int uidx = (Integer)session.getAttribute("uidx");
 
-	    // 페이징 처리를 위한 Logic 생략 (위와 동일)
-
 	 // 전자 결재 리스트 가져오기 (로그인한 사용자의 idx를 파라미터로 전달)
 	    List<Map<String, Object>> eaaList = eas.getEAListByApproverUidxWithAdate(uidx);
 	    System.out.println(eaaList + "eaaList");
@@ -98,21 +96,10 @@ public class ElectronicApprovalsController {
 	        if (leaveData != null) {
 	            alList.add(leaveData);
 	            System.out.println(alList + "alList");
-
-	            // 로그 추가
-	            System.out.println("adate from leaveData: " + leaveData.get("adate"));
 	        } else {
-	            // 추가한 로그
-	            System.out.println("Leave data is null for aidx: " + aidx);
+	            System.out.println("Leaveaidx: " + aidx);
 	        }
 	    }
-
-	    // adate 필드를 추가
-
-
-
-
-
 	    // 모델에 전자 결재 리스트 추가
 	    model.addAttribute("alList", alList);
 
@@ -159,8 +146,9 @@ public class ElectronicApprovalsController {
 	            if (eav.getApprovalUidx1() == uidx) {
 	                // 1차 결재자인 경우
 	                LeaveVo lv = new LeaveVo();
-	                lv.setlAcpYn("1차결재완료");  // 변경된 휴가 승인 상태를 'Y'로 설정
+	                lv.setlAcpYn("1차결재완료");  
 	                lv.setlState("1차결재완료");
+	                lv.setAidx(aidx);
 
 	                // 전자결재 테이블 업데이트
 	                eav.setApprovalStatus("1차결재완료");  // 1차 결재자의 결재 상태를 업데이트
@@ -209,7 +197,7 @@ public class ElectronicApprovalsController {
 	        }
 	    } catch (Exception e) {
 	        e.printStackTrace();
-	        System.err.println("Exception in agreeApproval: " + e.getMessage()); // 추가된 로깅
+	        System.err.println("Exception in agreeApproval: " + e.getMessage()); 
 	        return "error"; // 에러 발생
 	    }
 	}
