@@ -202,24 +202,25 @@
       
      function submitApproval() {
     	 var aidx = ${lv.aidx};
-         $.ajax({
-             type: "POST",
-             url: "<%=request.getContextPath()%>/ea/agreeApproval.do",
-             contentType: "application/json",
-             data: JSON.stringify({ aidx: aidx }),
-             success: function(response) {
-            	    if (response === "success") {
-            	        alert("승인이 완료되었습니다.");
-            	        // 성공했을 때의 동작 추가
-            	    } else {
-            	        alert("오류가 발생하였습니다. 오류 메시지: " + response);
-            	        // 기타 오류 처리
-            	    }
-            	},
-             error: function(error) {
-                 console.error("AJAX 오류:", error);
-             }
-         });
+    	 $.ajax({
+    		    type: "POST",
+    		    url: "<%=request.getContextPath()%>/ea/agreeApproval.do",
+    		    contentType: "application/json",
+    		    data: JSON.stringify({ aidx: aidx }),
+    		    dataType: "text", // 데이터 타입을 명시적으로 text로 지정
+    		    success: function(response) {
+    		        if (response === "success") {
+    		            alert("승인이 완료되었습니다.");
+    		            // 성공했을 때의 동작 추가
+    		        } else {
+    		            alert("오류가 발생하였습니다. 오류 메시지: " + response);
+    		            // 기타 오류 처리
+    		        }
+    		    },
+    		    error: function(error) {
+    		        console.error("AJAX 오류:", error);
+    		    }
+    		});
      }
     
     

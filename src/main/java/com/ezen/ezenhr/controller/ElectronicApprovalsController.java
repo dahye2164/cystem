@@ -170,7 +170,7 @@ public class ElectronicApprovalsController {
 	            } else if (eav.getApprovalUidx2() == uidx) {
 	                // 2차 결재자인 경우
 	                LeaveVo lv = new LeaveVo();
-	                lv.setlAcpYn("2차결재완료");  // 변경된 휴가 승인 상태를 'Y'로 설정
+	                lv.setlAcpYn("2차결재완료"); 
 	                lv.setlState("2차결재완료");
 
 	                // 전자결재 테이블 업데이트
