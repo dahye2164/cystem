@@ -50,7 +50,7 @@ public class UserController {
 		uv.setuPwd(userPwdEncrypt);
 		
 		int value = us.userInsert(uv);
-		System.out.println(us.userInsert(uv) + "<--- uvInsert");
+		
 		
 		return "redirect:/";
 	}
