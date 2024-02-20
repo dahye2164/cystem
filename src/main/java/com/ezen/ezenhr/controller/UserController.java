@@ -41,7 +41,7 @@ public class UserController {
 	@RequestMapping(value="/userJoinAction.do", method=RequestMethod.POST)
 	public String userJoinAction(UserVo uv) {
 		
-		
+		 
 		System.out.println(uv.getuId() + " <----- 유저가 입력한 아이디");
 		System.out.println(uv.getuPwd() + "<---- 유저가 입력한 비밀번호");
 		
